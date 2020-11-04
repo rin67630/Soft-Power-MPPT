@@ -1,4 +1,4 @@
-Solar-Booster: the Swiss-Army-Knife-for-Solar Charge Controllers
+<b>Solar-Booster: the Swiss-Army-Knife-for-Solar Charge Controllers</b>
 
 The solution for solar charge controllers owners and those planning especially off-grid small installtions to visualize your battery level: 
 
