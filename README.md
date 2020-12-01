@@ -40,3 +40,5 @@ For plain buck converters with CC/CV potentiometers, the system provides an ella
 In the first variant, ESP8266 WiFi processor + INA226 power measuring interface + Online Dashboard the total value of the bill of material will be below 20€ (+ casing and connectors used)!
 
 Enjoy!
+
+![grafik](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)
