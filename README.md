@@ -1,4 +1,4 @@
-<b>Solar-Booster: the Swiss-Army-Knife-for-Solar Charge Controllers</b>
+<b>SCC2Buck: the Swiss-Army-Knife-for-Solar Charge Controllers and dumb Buck DC converters</b>
 
 The solution for solar charge controllers owners and those planning especially off-grid small installations to visualize your battery level and get deep reporting: 
 
