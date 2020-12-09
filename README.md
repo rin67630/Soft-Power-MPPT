@@ -1,6 +1,6 @@
-<b>SCC2Buck: the Swiss-Army-Knife-for-Solar Charge Controllers and dumb Buck DC converters</b>
+<b>Soft-Power: the Swiss-Army-Knife Solar Charge Controller based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)</b>
 
-The solution for solar charge controllers owners and those planning especially off-grid small installations to visualize your battery level and get deep reporting: 
+The solution for solar charge controllers owners and those planning especially off-grid small installations to charge, manage and visualize your battery level and get deep reporting: 
 
 Add REAL MPPT (maximum power point tracking) to simple buckconverters and boost them  with elaboate networked display and reporting features...
 
