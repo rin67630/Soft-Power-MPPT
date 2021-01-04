@@ -1,16 +1,20 @@
 <b>Soft-Power: the Swiss-Army-Knife Solar Charge Controller based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)</b>
 
-The solution for solar charge controllers owners and those planning especially off-grid small installations to charge, manage and visualize your battery level and get deep reporting: 
+The challenge might seem simple: Run a) a Raspberry Pi or b) Arduino + radio + a few instruments on solar power 24/365 in a Scottish climate as an environmental measuring station placed in the public domain / others property (which means with limited panel size).
 
-Add REAL MPPT (maximum power point tracking) to simple buckconverters and boost them  with elaboate networked display and reporting features...
+A Raspberry Pi + radio + instruments will need ~150Wh daily, easy with a 100W panel and a 100Ah battery... 
+An Arduino + radio + instruments will need ~30Wh daily, easy with a 20W panel and a 20Ah battery...
+... in a sunny region that might work, not in Scotland. 
+You must dimension panel and battery to last two weeks cloudy winter weather with barely 5% solar contribution for just 3 hours a day!
 
-Especially at the low-power end, market devices tend to be primitive and frequently lack a decent dashboard to supervise the solar process.
-The real MPPT devices -beside being expensive- drag too much power for themselves for low-power off grid solutions.
+Commercial MPPT solar charge controllers will require 40-100mA for themselves -that is up to 31Wh a day- less than what the panel delivers in bad winter days!
 
-The purpose of this development is to provide networking and reporting abilities to low-end solar charge controllers, by adding a ESP8266 WiFi microcontroller to it.
+So I decided to build my own MPPT solar charge controller, optimized for efficiency and very low quiescent consumption.
+It manages to draw als less as 20mA including WiFi trasnsmission of data to a powerful cloud dashboard.
+
+The purpose of this development is to provide networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
  
-
-The basic reporting and statistic functions will be available for all types of solar charge controllers.
+These basic reporting and statistic functions will be available.
 - battery voltage and current monitoring (with trending in the cloud and download to excel)
 - total current to/from Battery and power
 - statistics and Coulomb/Ah integration
@@ -18,26 +22,7 @@ The basic reporting and statistic functions will be available for all types of s
 - energy not harvested (after battery full)
 - computation of the internal resistance of the battery
 - weather display from openweather.org
-- abilty to network measures over UDP
-
-The electronics will provide following convenience functions:
-- 5V 1A output ( permanent )
-- optionally two independently adjustable voltage outputs 1A (2-12V) switchable by software/dashboard
-- optionally two relays switchable by software/dashboard (total power relief strategies, alarming...)
-
-All above functions are available for any SCC irrespective of it's technology.
-
-SCCs with PWM function are usually switching the negative pole (the positive pole is common to panel, battery and output).
-
-SCCs with DC conversion (true or false MPPT) and plain buck converters usually have a common negative pole between panel and battery.
-For thes models the swiss army knife will provide additional functionality:
-
--panel voltage monitoring
--optional panel current, power and conversion efficiency  monitoring.
-
-For plain buck converters with CC/CV potentiometers, the system provides an ellaborated MPPT + battery load optimizsation function (for various chemistries) opon injecting CC/CV corrections to the potentiometers transfoming these cheap devices into fully MPPT enabled SCC, costing ten times as much!
-
-In the first variant, ESP8266 WiFi processor + INA226 power measuring interface + Online Dashboard the total value of the bill of material will be below 20€ (+ casing and connectors used)!
+- ability to network measures over UDP
 
 Enjoy!
 
