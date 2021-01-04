@@ -2,9 +2,12 @@
 
 The challenge might seem simple: Run a) a Raspberry Pi or b) Arduino + radio + a few instruments on solar power 24/365 in a Scottish climate as an environmental measuring station placed in the public domain / others property (which means with limited panel size).
 
-A Raspberry Pi + radio + instruments will need ~150Wh daily, easy with a 100W panel and a 100Ah battery... 
+A Raspberry Pi + radio + instruments will need ~150Wh daily, easy with a 100W panel and a 100Ah battery...
+
 An Arduino + radio + instruments will need ~30Wh daily, easy with a 20W panel and a 20Ah battery...
+
 ... in a sunny region that might work, not in Scotland. 
+
 You must dimension panel and battery to last two weeks cloudy winter weather with barely 5% solar contribution for just 3 hours a day!
 
 Commercial MPPT solar charge controllers will require 40-100mA for themselves -that is up to 31Wh a day- less than what the panel delivers in bad winter days!
