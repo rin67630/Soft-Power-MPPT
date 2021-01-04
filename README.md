@@ -12,7 +12,7 @@ Commercial MPPT solar charge controllers will require 40-100mA for themselves -t
 So I decided to build my own MPPT solar charge controller, optimized for efficiency and very low quiescent consumption.
 It manages to draw als less as 20mA including WiFi trasnsmission of data to a powerful cloud dashboard.
 
-The purpose of this development is to provide networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
+The purpose of this development is to provide MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
  
 These basic reporting and statistic functions will be available.
 - battery voltage and current monitoring (with trending in the cloud and download to excel)
