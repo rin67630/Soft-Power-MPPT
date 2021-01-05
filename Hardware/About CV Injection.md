@@ -42,14 +42,14 @@ Why tweaking commercial PWM Buck converters and not PWM directly the buck conver
 There are several reasons for this:
 
 
--The first one is efficiency: The PWM signal of most microcontrollers have a fixed frequency around a few KHz. 
+- The first one is efficiency: The PWM signal of most microcontrollers have a fixed frequency around a few KHz. 
 Sure, you can operate a buck conversion at that frequency, but it is far from being efficient. 
 The state of the art is switching between 100Khz and 1MHz, requiring much smaller inductors and filter capacitors.
 
--The second one is safety: The buck converters will be set to generate a safe voltage on their own immediately after power on, right before the microcontroller will 
+- The second one is safety: The buck converters will be set to generate a safe voltage on their own immediately after power on, right before the microcontroller will 
 have finished to boot. Mainly you can design the circuit to work, without the microcontroller, this one being only care to optimize the operation.
 
--The third one is design: Designing a buck converter is not something to improvise, the PCB must be designed in such a way to reduce the impact of high current pulses onto 
+- The third one is design: Designing a buck converter is not something to improvise, the PCB must be designed in such a way to reduce the impact of high current pulses onto 
 the feedback circuit and GND traces must be carefully routed. 
  
 Enjoy!
