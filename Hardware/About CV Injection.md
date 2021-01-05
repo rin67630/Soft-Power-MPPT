@@ -37,10 +37,9 @@ the injection technique is safe to use for a limited range of output voltages, i
 The software cc control is however too slow to protect the buck controller against inadvertent shorts; small buck converters without currently limitation will burn 
 without notice...
 
-Why tweaking commercial PWM Buck converters and not PWM directly the buck converter functionality in software?
+Why tweaking commercial Buck converters and not PWM directly the buck converter functionality in software?
 
 There are several reasons for this:
-
 
 - The first one is efficiency: The PWM signal of most microcontrollers have a fixed frequency around a few KHz. 
 Sure, you can operate a buck conversion at that frequency, but it is far from being efficient. 
