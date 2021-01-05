@@ -49,28 +49,6 @@ The state of the art is switching between 100Khz and 1MHz, requiring much smalle
 have finished to boot. Mainly you can design the circuit to work, without the microcontroller, this one being only care to optimize the operation.
 
 - The third one is design: Designing a buck converter is not something to improvise, the PCB must be designed in such a way to reduce the impact of high current pulses onto 
-the feedback circuit and GND traces must be carefully routed. 
+the feedback circuit and GND traces must be carefully routed. All that has been already cared for by the designers of your commercial buck converter and tested to a commercial grade, less sorrows and trouble for you.
  
 Enjoy!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
