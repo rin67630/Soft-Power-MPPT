@@ -31,13 +31,17 @@ In software, it is an advantage to know which PWM value will correspond to the F
 circuit. It is a good praxis to initialize the PWM outputs upon booting to that value.
 
 
-Caveats: the injection technique is safe to use for a limited range of output voltages, ideally, what is required for battery charging and solar controllers.
+Caveats: 
+
+the injection technique is safe to use for a limited range of output voltages, ideally, what is required for battery charging and solar controllers.
 The software cc control is however too slow to protect the buck controller against inadvertent shorts; small buck converters without currently limitation will burn 
 without notice...
 
 Why tweaking commercial PWM Buck converters and not PWM directly the buck converter functionality in software?
 
 There are several reasons for this:
+
+
 -The first one is efficiency: The PWM signal of most microcontrollers have a fixed frequency around a few KHz. 
 Sure, you can operate a buck conversion at that frequency, but it is far from being efficient. 
 The state of the art is switching between 100Khz and 1MHz, requiring much smaller inductors and filter capacitors.
