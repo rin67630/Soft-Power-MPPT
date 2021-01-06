@@ -27,7 +27,7 @@ current control. This software loop will however be considerably slower than the
 provide a solar panel maximum power point tracking functionality. 
 
 The importance of the neutral injection point: 
-as already mentioned, but converters have a FB voltage by design. The PWM injection circuit will feed current into the voltage 
+as already mentioned, but converters have a FB (feedback) voltage by design. The PWM injection circuit will feed current into the voltage 
 potentiometer if it is over the FB voltage, and draw current from the potentiometer if it is below. If the FB voltage were at 1.65V (the half of 3,3V), you could increase 
 decrease the output voltage by the same value. Usually the FB voltage is however lower 0.8V or 1.2V which means, you can decrease output voltage better, then you can increase it.
 Fortunately is that is also, what we need by designing a battery charger.
@@ -35,7 +35,7 @@ In software, it is an advantage to know which PWM value will correspond to the F
 circuit. It is a good praxis to initialize the PWM outputs upon booting to that value.
 
 
-**Caveats: **
+**Caveats:**
 
 The injection technique is safe to use for a limited range of output voltages, ideally, what is required for battery charging and solar controllers.
 The software cc control is however too slow to protect the buck controller against inadvertent shorts; small buck converters without currently limitation will burn 
