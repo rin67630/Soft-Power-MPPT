@@ -11,6 +11,10 @@ Experience has shown, that an injection current changing the voltage by up to -1
 By the way, that this is also the technique used by many modules providing a current limitation functionality: an op amp monitors the output current and injects voltage into the 
 feedback loop to reduce output voltage as the current increases.
 
+![Typical trim potentiometer on a buck converter](1608728259654.png)
+
+**Image:** Typical buck converter
+
 With the microcontroller, we can use the injection technique to provide neat things on an existing buck converter:
 - digital control: with a direct digital output 3,3V to 5V over a 1k resistor and a diode,  you can shut down the buck converter: a high signal will increase the feedback voltage 
 in such a way, the chip will virtually stop. 
@@ -31,9 +35,9 @@ In software, it is an advantage to know which PWM value will correspond to the F
 circuit. It is a good praxis to initialize the PWM outputs upon booting to that value.
 
 
-Caveats: 
+**Caveats: **
 
-the injection technique is safe to use for a limited range of output voltages, ideally, what is required for battery charging and solar controllers.
+The injection technique is safe to use for a limited range of output voltages, ideally, what is required for battery charging and solar controllers.
 The software cc control is however too slow to protect the buck controller against inadvertent shorts; small buck converters without currently limitation will burn 
 without notice...
 
