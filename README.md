@@ -14,12 +14,12 @@ An Arduino + radio + instruments will need ~30Wh daily, easy with a 20W panel an
 
 ... in a sunny region that might work, not in Scotland. 
 
-You must dimension panel and battery to last two weeks cloudy winter weather with barely 5% solar contribution for just 3 hours a day!
+You must dimension panel and battery to last two weeks cloudy winter weather with barely 5% solar contribution during 3 hours a day!
 
 Commercial MPPT solar charge controllers will require 40-100mA for themselves -that is up to 31Wh a day- less than what the panel delivers in bad winter days!
 
 So I decided to build my own MPPT solar charge controller, optimized for efficiency and very low quiescent consumption.
-It manages to draw als less as 20mA including WiFi trasnsmission of data to a powerful cloud dashboard.
+It manages to draw als less as 20mA including WiFi transmission of data to a powerful cloud dashboard.
 
 The purpose of this development is to provide MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
  
