@@ -9,7 +9,7 @@ If current is fed into or drawn from that voltage source the resulting voltage w
 The effect is the buck converter chip will compensate with an opposite change on the output voltage. 
 So feeding some current into the potentiometer will reduce the output voltage, drawing some current from the potentiometer will increase the output voltage.
 
-
+![injection](https://user-images.githubusercontent.com/14197155/103954043-a18d9000-5143-11eb-96a6-9f30876e3fec.jpg)
 
 Of course, with that technique the output voltage cannot vary from zero to the maximum. By fooling the feedback circuit the overall gain of the feedback loop is also reduced.
 In my experience, every buck converter I have tested by injecting current to change the voltage from -100% to +10% was safe and efficient.
