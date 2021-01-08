@@ -4,9 +4,9 @@ The challenge might seem simple: Run
 
 a) a Raspberry Pi or 
 
-b) an Arduino plus
+b) an Arduino 
 
-a radio transmitter an a few instruments on solar power 24/365 in a Scottish climate as an environmental measuring station placed in the public domain / others property (which means with limited panel size).
+plus a radio transmitter and a few instruments on solar power 24/365 in a Scottish climate as an environmental measuring station placed in the public domain / others property (which means with limited panel size).
 
 A Raspberry Pi + radio + instruments will need ~150Wh daily, easy with a 100W panel and a 100Ah battery...
 
@@ -19,7 +19,7 @@ You must dimension panel and battery to last two weeks cloudy winter weather wit
 Commercial MPPT solar charge controllers will require 40-100mA for themselves -that is up to 31Wh a day- less than what the panel delivers in bad winter days!
 
 So I decided to build my own MPPT solar charge controller, optimized for efficiency and very low quiescent consumption.
-It manages to draw als less as 20mA including WiFi transmission of data to a powerful cloud dashboard.
+It manages to draw as less as 20mA including WiFi transmission of data to a powerful cloud dashboard.
 
 The purpose of this development is to provide MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
  
