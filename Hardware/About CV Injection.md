@@ -17,7 +17,7 @@ In my experience, every buck converter I have tested by injecting current to cha
 By the way, this technique is also used by many modules providing a current limitation functionality. For example, an op amp monitors the output current and injects
 voltage into the feedback loop to reduce output voltage as the current increases.
 
-![Typical trim potentiometer on a buck converter](1608728259654.png)
+![grafik](https://user-images.githubusercontent.com/14197155/104005611-ae42d000-51a5-11eb-9d24-4be0bc87c92b.png)
 
 **Image:** Typical buck converter
 
