@@ -6,7 +6,7 @@ a) a Raspberry Pi or
 
 b) an Arduino 
 
-plus a radio transmitter and a few instruments on solar power 24/365 in a Scottish climate as an continuous (1s pace) environmental measuring station placed in the public domain / others property (which means with limited panel size).
+plus a radio transmitter and a few instruments on solar power 24/365 in a Scottish climate as a continuous (1s pace) environmental measuring station placed in the public domain / others property (which means with limited panel size).
 
 A Raspberry Pi + radio + instruments will need ~150Wh daily, easy with a 100W panel and a 100Ah battery...
 
