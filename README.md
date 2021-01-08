@@ -4,9 +4,9 @@ The challenge might seem simple: Run
 
 a) a Raspberry Pi or 
 
-b) Arduino 
+b) an Arduino plus
 
-+ radio + a few instruments on solar power 24/365 in a Scottish climate as an environmental measuring station placed in the public domain / others property (which means with limited panel size).
+a radio transmitter an a few instruments on solar power 24/365 in a Scottish climate as an environmental measuring station placed in the public domain / others property (which means with limited panel size).
 
 A Raspberry Pi + radio + instruments will need ~150Wh daily, easy with a 100W panel and a 100Ah battery...
 
