@@ -19,7 +19,7 @@ In my experience, every buck converter I have tested by injecting current to cha
 By the way, this technique is also used by many modules providing a current limitation functionality. For example, an op amp monitors the output current and injects
 voltage into the feedback loop to reduce output voltage as the current increases.
 
-![grafik](https://user-images.githubusercontent.com/14197155/104005611-ae42d000-51a5-11eb-9d24-4be0bc87c92b.png) 
+![grafik](https://user-images.githubusercontent.com/14197155/104091179-195ed600-527c-11eb-95ee-f5080a87a2b8.png) 
 ![grafik](https://user-images.githubusercontent.com/14197155/104006108-59ec2000-51a6-11eb-913e-a121d4db0a9b.png)
 
 **Images:** Power buck converter and mini buck converter injection points (not to scale!)
