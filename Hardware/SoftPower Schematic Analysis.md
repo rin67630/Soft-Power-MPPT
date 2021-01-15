@@ -104,6 +104,14 @@ The prototyping board is equipped with following connectors:
 - C6.2 +5V.
 - C6.3 0V.
 
+## Performance
+Quiescent current from the 12V battery: ~25mA, mainly from the WiFi chip, could be reduced to <1mA at night(2)
+Low-Power Efficiency at 1W 92%
+Low-Power Efficiency at 10W 95%
+Mid Power Efficiency at 200W 97%
+
+(2) currently not realized, since the user measurement functions must go on, which are preventing sleep.
+
 Enjoy!
 
 
