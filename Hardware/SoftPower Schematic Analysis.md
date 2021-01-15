@@ -55,8 +55,10 @@ The INA 3221 power measurement module provides three independent measurement cha
 - channel 1 is used to measure the photovoltaic module
 - channel 2 is used to measure the main battery
 - channel 3 is used to measure the convenience output/secondary battery.
-The INA 3221 is normally provided with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. 
-For the extended power range 300W using a SZBK07 we will have to replace the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA.
+The INA 3221 is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. 
+For the extended power range 300W using a SZBK07 we will have to replace* the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA.
+* the original shunt can be relatively easy unsoldered by adding some tin to both ends, then heating the ends in short sequence and shifting the resistor away 
+with the soldering tip.
 
 ## Current injection
 The technique of current injection is described in document https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/About%20CV%20Injection.md.
@@ -67,34 +69,34 @@ which can be replaced by a fixed resistor, once the project is stable, currently
 The prototyping board is equipped with following connectors:
 
 **Photovoltaic panel** 
-C1.1 positive.
-C1.2 photovoltaic panel negative.
+- C1.1 positive.
+- C1.2 photovoltaic panel negative.
 
 **SZBK07 (mid-power 300W option)**
-C2.0 Power input negative
-C2.1 Power input positive
-C2.2 Enable
-C2.3 CV Injection
-C2.4 Power output positive
+- C2.0 Power input negative
+- C2.1 Power input positive
+- C2.2 Enable
+- C2.3 CV Injection
+- C2.4 Power output positive
 
 **Main battery**
-C3.1 positive
-C3.2 negative
+- C3.1 positive
+- C3.2 negative
 
-** Secondary battery or convenience output**
-C4.1 positive
-C4.2 negative
+**Secondary battery or convenience output**
+- C4.1 positive
+- C4.2 negative
 
-** Relay/FET control
-C5.1 +5V.
-C5.2 0..3.3V to control first relay
-C5.3 0..3.3V to control second relay
-C5.4 0V.
+**Relay/FET control**
+- C5.1 +5V.
+- C5.2 0..3.3V to control first relay
+- C5.3 0..3.3V to control second relay
+- C5.4 0V.
 
-** user defined measurement input
-C6.1 0..3.3V analog input.
-C6.2 +5V.
-C6.3 0V.
+**User defined measurement input**
+- C6.1 0..3.3V analog input.
+- C6.2 +5V.
+- C6.3 0V.
 
 
 
