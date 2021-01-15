@@ -55,12 +55,14 @@ The INA 3221 power measurement module provides three independent measurement cha
 - channel 2 is used to measure the main battery
 - channel 3 is used to measure the convenience output/secondary battery.
 The INA 3221 is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. 
-For the extended power range 300W using a SZBK07 we will have to replace* the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA.
-* the original shunt can be relatively easy unsoldered by adding some tin to both ends, then heating the ends in short sequence and shifting the resistor away 
+For the extended power range 300W using a SZBK07 we will have to replace(1) the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA.
+
+(1) the original shunts can be relatively easy unsoldered by adding some tin to both ends, then heating the ends in short sequence and shifting the resistor away 
 with the soldering tip.
 
 ## Current injection
-The technique of current injection is described in document https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/About%20CV%20Injection.md.
+The technique of current injection is described in document 
+https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/About%20CV%20Injection.md.
 The bypass filter consists of a 8,2K resistor and a 10 microfarad condenser, the injection current resistor is a 500K trim potentiometer, 
 which can be replaced by a fixed resistor, once the project is stable, currently the value is around 100K.
 
