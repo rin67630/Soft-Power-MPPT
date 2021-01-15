@@ -8,13 +8,12 @@ optimizing the power harvesting from the solar panel and the charging process fo
 1. Flooded lead acid batteries
 2. AGM lead acid batteries
 3. GEL lead acid batteries
-4. 3s LiPo batteries
-5: 4S LiFePo batteries
-The project provides a convenience power output that can be controlled by software between 5V and 12V and can be switched on and off as required.
-The project provides two control lines for relays or FET-modules to switch loads by software.
-Besides that the analog output and enough processing capacity of the microcontroller remains free to include user-defined measurement functionalities, 
-additionally to all above described power management functions.
+4. LiPo batteries (3s)
+5. LiFePo batteries (4s)
 
+The project provides a convenience power output that can be controlled by software between 5V and 12V and can be switched on and off as required.
+The project also provides two control lines for relays or FET-modules to switch user loads by software.
+Additionally to all above described power management functions, the analog output and enough processing capacity of the microcontroller remains free to include user-defined measurement functionalities.
 
 ## The hardware involved is using:
 1. an ESP8266 microcontroller to provide WiFi connectivity, and optimize the power harvesting from the solar panel and the charging process for 
@@ -98,7 +97,7 @@ The prototyping board is equipped with following connectors:
 - C6.2 +5V.
 - C6.3 0V.
 
-
+Enjoy!
 
 
 
