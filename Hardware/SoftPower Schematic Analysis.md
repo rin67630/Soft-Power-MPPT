@@ -1,19 +1,23 @@
 # SoftPower Schematic Analysis
 
 ## Aims of the project
-Soft power is a project intending address a specific niche in the solar charge controller market to provide solar charging services optimized 
-according to MPPT strategies to low and mid-range solar panels to power instrumentation projects off grid.
-The specificities of the project are an extremely low quiescent consumption, suitable for a very efficient operation under bad weather conditions, while
-optimizing the power harvesting from the solar panel and the charging process for various battery chemistries:
+Soft power is a project intending to address a specific niche in the solar charge controller market: 
+Providing solar charging services with MPPT strategies to _low and mid-range solar panels_ for powering instrumentation projects off grid, consuming as low as 30mA but 24/365.
+The specificities of the project are requiring an extremely low quiescent consumption.
+The concept is suitable for a very efficient operation under bad weather conditions, while optimizing the power harvesting from the solar panel.
+It includes the charging profiles for various battery chemistries:
 1. Flooded lead acid batteries
 2. AGM lead acid batteries
 3. GEL lead acid batteries
 4. LiPo batteries (3s)
 5. LiFePo batteries (4s)
 
-The project provides a convenience power output that can be controlled by software between 5V and 12V and can be switched on and off as required.
+The project provides furthermore a convenience power output that can be controlled by software between 5V and 12V and can be switched on and off as required.
+This output can be used to charge a smaller secondary battery, or just for any other purpose at the discretion of the user.
 The project also provides two control lines for relays or FET-modules to switch user loads by software.
-Additionally to all above described power management functions, the analog output and enough processing capacity of the microcontroller remains free to include user-defined measurement functionalities.
+
+Additionally to all above described power management functions, the analog input of the ESP8266 and enough processing capacity of the microcontroller 
+remain available to include user-defined measurement functionalities.
 
 ## The hardware involved is using:
 1. an ESP8266 microcontroller to provide WiFi connectivity, and optimize the power harvesting from the solar panel and the charging process for 
@@ -54,7 +58,8 @@ The INA 3221 power measurement module provides three independent measurement cha
 - channel 1 is used to measure the photovoltaic module
 - channel 2 is used to measure the main battery
 - channel 3 is used to measure the convenience output/secondary battery.
-The INA 3221 is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. 
+N.B. The INA 3221 is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. 
+
 For the extended power range 300W using a SZBK07 we will have to replace(1) the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA.
 
 (1) the original shunts can be relatively easy unsoldered by adding some tin to both ends, then heating the ends in short sequence and shifting the resistor away 
