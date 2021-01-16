@@ -113,6 +113,11 @@ The prototyping board is equipped with following connectors:
 
 (2) currently not realized, since my user measurement functions must go on permanently, which are preventing sleep.
 
+## Commissioning
+...to be described further, but the most important first:
+The U1 and evtl. U6 buck converters must be set to the float voltage of the battery before starting operations. 
+That way, the concept is fail-safe: without ESP8266 the hardware will charge -and not overcharge- the battery.
+
 Enjoy!
 
 
