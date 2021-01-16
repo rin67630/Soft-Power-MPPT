@@ -20,7 +20,7 @@ Additionally to all above described power management functions, the analog input
 remain available to include user-defined measurement functionalities.
 
 ## The hardware involved is using:
-1. An ESP8266 microcontroller to provide WiFi connectivity, a cloud dashboard, satistics, and optimize the power harvesting from the solar panel and the charging process for 
+1. An ESP8266 microcontroller to provide WiFi connectivity, a cloud dashboard, statistics, and optimize the power harvesting from the solar panel and the charging process for 
    various battery chemistries.
 2. Several generally available buck converters to provide extremly effective power conversions, using injection into their CV potentiometers to control operation.
 3. The usage of generally available modules interconnected through comparatively few connections make it possible to realize the hardware without a PCB, 
