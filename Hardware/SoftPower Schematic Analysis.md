@@ -115,8 +115,10 @@ The prototyping board is equipped with following connectors:
 
 ## Commissioning
 ...to be described further, but the most important first:
-The U1 and evtl. U6 buck converters must be set to the float voltage of the battery before starting operations. 
-That way, the concept is fail-safe: without ESP8266 the hardware will charge -and not overcharge- the battery.
+- The U1 and evtl. U6 buck converters must be set to the float voltage of the battery before starting operations. 
+  That way, the concept is fail-safe: without ESP8266 the hardware will charge -and not overcharge- the battery.
+- If you use a HW813 as U3, you must set it a +5V you can do that with the trim pot or, better, cut the trace to the trim pot and solder a bridge on the 5V setting.
+- U7 should be set at 11v using the trim pot.
 
 Enjoy!
 
