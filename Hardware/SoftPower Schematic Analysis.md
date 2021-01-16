@@ -20,21 +20,22 @@ Additionally to all above described power management functions, the analog input
 remain available to include user-defined measurement functionalities.
 
 ## The hardware involved is using:
-1. an ESP8266 microcontroller to provide WiFi connectivity, and optimize the power harvesting from the solar panel and the charging process for 
+1. An ESP8266 microcontroller to provide WiFi connectivity, a cloud dashboard, satistics, and optimize the power harvesting from the solar panel and the charging process for 
    various battery chemistries.
-2. several generally available buck converters to provide effectively the power conversions, using injection into their CV potentiometers to control operation.
+2. Several generally available buck converters to provide extremly effective power conversions, using injection into their CV potentiometers to control operation.
 3. The usage of generally available modules interconnected through comparatively few connections make it possible to realize the hardware without a PCB, 
    just using a prototyping board.
-4. The whole bill of material should be procured far below 50$
-5. The control board stages a power measurement module INA3221, and three low-power buck converters, and can be used alone for panels up to 20W. 
-6. An additional mid-power buck converter can extend the power range to 300W.
+4. The control board stages a power measurement module INA3221, and three low-power buck converters, and can be used alone for panels up to 20W. 
+5. An additional mid-power buck converter can extend the power range to 300W.
+6. The whole bill of material should be procured far below 50$.
 
 ## Buck converters used:
 The buck converter HW813 and optionally the Fine-Red buck converter have been selected because they provide is very low quiescient current, far below 1mA.
-The buck converter HW813 is also one of the few providing an enable input and it can be tweaked to get CV injection.
+The HW813 buck converter is also one of the few providing an "enable" input pad and it can easily be tweaked to get CV injection.
 The "Fine" Red buck converter is a plain fixed 5V buck converter, that has the advantage of providing directly a USB connector. 
 It can be replaced by a HW813, if the 5 V USB output is not a requirement, so to have three identical modules.
-The buck converter SZBK07 is an option to boost the power from 20W to 300W for projects requiring more energy. 
+
+The buck converter SZBK07 is an option to boost the power from 20W to 300W for projects requiring more energy only. 
 
 The buck converters have following functions
 - U1 low-power (max 20W) conversion of the panel voltage to battery voltage.
@@ -110,7 +111,7 @@ The prototyping board is equipped with following connectors:
 - Low-Power Efficiency at 10W 95%
 - Mid Power Efficiency at 200W 97%
 
-(2) currently not realized, since the user measurement functions must go on, which are preventing sleep.
+(2) currently not realized, since my user measurement functions must go on permanently, which are preventing sleep.
 
 Enjoy!
 
