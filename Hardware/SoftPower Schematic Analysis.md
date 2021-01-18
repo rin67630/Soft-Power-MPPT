@@ -79,6 +79,19 @@ Almost all outputs of the ESP will be used:
 - D5 is the PWM-output to control the voltage of either U1 or U6, depending on the charging power.
 - A0 ist the 0..3V analog input left  to the user for measuring tasks.
 
+## OLED display option:
+The oled display is just nice to have:
+You can use two versions:
+
+a) a 64x48 pixel Wemos display hat, that is just a you on the top of the WEMOS D1
+
+b) a 128x64 pixel display, that must be connected separately. 
+You need to connect 
+-  Vcc to +3.3V
+-  SCL to D1
+-  SDA to D2
+-  GND to GND
+
 ## INA 3221 power measurement module:
 The INA 3221 power measurement module provides three independent measurement channels each of them consisting of voltage, current, power measurement.
 - channel 1 is used to measure the photovoltaic module
