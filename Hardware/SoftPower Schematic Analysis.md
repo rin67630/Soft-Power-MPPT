@@ -25,9 +25,22 @@ remain available to include user-defined measurement functionalities.
 2. Several generally available buck converters to provide extremly effective power conversions, using injection into their CV potentiometers to control operation.
 3. The usage of generally available modules interconnected through comparatively few connections make it possible to realize the hardware without a PCB, 
    just using a prototyping board.
-4. The control board stages a power measurement module INA3221, and three low-power buck converters, and can be used alone for panels up to 20W. 
+4. The control board stages power measurement module INA 226 or INA3221, and three low-power buck converters, and can be used alone for panels up to 20W. 
 5. An additional mid-power buck converter can extend the power range to 300W.
 6. The whole bill of material should be procured far below 50$.
+
+## Schematic diagrams:
+This schematics now contains 3 variants
+
+- The variant with one INA-226, measuring the battery voltage and current, the A0 analog input measures the panel voltage. 
+  This variant does not provide an efficiency computation and only estimates the voltage of the convenient output.
+  The INA-226 was historically the first build and still has the advantage of being able to measure panel voltages up to 36V
+
+- The variant with one INA-3221, measuring voltage and current for panel, battery, convenience output, the A0 analog input is free for extra usage.
+  This variant has all functions, and is the preferred one. It is however limited to panel voltage up to 26V only.
+
+- The variant with two INA-226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage.
+  This variant just lack the possibility of measuring the current of the convenience output.
 
 ## Buck converters used:
 The buck converter HW813 and optionally the Fine-Red buck converter have been selected because they provide is very low quiescient current, far below 1mA.
@@ -42,6 +55,18 @@ The buck converters have following functions
 - U3 fixed conversion of the battery voltage to the 5V required by the ESP.
 - U7 convenience user power output or secondary battery charge. 
 - U6 mid-power _optional_ (max 300W) conversion of the panel voltage to battery voltage.
+
+## Preparation of the buck converters for injection
+None of the buck converters are providing injection from factory. There is a minimum of preparation to use them:
+The D-SUN and the HW813 are requiring to solder a wire to a really tiny trim potentiometer. That requires a bit of soldering experience, and a fine tip.
+But it is doable, even for an old man with some early signs of Parkinson. 
+
+1) D-SUN module (deprecated, and also the most difficult to solder)
+![image](https://user-images.githubusercontent.com/14197155/104938919-0b156600-59b0-11eb-9405-7e87dc7c254f.png)
+2) HW813 module (preferred)
+![image](https://user-images.githubusercontent.com/14197155/104938984-1f596300-59b0-11eb-8d2a-57a3ed7b8cc6.png)
+3) SZBK07 module (only for mid-power option)
+![image](https://user-images.githubusercontent.com/14197155/104939054-37c97d80-59b0-11eb-9a48-06a902532046.png)
 
 ## ESP8266 microcontroller:
 Almost all outputs of the ESP will be used:
