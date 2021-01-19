@@ -30,7 +30,7 @@ remain available to include user-defined measurement functionalities.
 6. The whole bill of material should be procured far below 50$.
 
 ## Schematic diagrams:
-This schematics now contains 3 variants
+This schematics now contains 4 variants, the three first being suitable with panels vith Voc <= 36V.
 
 - The variant with one INA-226, measuring the battery voltage and current, the A0 analog input measures the panel voltage. 
   This variant does not provide an efficiency computation and only estimates the voltage of the convenient output.
@@ -41,6 +41,15 @@ This schematics now contains 3 variants
 
 - The variant with two INA-226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage.
   This variant just lack the possibility of measuring the current of the convenience output.
+  
+- A variant with two INA-226 as defined above, however suitable for panels with Voc up to 60V.
+  For this version we will be using an efficient HW636 buck converter board, that inables Vin up to 60V but has _however an important caveat_:
+  The module cannot supply safely more than 20V at the output, else the LT3800 chip _will be destroyed!_ The trim pot does not prevent that.
+  The very best is to replace the potentiometer by a 20K model to avoid this risk, else just set it counterclockwise to the minimum and increase until 
+  the floating battery voltage, typically 13.8V for a lead-acid. 
+  The higher panel voltage does not allow to use the U1 HW813 buck converter as a low-power tandem either, so that module must not be populated.
+  The high panel voltage exceeds also the maximum voltage for the INA226 chip. 
+  That leads us also to use the low side current monitoring for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin.
 
 ## Buck converters used:
 The buck converter HW813 and optionally the Fine-Red buck converter have been selected because they provide is very low quiescient current, far below 1mA.
@@ -54,7 +63,8 @@ The buck converters have following functions
 - U1 low-power (max 20W) conversion of the panel voltage to battery voltage.
 - U3 fixed conversion of the battery voltage to the 5V required by the ESP.
 - U7 convenience user power output or secondary battery charge. 
-- U6 mid-power _optional_ (max 300W) conversion of the panel voltage to battery voltage.
+- U6 mid-power _optional_ (max 300W) conversion of the panel voltage to battery voltage. 
+  n.b. the mid-power modueles have usually a low side current shunt: never connect both Vin- and Vout- to GND simultaneously!
 
 ## Preparation of the buck converters for injection
 None of the buck converters are providing injection from factory. There is a minimum of preparation to use them:
