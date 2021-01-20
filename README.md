@@ -1,10 +1,9 @@
 <b>Soft-Power: the Swiss-Army-Knife MPPT Solar Charge Controller based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)</b>
 
 The challenge might seem simple: Run\
-a) a Raspberry Pi or\
-b) an Arduino\
-plus a radio transmitter and a few instruments on solar power 24/365 in a Scottish climate as a continuous (1s pace) environmental measuring station\
-placed in the public domain / others property (which means with limited panel size).
+  a) a Raspberry Pi or\
+  b) an Arduino\
+plus a radio transmitter and a few instruments on solar power 24/365 in a Scottish climate as a continuous (1s pace) environmental measuring station placed in the public domain or others property (which means with limited panel size).
 
 A Raspberry Pi + radio + instruments will need ~150Wh daily, easy with a 100W panel and a 100Ah battery?\
 An Arduino + radio + instruments will need ~30Wh daily, easy with a 20W panel and a 20Ah battery?\
