@@ -2,7 +2,7 @@
 
 ## Aims of the project
 
-Soft power is a project intending to address a specific niche in the solar charge controller market: Providing solar charging services with MPPT strategies to _low and mid-range solar panels_ for powering instrumentation projects off grid, consuming as low as 30mA but 24/365. The specifics of the project are requiring an extremely low quiescent consumption. The concept is suitable for a very efficient operation under bad weather conditions, while optimizing the power harvesting from the solar panel.
+Soft power is a project intending to address a specific niche in the solar charge controller market: Providing solar charging services with MPPT strategies to _low and mid-range solar panels_ for powering instrumentation projects off grid, consuming as low as 30mA but 24/365. The specifics of the project are requiring an extremely low quiescent consumption. The concept is suitable for an efficient operation under bad weather conditions, while optimizing the power harvesting from the solar panel.
 
 It includes the charging profiles for various battery chemistries:
 
@@ -14,32 +14,45 @@ It includes the charging profiles for various battery chemistries:
 
 Instrumentation control is provided by:
 
-1. A convenience power output that can be controlled by software between 5V and 12V that can switched on and off by software as required. This can be used for any discretionary purpose by the user such as to charge a smaller secondary battery.
+1. A convenience power output that can be controlled by software between 5V and 12V that can switched on and off by software as required. This can be used for any discretionary purpose by the user such as to charge a smaller secondary battery, control devices/track sun...
 2. Two control lines for relays or FET-modules to switch user loads by software.
 3. The analog input of the ESP8266 and enough processing capacity of the microcontroller remain available to include user-defined measurement functionalities.
 
 ## The hardware involved is using:
 
-1. Several generally available buck converters, depending on panel size voltage, controlled by injecting voltage into their CV potentiometers to provide extremely efficient power conversions.
+1. Several generally available buck converters, depending on panel size voltage, controlled by injecting voltage into their CV potentiometers to provide efficient power conversions.
 2. An ESP8266 microcontroller to optimize solar panel power harvesting, control the buck converters and the charging process for various battery chemistries; and provide WiFi connectivity and a cloud statistical dashboard.
 3. Relatively few connections with power measurement modules and other components make it possible to build the hardware without a PCB, using just a prototyping board.
 4. The low cost materials should be procured for far less than $50.
 
 ## Schematic diagrams:
 
-This schematics now contains 4 variants, the three first being suitable with panels with Voc <= 36V.
+Unfortunately, I cannot provide a " one size fits all " hardware.  
+There is currently no buck converter capable of having at the same time a very low quiescent current, high power, and be able to manage relatively high input voltage (see next chapter about converters used). For that reason, the design will consist of a base module, containing low-power, very low quiescent current buck converters, able to handling input power up to about 15 -20W. That base module can be used alone. 
+To handle more power an optional external buck converter can be added. The software will use the low-power modules in the low-power range and switch over to the more powerful buck converter as a power increase.
 
-- The variant with one INA226, a simple build intended for 12V systems with 10 to 100W panels, measuring the battery voltage and current, the A0 analog input measures the panel voltage. This variant does not provide an efficiency computation and only estimates the voltage of the convenient output. The INA226 has the advantage of being able to fit panel voltages up to 36V.
+The base module has a versatile design. It uses a standard framework, but is offered in several flavors, depending on the INA modules used.
 
-- The comfort-variant with one INA3221, measuring voltage, current, power at every stage: panel, battery, convenience output. The A0 analog input is left free for an extra usage. This variant is the preferred, and provides all features. It is however limited to panel voltages up to 26V only.
+The recommended variant is "SoftPower 1XINA3221", staging a chip able to measure three channels.
+It will measure the voltage the current, and the power coming from the solar panel, fed/retrieved from the battery and provided by the convenience output.
+The A0 analog input is left free for an extra usage. Since the INA3221 module is specified for a maximum of 26 V, this variant is reserved for the "12V class" of panels (Voc=~20V, Vpp=~18V) and "12V" batteries.
 
-- The variant with two INA226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage. This variant fits for panels up to 36Voc and lacks the possibility of measuring the current of the convenience output.
+The second variant is functionally identical, the measurements are however realized by three separate INA226 modules, able to handle up to 36V.
+with this variant you can use 24V class panels (Voc=~40V, Vpp=~36V) and "24V" batteries. The low power buck converters must be D-SUN.
 
-- A high voltage variant with two INA226 as defined above. This version uses an efficient HW636 buck converter that can handle Vin up to 60V.  The higher panel voltage does not allow to use the U1 HW813 buck converter as a low-power tandem either, so that module must not be populated. The high panel voltage also exceeds the maximum voltage for the INA226 chip so low side current monitoring is used for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin.
+The third variant uses saves the INA226 dedictated to measure the convenience output. The convenience voltage will be measured over A0.
+You lose the measure of the convenience current and the A0 analog input is not available anymore for extra usage.  
+
+The 4th variant saves additionally the INA226 dedictated to measure the panel voltage and power. The panel voltage will be measured over A0.
+You lose additionally the measure of the panel current and the monitoring of the conversion efficiency. The voltage of the convenience output is estimated ~5%. 
+
+The 5th schematic diagram is the same as above, just for clarity the power option is removed. This is the typical usage for micropower solutions with a solar panel up to 20W.
+
+The 6th variant is a special flavor for higher voltage solar panels up to 60 V. It uses a buck converter able to handle that voltage, the higher panel voltage does not allow to use a low power tandem buck converter either, so that module must not be populated. The high panel voltage also exceeds the maximum voltage for the INA226 chip, so low side current monitoring is used for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin. 
 
 ## Buck converters used:
 
-The selected buck converters provide is very low quiescent current, far below 1mA.
+The selected low-power buck converters used provide is very low quiescent current, far below 1mA.
 The HW813 buck converter is preferred in almost all respects, it is one of the few providing an "enable" input pad and is more easily tweaked to get CV injection, but it only supports an input voltage up to 28V.
 The D-SUN buck converter accepts an input up to 40V which is required for 36Voc panels.
 
@@ -47,21 +60,21 @@ The "Fine" Red buck converter is a plain fixed 5V buck converter with the advant
 If 5V USB output is not a requirement, HW813 modules can be used instead to keep all low power modules identical.
 
 The SZBK07 buck converter is an option to boost the power from 20W to 300W for projects requiring more energy.
+The HW636 buck converter is an option to manage high-voltage solar panels up to 250W 
 
 The buck converters have following functions:
 
-- U1 low-power (max 20W) conversion of the panel voltage to battery voltage.
-- U3 fixed conversion of the battery voltage to the 5V required by the ESP.
-- U7 convenience user power output or secondary battery charge.
-- U6 mid-power _optional_ (max 300W) conversion of the panel voltage to battery voltage.
+- low-power (max 20W) conversion of the panel voltage to battery voltage.
+- fixed conversion of the battery voltage to the 5V required by the ESP.
+- convenience user power output or secondary battery charge.
+-  _optional_ mid-power conversion of the panel voltage to battery voltage.
   n.b. the mid-power modules have usually a low side current shunt: never connect both Vin- and Vout- to GND simultaneously!
 
-The HW636 buck converter is one of the few modules on the market that can handle 60V input. _However, it has an important caveat_: it cannot safely supply more than 20V at the output without _destroying the LT3800 chip!_ Sadly, its trimpot does not prevent this. The very best solution is to replace it's 50K potentiometer by a 20K model to avoid this risk. Alternatively, before powering up the module screw the trimpot counterclockwise until a small clicking sound is heard at the minimum, then power it up and increase the voltage to the floating battery voltage, typically 13.8V for a lead-acid battery. This buck converter also has a built-in reverse feed current protection, so an ideal diode is not required.
+N.B. High voltage variant: The HW636 buck converter is one of the few modules on the market that can handle 60V input. _However, it has an important caveat_: it cannot safely supply more than 20V at the output without _destroying the LT3800 chip!_ Sadly, its trimpot does not prevent this. The very best solution is to replace it's 50K potentiometer by a 20K model to avoid this risk. Alternatively, before powering up the module screw the trimpot counterclockwise until a small clicking sound is heard at the minimum, then power it up and increase the voltage to the floating battery voltage, typically 13.8V for a lead-acid battery. This buck converter also has a built-in reverse feed current protection, so an ideal diode is not required.
 
-## Preparation of the buck converters for injection
+## Preparation of the buck converters for injection:
 
-None of the buck converters allow voltage injection from factory. They must be prepared for use as follows:
-
+None of the buck converters allow voltage injection from factory. They must be prepared for use as follows:  
 The HW813 and D-SUN require soldering a wire to a really tiny trim potentiometer. That requires a bit of soldering experience, and a fine tip. It is doable, even for an old man with some early signs of Parkinson.
 
 1. HW813 preferred module (for 18V panels)
@@ -79,21 +92,19 @@ Almost all outputs of the ESP will be used:
 
 - D1 and D2 are providing the I2C functionality used by the power measurement module INA3221.
 - D3 and D4 can control up to two relays or two FET modules to control power loads by software.
-- D8 enables U7, the convenience user power output.
-- D7 enables U6, the mid-power option when the charging power exceeds 15W.
+- D7 enables the convenience user power output.
+- D8 enables the mid-power option when the charging power exceeds 15W.
 - D0 enables U1, the low-power buck converter when the charging power is less than 15W (D0 has a specificity to be enabled automatically at power on).
 - D6 is the PWM-output to control the voltage of the convenience user power output.
 - D5 is the PWM-output to control the voltage of either U1 or U6, depending on the charging power.
-- A0 is the 0..3V analog input left to the user for measuring tasks.
+- A0 is the 0..3V analog input left to the user for measuring tasks, or used to measure the panel voltage or the convenince output.
 
 ## OLED display option:
 
 The oled display is nice to have. There are two versions:
 
-a) A 64x48 pixel Wemos display hat, just push it on the top of the WEMOS D1
-
-b) a 128x64 pixel display, that must be connected separately by connecting:
-
+a) A 64x48 pixel Wemos display hat, just push it on the top of the WEMOS D1  
+b) a 128x64 pixel display, that must be connected separately by connecting:  
 -  Vcc to +3.3V
 -  SCL to D1
 -  SDA to D2
@@ -105,13 +116,13 @@ The INA3221 power measurement module provides three independent measurement chan
 - channel 1 is used to measure the photovoltaic module
 - channel 2 is used to measure the main battery
 - channel 3 is used to measure the convenience output/secondary battery.
-N.B. The INA3221 is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W.
-
-For the extended power range 300W using a SZBK07 we will have to replace the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA. The original shunts can be relatively easy unsoldered by adding some tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip.
+N.B. The INA3221 is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W.  
+For the extended power range 300W using a SZBK07 we will have to replace the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA. The original shunts can be relatively easy unsoldered by generously adding tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip. You can do it! Even I can, as an old man with beginning Parkinson! 
 
 ## Current injection
 
-The technique of current injection is described in document https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/About%20CV%20Injection.md. The bypass filter consists of a 8,2K resistor and a 10 microfarad condenser, the injection current resistor is a 500K trim potentiometer, which can be replaced by a fixed resistor, once the project is stable, currently the value is around 100K.
+The technique of current injection is described in document https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/About%20CV%20Injection.md. The bypass filter consists of a 8,2K* resistor and a 10 microfarad* condenser, the injection current resistor is a 500K trim potentiometer, which can be replaced by a fixed resistor, once the project is stable, currently the value is around 63K, excepted for the high voltage module which needs 3,3K.  
+* The values are not critical, anything +- 50% will do.
 
 ## Connectors
 
@@ -119,39 +130,39 @@ The prototyping board is equipped with following connectors:
 
 **Photovoltaic panel**
 
-- C1.1 positive.
-- C1.2 photovoltaic panel negative.
+- Panel_in   positive.
+- Gnd        negative.
 
 **SZBK07 (mid-power 300W option)**
 
-- C2.0 Power input negative
-- C2.1 Power input positive
-- C2.2 Enable
-- C2.3 CV Injection
-- C2.4 Power output positive
+- Inject CV Injection
+- Enable 
+- Power_Input positive
+- Gnd 
+- Power_Out positive
 
 **Main battery**
 
-- C3.1 positive
-- C3.2 negative
+- positive
+- negative
 
 **Secondary battery or convenience output**
 
-- C4.1 positive
-- C4.2 negative
+- positive
+- himnegative
 
 **Relay/FET control**
 
-- C5.1 +5V.
-- C5.2 0..3.3V to control first relay
-- C5.3 0..3.3V to control second relay
-- C5.4 0V.
+- 0..3.3V to control first relay
+- 0..3.3V to control second relay
+- Gnd.
+- +5V.
 
 **User defined measurement input**
 
-- C6.1 0..3.3V analog input.
-- C6.2 +5V.
-- C6.3 0V.
+- 0..3.3V analog input.
+- Gnd
+- +5V.
 
 ## Performance
 
