@@ -67,7 +67,7 @@ The HW813 and D-SUN require soldering a wire to a really tiny trim potentiometer
 1. HW813 preferred module (for 18V panels)
 ![image](https://user-images.githubusercontent.com/14197155/104938984-1f596300-59b0-11eb-8d2a-57a3ed7b8cc6.png)
 2. D-SUN module (to be used for panels > 26Voc)
-![image](https://user-images.githubusercontent.com/14197155/104938919-0b156600-59b0-11eb-9405-7e87dc7c254f.png)3) SZBK07 module (mid-power option up to 300W)
+![image](https://user-images.githubusercontent.com/14197155/104938919-0b156600-59b0-11eb-9405-7e87dc7c254f.png)
 3. SZBK07 module (mid-power option up to 300W)
 ![image](https://user-images.githubusercontent.com/14197155/104939054-37c97d80-59b0-11eb-9a48-06a902532046.png)  
 4. HW636 module (high voltage 60V)
