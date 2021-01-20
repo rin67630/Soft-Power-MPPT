@@ -64,11 +64,11 @@ None of the buck converters are providing injection from factory. There is a min
 The D-SUN and the HW813 are requiring to solder a wire to a really tiny trim potentiometer. That requires a bit of soldering experience, and a fine tip.
 But it is doable, even for an old man with some early signs of Parkinson. 
 
-1) D-SUN module (deprecated, and also the most difficult to solder)
+1) D-SUN module (to be used for panels > 26Voc) 
 ![image](https://user-images.githubusercontent.com/14197155/104938919-0b156600-59b0-11eb-9405-7e87dc7c254f.png)
-2) HW813 module (preferred)
+2) HW813 module (preferred for 18V panels)
 ![image](https://user-images.githubusercontent.com/14197155/104938984-1f596300-59b0-11eb-8d2a-57a3ed7b8cc6.png)
-3) SZBK07 module (only for mid-power option)
+3) SZBK07 module (mid-power option up to 300W)
 ![image](https://user-images.githubusercontent.com/14197155/104939054-37c97d80-59b0-11eb-9a48-06a902532046.png)
 
 ## ESP8266 microcontroller:
