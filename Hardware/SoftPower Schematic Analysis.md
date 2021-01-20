@@ -41,7 +41,7 @@ The A0 analog input is left free for an extra usage. This variant is the preferr
 This variant fits for panels up to 36Voc and just lack the possibility of measuring the current of the convenience output.
   
 - A high voltage variant with two INA-226 as defined above. 
-For this version we will be using an efficient HW636 buck converter board, that can handle Vin up to 60V. The module has _however an important caveat_: it cannot supply safely more than 20V at the output, else the LT3800 chip _will be destroyed!_. Its trim pot does not prevent that. The very best is to replace the potentiometer by a 20K model to avoid this risk, else just set it counterclockwise to the minimum and increase until the floating battery voltage, typically 13.8V for a lead-acid.   
+For this version we will be using an efficient HW636 buck converter board, that can handle Vin up to 60V. The module has _however an important caveat_: it cannot supply safely more than 20V at the output, else the LT3800 chip _will be destroyed!_. Its trim pot does not prevent that. The very best is to replace it's 50K potentiometer by a 20K model to avoid this risk, else just set it counterclockwise to the minimum and increase until the floating battery voltage, typically 13.8V for a lead-acid.   
 The higher panel voltage does not allow to use the U1 HW813 buck converter as a low-power tandem either, so that module must not be populated.  
 The high panel voltage exceeds also the maximum voltage for the INA226 chip. That leads us also to use the low side current monitoring for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin.  
 
