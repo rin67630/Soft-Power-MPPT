@@ -76,7 +76,9 @@ But it is doable, even for an old man with some early signs of Parkinson.
 2) HW813 module (preferred for 18V panels)
 ![image](https://user-images.githubusercontent.com/14197155/104938984-1f596300-59b0-11eb-8d2a-57a3ed7b8cc6.png)
 3) SZBK07 module (mid-power option up to 300W)
-![image](https://user-images.githubusercontent.com/14197155/104939054-37c97d80-59b0-11eb-9a48-06a902532046.png)
+![image](https://user-images.githubusercontent.com/14197155/104939054-37c97d80-59b0-11eb-9a48-06a902532046.png)  
+4) HW636 module (high voltage 60V)
+![image](https://user-images.githubusercontent.com/14197155/105155131-87bc5780-5b0a-11eb-8179-0464e8d1f992.png)
 
 ## ESP8266 microcontroller:
 Almost all outputs of the ESP will be used:
