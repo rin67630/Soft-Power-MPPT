@@ -41,15 +41,16 @@ The A0 analog input is left free for an extra usage. This variant is the preferr
 This variant fits for panels up to 36Voc and just lack the possibility of measuring the current of the convenience output.
   
 - A high voltage variant with two INA-226 as defined above. 
-For this version we will be using an efficient HW636 buck converter board, that can handle Vin up to 60V. The module has _however an important caveat_: it cannot supply safely more than 20V at the output, else the LT3800 chip _will be destroyed!_. Its trim pot does not prevent that. The very best is to replace it's 50K potentiometer by a 20K model to avoid this risk, else just set it counterclockwise to the minimum and increase until the floating battery voltage, typically 13.8V for a lead-acid.   
+For this version we will be using an efficient HW636 buck converter board, that can handle Vin up to 60V.  
 The higher panel voltage does not allow to use the U1 HW813 buck converter as a low-power tandem either, so that module must not be populated.  
 The high panel voltage exceeds also the maximum voltage for the INA226 chip. That leads us also to use the low side current monitoring for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin.  
 
 ## Buck converters used:
-The buck converter HW813 and optionally the Fine-Red buck converter have been selected because they provide is very low quiescient current, far below 1mA.  
-The HW813 buck converter is also one of the few providing an "enable" input pad and it can easily be tweaked to get CV injection.  
-The "Fine" Red buck converter is a plain fixed 5V buck converter, that has the advantage of providing directly a USB connector.   
-It can be replaced by a HW813, if the 5 V USB output is not a requirement, so to have three identical modules.  
+The buck converters D-SUN, HW813 and Fine-Red have been selected because they provide is very low quiescient current, far below 1mA.
+The D-SUN buck converter accepts up to 40V input, which is the criterium to select it for 36Voc panels, else the HW813 is better in every aspect.  
+The HW813 buck converter is preferred if the 28V input voltage is not an issue. It is also one of the few providing an "enable" input pad and it can easier be tweaked to get CV injection.  
+The "Fine" Red buck converter is a plain fixed 5V buck converter, that has the advantage of providing directly a USB connector. It fits well under the Wemos module.   
+You can use a HW813 insteda, if the 5 V USB output is not a requirement, so to use all identical modules.
 
 The buck converter SZBK07 is an option to boost the power from 20W to 300W for projects requiring more energy only.  
 The buck converters have following functions:
@@ -58,6 +59,12 @@ The buck converters have following functions:
 - U7 convenience user power output or secondary battery charge. 
 - U6 mid-power _optional_ (max 300W) conversion of the panel voltage to battery voltage. 
   n.b. the mid-power modueles have usually a low side current shunt: never connect both Vin- and Vout- to GND simultaneously!
+
+The HW636 buck converter is one of the few modules on the market that can handle 60V input. It has _however an important caveat_: it cannot supply safely more than 20V at the output, else the LT3800 chip _will be destroyed!_. Sadly, its trim pot does not prevent that. The very best is to replace it's 50K potentiometer by a 20K model to avoid this risk, else just set it counterclockwise to the minimum and increase until the floating battery voltage, typically 13.8V for a lead-acid.  
+This buck converter also has a built-in reverse feed current protection, so an ideal diode is not required.
+
+  
+ 
 
 ## Preparation of the buck converters for injection
 None of the buck converters are providing injection from factory. There is a minimum of preparation to use them:
