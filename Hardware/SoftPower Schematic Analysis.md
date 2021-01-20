@@ -33,23 +33,23 @@ To handle more power, an optional external buck converter can be added. The soft
 
 The base module has a versatile design. It uses a standard framework, but is offered in several flavors, depending on the INA modules used.
 
-The recommended variant is "SoftPower 1XINA3221", staging a chip able to measure three channels.
+The recommended variant is "SoftPower 1xINA3221", staging a chip able to measure three channels.
 It will measure the voltage, the current and the power coming from the solar panel, fed/retrieved from the battery and provided by the convenience output.
 The A0 analog input is left free for an extra usage.  
 Since the INA3221 module is specified for a maximum of 26 V, this variant is reserved for the "12V class" of panels (Voc=~20V, Vpp=~18V) and "12V" batteries.
 
-The second variant "SoftPower 3XINA226" is functionally identical, the measurements are however realized by three separate INA226 modules, able to handle up to 36V.
+The second variant "SoftPower 3xINA226" is functionally identical, the measurements are however realized by three separate INA226 modules, able to handle up to 36V.
 with this variant you can use 24V class panels (Voc=~40V, Vpp=~36V) and "24V" batteries. The low power buck converters must be D-SUN.
 
-The third variant "SoftPower 2XINA226" skips the INA226 dedictated to measure the convenience output. The convenience voltage will be measured over A0.
+The third variant "SoftPower 2xINA226" skips the INA226 dedictated to measure the convenience output. The convenience voltage will be measured over A0.
 You lose the measure of the convenience current and the A0 analog input is not available anymore for extra usage.  
 
-The 4th variant "SoftPower 1XINA226" skips additionally the INA226 dedictated to measure the panel voltage and power. The panel voltage will be measured over A0.
+The 4th variant "SoftPower 1xINA226" skips additionally the INA226 dedictated to measure the panel voltage and power. The panel voltage will be measured over A0.
 You lose additionally the measure of the panel current and the monitoring of the conversion efficiency. The voltage of the convenience output is estimated ~5%. 
 
 The 5th schematic diagram "SoftPower Bare minimum Micropower" is the same as above, I just removed the power option for clarity. This is the typical usage for micropower solutions with a solar panel up to 20W.
 
-The 6th variant "SoftPower 3XINA226 Hi Volt" is a special flavor for higher voltage solar panels up to 60 V. It uses a buck converter able to handle that voltage, the higher panel voltage does not allow to use a low power tandem buck converter either, so that module must not be populated. The high panel voltage also exceeds the maximum voltage for the INA226 chip, so low side current monitoring is used for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin. 
+The 6th variant "SoftPower 3xINA226 Hi Volt" is a special flavor for higher voltage solar panels up to 60 V. It uses a buck converter able to handle that voltage, the higher panel voltage does not allow to use a low power tandem buck converter either, so that module must not be populated. The high panel voltage also exceeds the maximum voltage for the INA226 chip, so low side current monitoring is used for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin. 
 
 ## Buck converters used:
 
