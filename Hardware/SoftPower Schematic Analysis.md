@@ -13,9 +13,8 @@ It includes the charging profiles for various battery chemistries:
 5. LiFePo batteries (4s)
 
 The project provides furthermore a convenience power output that can be controlled by software between 5V and 12V and can be switched on and off as required.
-This output can be used to charge a smaller secondary battery, or just for any other purpose at the discretion of the user.
-The project also provides two control lines for relays or FET-modules to switch user loads by software.
-
+This output can be used to charge a smaller secondary battery, or just for any other purpose at the discretion of the user.  
+The project also provides two control lines for relays or FET-modules to switch user loads by software.  
 Additionally to all above described power management functions, the analog input of the ESP8266 and enough processing capacity of the microcontroller 
 remain available to include user-defined measurement functionalities.
 
@@ -32,34 +31,28 @@ remain available to include user-defined measurement functionalities.
 ## Schematic diagrams:
 This schematics now contains 4 variants, the three first being suitable with panels vith Voc <= 36V.
 
-- The variant with one INA-226, measuring the battery voltage and current, the A0 analog input measures the panel voltage. 
-  This variant does not provide an efficiency computation and only estimates the voltage of the convenient output.
-  The INA-226 was historically the first build and still has the advantage of being able to measure panel voltages up to 36V
-
-- The variant with one INA-3221, measuring voltage and current for panel, battery, convenience output, the A0 analog input is free for extra usage.
-  This variant has all functions, and is the preferred one. It is however limited to panel voltage up to 26V only.
-
-- The variant with two INA-226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage.
-  This variant just lack the possibility of measuring the current of the convenience output.
+- The variant with one INA-226, a simple build intended for 12V systems with 10 to 100W panels, measuring the battery voltage and current, the A0 analog input measures the panel voltage. This variant does not provide an efficiency computation and only estimates the voltage of the convenient output.  
+  The INA-226 was historically the first build and still has the advantage of being able to fit panel voltages up to 36V.
   
-- A variant with two INA-226 as defined above, however suitable for panels with Voc up to 60V.
-  For this version we will be using an efficient HW636 buck converter board, that inables Vin up to 60V but has _however an important caveat_:
-  The module cannot supply safely more than 20V at the output, else the LT3800 chip _will be destroyed!_ The trim pot does not prevent that.
-  The very best is to replace the potentiometer by a 20K model to avoid this risk, else just set it counterclockwise to the minimum and increase until 
-  the floating battery voltage, typically 13.8V for a lead-acid. 
-  The higher panel voltage does not allow to use the U1 HW813 buck converter as a low-power tandem either, so that module must not be populated.
-  The high panel voltage exceeds also the maximum voltage for the INA226 chip. 
-  That leads us also to use the low side current monitoring for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin.
+- The comfort-variant with one INA-3221, measuring voltage, current, power at every stage: panel, battery, convenience output.  
+The A0 analog input is left free for an extra usage. This variant is the preferred, and provides all features. It is however limited to panel voltages up to 26V only.
+
+- The variant with two INA-226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage.  
+This variant fits for panels up to 36Voc and just lack the possibility of measuring the current of the convenience output.
+  
+- A high voltage variant with two INA-226 as defined above. 
+For this version we will be using an efficient HW636 buck converter board, that can handle Vin up to 60V. The module has _however an important caveat_: it cannot supply safely more than 20V at the output, else the LT3800 chip _will be destroyed!_. Its trim pot does not prevent that. The very best is to replace the potentiometer by a 20K model to avoid this risk, else just set it counterclockwise to the minimum and increase until the floating battery voltage, typically 13.8V for a lead-acid.   
+The higher panel voltage does not allow to use the U1 HW813 buck converter as a low-power tandem either, so that module must not be populated.  
+The high panel voltage exceeds also the maximum voltage for the INA226 chip. That leads us also to use the low side current monitoring for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin.  
 
 ## Buck converters used:
-The buck converter HW813 and optionally the Fine-Red buck converter have been selected because they provide is very low quiescient current, far below 1mA.
-The HW813 buck converter is also one of the few providing an "enable" input pad and it can easily be tweaked to get CV injection.
-The "Fine" Red buck converter is a plain fixed 5V buck converter, that has the advantage of providing directly a USB connector. 
-It can be replaced by a HW813, if the 5 V USB output is not a requirement, so to have three identical modules.
+The buck converter HW813 and optionally the Fine-Red buck converter have been selected because they provide is very low quiescient current, far below 1mA.  
+The HW813 buck converter is also one of the few providing an "enable" input pad and it can easily be tweaked to get CV injection.  
+The "Fine" Red buck converter is a plain fixed 5V buck converter, that has the advantage of providing directly a USB connector.   
+It can be replaced by a HW813, if the 5 V USB output is not a requirement, so to have three identical modules.  
 
-The buck converter SZBK07 is an option to boost the power from 20W to 300W for projects requiring more energy only. 
-
-The buck converters have following functions
+The buck converter SZBK07 is an option to boost the power from 20W to 300W for projects requiring more energy only.  
+The buck converters have following functions:
 - U1 low-power (max 20W) conversion of the panel voltage to battery voltage.
 - U3 fixed conversion of the battery voltage to the 5V required by the ESP.
 - U7 convenience user power output or secondary battery charge. 
