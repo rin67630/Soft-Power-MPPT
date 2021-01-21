@@ -30,7 +30,7 @@ Solder a provisional wire bridge on the input ports leaving 1cm wire in excess a
 ![image](https://user-images.githubusercontent.com/14197155/105382180-18c92680-5c10-11eb-8000-5b24a8c58c94.png)  
 Place the converter on the prototyping board in such a way is that these wires fit into the holes J-09 and O-09, solder these two holes.  
 ![image](https://user-images.githubusercontent.com/14197155/105382587-8412f880-5c10-11eb-87e8-bf3ca48f67fc.png)  
-Then the two outside USB connections should be exactly as though the holes K-03 and N-03. Press firmly the two boards together and fill the two holes K-03 and N-03 generously with tin so the molten tin will contact through the red board.
+Then the two outside USB connections should be exactly under the holes K-03 and N-03. Press firmly the two boards together and fill these two holes generously with tin so the molten tin will contact through the red board.
 The two boards should now be firmly connected together. 
 You can then cut the wire bridge at the other side and test your connections: 
 If you suply 12V, (+ to O-09 and - to J-09), you should get 5V (+ at N-03 and - at K-03). 
