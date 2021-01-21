@@ -89,6 +89,10 @@ The HW813 and D-SUN require soldering a wire to a really tiny trim potentiometer
 
 ## ESP8266 microcontroller:
 
+You need to use an ESP8266, model 12E. The best is to use the Wemos D1 mini, which is the most convenient to use, since it has a smaller footprint and provide the ability to stack an OLED display on it.
+The D1 Mini exists also in the Pro-version, which provides more EEPROM and the possibility to use an external antenna. That more expensive version is recommended but not required.
+I have also made builds using the Lolin Node MCU and they are surely also doable using the Adafruit HUZZAH.
+
 Almost all outputs of the ESP will be used:
 
 - D1 and D2 are providing the I2C functionality used by the power measurement module INA3221.
@@ -102,8 +106,8 @@ Almost all outputs of the ESP will be used:
 
 ## OLED display option:
 
-The oled display is nice to have. There are two versions:
-
+The oled display is nice to have. It adds only ~2 mA to the overall consumption.  
+Two versions are supported:  is
 a) A 64x48 pixel Wemos display hat, just push it on the top of the WEMOS D1  
 b) a 128x64 pixel display, that must be connected separately by connecting:  
 -  Vcc to +3.3V
@@ -116,8 +120,19 @@ b) a 128x64 pixel display, that must be connected separately by connecting:
 The INA3221 power measurement module provides three independent measurement channels each of them consisting of voltage, current, power measurement.
 - channel 1 is used to measure the photovoltaic module
 - channel 2 is used to measure the main battery
-- channel 3 is used to measure the convenience output/secondary battery.
-N.B. The INA3221 is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W.  
+- channel 3 is used to measure the convenience output/secondary battery.  
+N.B. There are two different versions of INA3221 on the market. You should avoid the left pink one one, for which the tree measurement channels are connected together at V+.  
+The right black one is the right one to go, it has independent inputs and is also less expensive:  
+![image](https://user-images.githubusercontent.com/14197155/105282377-7e84c680-5bae-11eb-81cc-30ba40c3fb61.png) ![image](https://user-images.githubusercontent.com/14197155/105282569-f94de180-5bae-11eb-9613-98fb4ebb6170.png)  
+
+
+## INA226 power measurement module(s):
+The INA226 power measurement module provides only one measurement channel, but they are more versatile.  
+# Addressing:  
+If you use more than one module, you must provide different I2C addresses, by soldering a small tin bridge:  
+![image](https://user-images.githubusercontent.com/14197155/105281711-0538a400-5bad-11eb-97eb-b8db0fc177ce.png)  
+# Increasing current measuring range:  
+N.B. The INA boards are normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W.  
 For the extended power range 300W using a SZBK07 we will have to replace the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA. The original shunts can be relatively easy unsoldered by generously adding tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip. You can do it! Even I can, as an old man with beginning Parkinson! 
 
 ## Current injection
