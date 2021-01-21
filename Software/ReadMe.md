@@ -3,7 +3,7 @@ I like easy to read, close to naturally language, software.
 The Arduino IDE is very accessible development environment, that hides the complexity of C++ language to the beginners.
 My code makes also extensive use of compiler directives to determining different options.  
 For the sake of clarity I made an extensive use of comments, especially commenting why I realized the code that way.  
-I refrained as far as possible to use C++ code that requires C++ expertise beyond what an Arduino user with reasonable experience can understand. 
+I refrained as far as possible to use geek code that requires C++ expertise beyond what an Arduino user with reasonable experience can understand. 
 The Arduino IDE provides the possibility to split the code into separate tabs for clarity.
 ![image](https://user-images.githubusercontent.com/14197155/105344771-a7737e80-5be3-11eb-8d53-a8eb8499e287.png)
 
