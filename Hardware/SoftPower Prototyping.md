@@ -18,9 +18,9 @@ If you only have 2-blocks, you can solder them directly onto the GND holes.
 Then solder the 8 pins on the INA module and then on the top line of the prototyping board between the rows H to Q. 
 
 
-## Preapring the "Fine Red" 5V buck converter.  
+## Preparing the "Fine Red" 5V buck converter.  
 
-The "Fine Red" Buckler, fits ideally under the Wemos D1 and delivers a 5V USB plug, situated just under the USB connector of the WEMOS-D1:  
+The "Fine Red" buck converter fits ideally under the Wemos D1 and delivers a 5V USB plug, situated just under the USB connector of the WEMOS-D1:  
 ![image](https://user-images.githubusercontent.com/14197155/105381085-ea971700-5c0e-11eb-9fde-c156cdf54698.png)  
 To solder this module on the prototyping board, we will use a direct solder connection between the two boards.  
 First of all you need to prepare the module, which back should be as flat as possible.  
@@ -29,9 +29,13 @@ Then put a generous quantity of solder tin on the outside USB connections:
 ![image](https://user-images.githubusercontent.com/14197155/105383836-d9033e80-5c11-11eb-89be-c0c5d75c8b2a.png)  
 Solder a provisional wire bridge on the input ports leaving 1cm wire in excess at the other side.  
 ![image](https://user-images.githubusercontent.com/14197155/105382180-18c92680-5c10-11eb-8000-5b24a8c58c94.png)  
-Place the converter on the prototyping board in such a way is that these wires fit into the holes J.09 and O-09, solder these two holes.  
+Place the converter on the prototyping board in such a way is that these wires fit into the holes J-09 and O-09, solder these two holes.  
 ![image](https://user-images.githubusercontent.com/14197155/105382587-8412f880-5c10-11eb-87e8-bf3ca48f67fc.png)  
 Then the two outside USB connections should be exactly as though the holes K-03 and N-03. Press firmly the two boards together and fill the two holes K-03 and N-03 generously with tin so the molten tin will contact through the red board.
+The two boards should now be firmly connected together, if you suply 12V, (+ to O-09 and - to J-09), you should get 5V (+ at N-03 and - at K-03).  
+
+## Preparing the Wemos connectors.
+Solder the female short pin connectors between H02 to H09 and between Q-02 and Q-09.
 
 
 
