@@ -32,9 +32,9 @@ The code separation into functional blocks makes it much easier to jump between 
 
 ## Installing the Arduino IDE with ESP support.
 https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/
-Then you need a few libraries to run SoftPower:
-Start the library manager: Tools/Manage Libraries...
-You need 
+Then you need a few libraries to run SoftPower:  
+Start the library manager: Tools/Manage Libraries...  
+You need  
 - ArduinoJson by Benoit Blanchon
 - ESP8266...OLED driver, by Thingpulse and Fabrice Weinberg
 - INA2xx by Arnd
@@ -42,17 +42,31 @@ You need
 The other libraries should be already present.
 
 ## Download instructions
-You can download all the files from the main page of Soft-Power upon clicking on the green Code button and selecting "download Zip".
-This will save a file Soft-Power-MPPT-main.zip.
-From that compressed file, extract the folder "Software" and copy it into your Arduino working space.
-Rename that folder SoftPowerMPPT.
+You can download all the files from the main page of Soft-Power upon clicking on the green Code button and selecting "download Zip".  
+This will save a file Soft-Power-MPPT-main.zip.  
+From that compressed file, extract the folder "Software" and copy it into your Arduino working space.  
+Rename that folder SoftPowerMPPT.  
+You will now find the project in File/Sketchbook/SoftPowerMPPT and after starting, it you will find all tabs present.  
 
-You will now find the project in File/Sketchbook/SoftPowerMPPT and after starting, it you will find all tabs present.
-
-## Required libraries
-to be continued...
+If later you just need to update some tabs individually, you just can copy the content directly into the Arduino IDE.
 
 ## Configuration instructions
+The software is written in such a way that you can use it just upon defining your options in the folder a0_Parameters.
+If you are not familiar with the code, this is the only folder that you should change:
+
+If you have several devices, change the hostname.
+Then proceed with the hardware configuration:
+- #define WEATHER_SOURCE_IS_URL specifies that you get the weather information from an URL, the other options are given in the comment, so you also have the option to #define WEATHER_SOURCE_IS_NONE, if you do not want to process weather information.
+- #define BATTERY_SOURCE_IS_INA specifies that to get the battery voltage and current from an INA-device, the other options being #define BATTERY_SOURCE_IS_UDP to get the battery information from another ESP as a slave device, or #define BATTERY_SOURCE_IS_NONE to not process battery information at all ( which only makes sense in my other projects ).
+- #define PANEL_SOURCE_IS_A0 specifies that you get the panel voltage over A0 (that would be the case if you only have one INA226), the other options being #define PANEL_SOURCE_IS_INA if you are using an INA sensor for the panel (with INA3221 or at least two INA226) or #define PANEL_SOURCE_IS_URL to get the battery information from another ESP as a slave device and #define PANEL_SOURCE_IS_NONE to not process panel information at all ( which only makes sense in my other projects ).
+- #define BATTERY_IS_12V_FLA specifies that you are using a 12 V flooded acid battery, the other options being #define BATTERY_IS_12V_AGM to use a 12 V AGM battery and so on...
+- #define DISPLAY_IS_OLED64x48 define if you are using an OLED display and which one.
+- #define DISPLAY_REVERSED if you're display should be used downunder (for Australians for example ;-)
+
+
+
+
+
 to be continued...
 
 ## Instructions to begin with Tinger.io
