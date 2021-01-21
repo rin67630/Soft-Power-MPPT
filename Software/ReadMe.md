@@ -1,3 +1,7 @@
+### Caveat
+The software is _still under development_: the display, menu, serial functions and dashboard functionalities are operative.  
+The MPPT control loop and the battery loading processes are still missing, since I am still in the process of analyzing the behavior of the hardware, before determining the best algorithm.
+
 # Explanations about the software.
 I like easy to read, close to naturally language, software.  
 The Arduino IDE is a very accessible development environment, that hides the complexity of C++ language to the beginners.
@@ -26,7 +30,16 @@ I used that feature to organize my code in functional blocks:
 
 The code separation into functional blocks makes it much easier to jump between several tasks.
 
+## Installing the IDE
+to be continued...
+
 ## Download instructions
+to be continued...
+
+## Required libraries
+to be continued...
+
+## Configuration instructions
 to be continued...
 
 Stay tuned!
