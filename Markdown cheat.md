@@ -13,8 +13,8 @@
 *italicized text*
 
 ### Line feeds
-simple line feeds in the source are ignored, double line feeds are respected.
-to force a single line feed, use [space][space][return] or \[return]
+Simple line feeds in the source are ignored, double line feeds are respected.  
+To force a single line feed, use [space][space][return] or [backslash][return]
 
 ### Blockquote
 
