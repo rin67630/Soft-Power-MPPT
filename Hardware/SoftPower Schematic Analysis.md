@@ -12,8 +12,7 @@ It includes the charging profiles for various battery chemistries:
 4. LiPo batteries (3s)
 5. LiFePo batteries (4s)
 
-Instrumentation control is provided by:
-
+Instrumentation control is provided by:  
 1. A convenience power output that can be controlled by software between 5V and 12V that can switched on and off by software as required. This can be used for any discretionary purpose by the user such as to charge a smaller secondary battery, control devices/track sun...
 2. Two control lines for relays or FET-modules to switch user loads by software.
 3. The analog input of the ESP8266 and enough processing capacity of the microcontroller remain available to include user-defined measurement functionalities.
@@ -89,12 +88,12 @@ The HW813 and D-SUN require soldering a wire to a really tiny trim potentiometer
 
 ## ESP8266 microcontroller:
 
-You need to use an ESP8266, model 12E. The best is to use the Wemos D1 mini, which is the most convenient to use, since it has a smaller footprint and provide the ability to stack an OLED display on it.
-The D1 Mini exists also in the Pro-version, which provides more EEPROM and the possibility to use an external antenna. That more expensive version is recommended but not required.
+You need to use an ESP8266, model 12E. The best is to use the Wemos D1 mini, which is the most convenient to use, since it has a smaller footprint and provide the ability to stack an OLED display on it.  
+![image](https://user-images.githubusercontent.com/14197155/105284419-b1c95480-5bb2-11eb-986b-175e385d049a.png)
+The D1 Mini exists also in the Pro-version, which provides more EEPROM and the possibility to use an external antenna. That more expensive version is recommended but not required.  
 I have also made builds using the Lolin Node MCU and they are surely also doable using the Adafruit HUZZAH.
 
-Almost all outputs of the ESP will be used:
-
+Almost all outputs of the ESP will be used:  
 - D1 and D2 are providing the I2C functionality used by the power measurement module INA3221.
 - D3 and D4 can control up to two relays or two FET modules to control power loads by software.
 - D7 enables the convenience user power output.
