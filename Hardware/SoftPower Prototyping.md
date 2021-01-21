@@ -19,7 +19,6 @@ Then solder the 8 pins on the INA module and then on the top line of the prototy
 
 
 ## Preparing the "Fine Red" 5V buck converter.  
-
 The "Fine Red" buck converter fits ideally under the Wemos D1 and delivers a 5V USB plug, situated just under the USB connector of the WEMOS-D1:  
 ![image](https://user-images.githubusercontent.com/14197155/105381085-ea971700-5c0e-11eb-9fde-c156cdf54698.png)  
 To solder this module on the prototyping board, we will use a direct solder connection between the two boards.  
@@ -32,12 +31,18 @@ Solder a provisional wire bridge on the input ports leaving 1cm wire in excess a
 Place the converter on the prototyping board in such a way is that these wires fit into the holes J-09 and O-09, solder these two holes.  
 ![image](https://user-images.githubusercontent.com/14197155/105382587-8412f880-5c10-11eb-87e8-bf3ca48f67fc.png)  
 Then the two outside USB connections should be exactly as though the holes K-03 and N-03. Press firmly the two boards together and fill the two holes K-03 and N-03 generously with tin so the molten tin will contact through the red board.
-The two boards should now be firmly connected together, if you suply 12V, (+ to O-09 and - to J-09), you should get 5V (+ at N-03 and - at K-03).  
+The two boards should now be firmly connected together. 
+You can then cut the wire bridge at the other side and test your connections: 
+If you suply 12V, (+ to O-09 and - to J-09), you should get 5V (+ at N-03 and - at K-03). 
+
+## Preparing the HW813 buck converter under the Wemos.  
+if you choose to use HW813 buck converters instead...
+( I am currently waiting for a new batch of HW813 to come, so I can provide pictures and description in time) 
 
 ## Preparing the Wemos connectors.
 Solder the female short pin connectors between H02 to H09 and between Q-02 and Q-09.
-
-
+Solder the female long pin connectors through the Wemos D1. you can then plug the WomosD1 onto the board:  
+![image](https://user-images.githubusercontent.com/14197155/105387729-208bc980-5c16-11eb-9954-28ac80c3b4aa.png)  
 
 
 
