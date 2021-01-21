@@ -56,16 +56,23 @@ If you are not familiar with the code, this is the only folder that you should c
 
 If you have several devices, change the hostname.
 Then proceed with the hardware configuration:
-- #define WEATHER_SOURCE_IS_URL specifies that you get the weather information from an URL, the other options are given in the comment, so you also have the option to #define WEATHER_SOURCE_IS_NONE, if you do not want to process weather information.
-- #define BATTERY_SOURCE_IS_INA specifies that to get the battery voltage and current from an INA-device, the other options being #define BATTERY_SOURCE_IS_UDP to get the battery information from another ESP as a slave device, or #define BATTERY_SOURCE_IS_NONE to not process battery information at all ( which only makes sense in my other projects ).
-- #define PANEL_SOURCE_IS_A0 specifies that you get the panel voltage over A0 (that would be the case if you only have one INA226), the other options being #define PANEL_SOURCE_IS_INA if you are using an INA sensor for the panel (with INA3221 or at least two INA226) or #define PANEL_SOURCE_IS_URL to get the battery information from another ESP as a slave device and #define PANEL_SOURCE_IS_NONE to not process panel information at all ( which only makes sense in my other projects ).
+- #define WEATHER_SOURCE_IS_URL specifies that you get the weather information from an URL, the other options are given in the comment, so you also have the option to  
+#define WEATHER_SOURCE_IS_NONE, if you do not want to process weather information.
+
+- #define BATTERY_SOURCE_IS_INA specifies that to get the battery voltage and current from an INA-device, the other options being  
+#define BATTERY_SOURCE_IS_UDP to get the battery information from another ESP as a slave device, or  
+#define BATTERY_SOURCE_IS_NONE to not process battery information at all ( which only makes sense in my other projects ).
+
+- #define PANEL_SOURCE_IS_A0 specifies that you get the panel voltage over A0 (that would be the case if you only have one INA226), the other options being  
+#define PANEL_SOURCE_IS_INA if you are using an INA sensor for the panel (with INA3221 or at least two INA226) or  
+#define PANEL_SOURCE_IS_URL to get the battery information from another ESP as a slave device and  
+#define PANEL_SOURCE_IS_NONE to not process panel information at all ( which only makes sense in my other projects ).
+
 - #define BATTERY_IS_12V_FLA specifies that you are using a 12 V flooded acid battery, the other options being #define BATTERY_IS_12V_AGM to use a 12 V AGM battery and so on...
 - #define DISPLAY_IS_OLED64x48 define if you are using an OLED display and which one.
 - #define DISPLAY_REVERSED if you're display should be used downunder (for Australians for example ;-)
 
-
-
-
+Additional configuration options may be introduced, hoping that they will more or less self explanatory.
 
 to be continued...
 
