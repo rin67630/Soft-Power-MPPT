@@ -20,9 +20,9 @@ I used that feature to organize my code in functional blocks:
 9. f_Display: The code intended to display current information on the OLED displays
 10. g_Serial: The code intended to issue the serial reports called by the menu.
 11. h_Wireless: The code to exchange information with the thinger.io Dashboard and other devices
-12: k_Loop: The scheduling loop controlling all previous tasks.
-13: x_ReadMe: comment-only, mainly for myself contains some syntaxes, that my limited brain tends to forget.
-14: y_ParkedCode: comment-only, containing parts of the code intended for further usage. 
+12. k_Loop: The scheduling loop controlling all previous tasks.
+13. x_ReadMe: comment-only, mainly for myself contains some syntaxes, that my limited brain tends to forget.
+14. y_ParkedCode: comment-only, containing parts of the code intended for further usage. 
 
 The code separation into functional blocks makes it much easier to jump between several tasks.
 
