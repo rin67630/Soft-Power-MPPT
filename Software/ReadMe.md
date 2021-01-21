@@ -1,6 +1,6 @@
 # Explanations about the software.
 I like easy to read, close to naturally language, software.  
-The Arduino IDE is very accessible development environment, that hides the complexity of C++ language to the beginners.
+The Arduino IDE is a very accessible development environment, that hides the complexity of C++ language to the beginners.
 My code makes also extensive use of compiler directives to determining different options.  
 For the sake of clarity I made an extensive use of comments, especially commenting why I realized the code that way.  
 I refrained as far as possible to use geek code that requires C++ expertise beyond what an Arduino user with reasonable experience can understand. 
