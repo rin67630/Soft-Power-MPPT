@@ -3,7 +3,7 @@ The software is _still under development_: the display, menu, serial functions a
 The MPPT control loop and the battery loading processes are still missing, since I am still in the process of analyzing the behavior of the hardware, before determining the best algorithm.
 
 # Explanations about the software.
-I like easy to read, close to naturally language, software.  
+I like software being easy to read, close to naturally language.  
 The Arduino IDE is a very accessible development environment, that hides the complexity of C++ language to the beginners.
 My code makes also extensive use of compiler directives to determining different options.  
 For the sake of clarity I made an extensive use of comments, especially commenting why I realized the code that way.  
@@ -30,11 +30,24 @@ I used that feature to organize my code in functional blocks:
 
 The code separation into functional blocks makes it much easier to jump between several tasks.
 
-## Installing the IDE
-to be continued...
+## Installing the Arduino IDE with ESP support.
+https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/
+Then you need a few libraries to run SoftPower:
+Start the library manager: Tools/Manage Libraries...
+You need 
+- ArduinoJson by Benoit Blanchon
+- ESP8266...OLED driver, by Thingpulse and Fabrice Weinberg
+- INA2xx by Arnd
+- thinger.io by Alvaro Luis Bustamente
+The other libraries should be already present.
 
 ## Download instructions
-to be continued...
+You can download all the files from the main page of Soft-Power upon clicking on the green Code button and selecting "download Zip".
+This will save a file Soft-Power-MPPT-main.zip.
+From that compressed file, extract the folder "Software" and copy it into your Arduino working space.
+Rename that folder SoftPowerMPPT.
+
+You will now find the project in File/Sketchbook/SoftPowerMPPT and after starting, it you will find all tabs present.
 
 ## Required libraries
 to be continued...
