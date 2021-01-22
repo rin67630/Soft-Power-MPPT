@@ -1,6 +1,5 @@
-# Soft-Power: the Swiss-Army-Knife  
-# MPPT Solar Charge Controller based on simple tinkering modules 
-# (Buck DC converters, ESP8266, INA226...)
+# Soft-Power: the Swiss-Army-Knife MPPT Solar Charge Controller 
+__based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)__
 
 ## The challenge:
 The challenge might seem simple: Run a Raspberry Pi or an Arduino, plus a radio transmitter and a few instruments  
