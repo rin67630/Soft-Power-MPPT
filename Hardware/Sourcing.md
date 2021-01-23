@@ -28,7 +28,8 @@ Trim potentiometers: https://www.aliexpress.com/item/1005001649630759.html
 2 Channel Relay Module Board: https://www.aliexpress.com/item/4000418641261.html  
 MOS Driver Module: https://www.aliexpress.com/item/1005001645129771.html  
 
-Color wires: I use to tear-off old parallel printer or VGA cables. They yet have good old quality copper wires, not the crap you buy today made of CC Aluminium! 
+Color wires: I use to tear-off old parallel printer or VGA cables from the scrapyard.  
+They yet have good old quality copper wires, not the crap you buy today made of CC Aluminium! 
 
 
 
