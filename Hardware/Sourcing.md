@@ -1,6 +1,6 @@
 # Sourcing 
 
-this file is given for convenience. I am not affiliated in any way with AliExpress, and do not even recommend them, but they have enough choice to be able to sell almost anything I have been using.
+this file is given for convenience. I am not affiliated in any way with AliExpress, and do not even recommend them, but they have enough choice to be able to sell almost anything I have been using. Many items sell by quantities. If you are not tnkering a lot, you are probably better off buying locally just what you need.
 
 Prototyping boards: https://www.aliexpress.com/item/32588853051.html  
 Screw terminals: https://www.aliexpress.com/item/32807534570.html and https://www.aliexpress.com/item/1005001725925575.html  
