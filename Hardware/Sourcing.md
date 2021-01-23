@@ -6,7 +6,7 @@ Prototyping boards: https://www.aliexpress.com/item/32588853051.html
 Screw terminals: https://www.aliexpress.com/item/32807534570.html and https://www.aliexpress.com/item/1005001725925575.html  
 Heat Sinks: https://www.aliexpress.com/item/32825341178.html and https://www.aliexpress.com/item/32825417247.html  
 
-Low power buck converters: https://www.aliexpress.com/item/4000938525410.html or https://www.aliexpress.com/item/32979661350.html (higher input voltage)  
+Low power buck converters: https://www.aliexpress.com/item/4000938525410.html or https://www.aliexpress.com/item/32979661350.html (less efficient, less owerful, but 40v input voltage instead of 28V for the first one)  
 60V buck converter: https://www.aliexpress.com/item/4001282565135.html  
 High power buck converter: https://www.aliexpress.com/item/32933666759.html 
 Temperature switch: https://www.aliexpress.com/item/4000683400658.html
@@ -27,7 +27,7 @@ Trim potentiometers: https://www.aliexpress.com/item/1005001649630759.html
 2 Channel Relay Module Board: https://www.aliexpress.com/item/4000418641261.html  
 MOS Driver Module: https://www.aliexpress.com/item/1005001645129771.html  
 
-Color wires: I use to tear-off old parallel printer or VGA cables. They yet have quality copper wires, not what you buy today made out of CC Aluminium! 
+Color wires: I use to tear-off old parallel printer or VGA cables. They yet have good old quality copper wires, not the crap you buy today made of CC Aluminium! 
 
 
 
