@@ -8,7 +8,9 @@ Heat Sinks: https://www.aliexpress.com/item/32825341178.html and https://www.ali
 
 Low power buck converters: https://www.aliexpress.com/item/4000938525410.html or https://www.aliexpress.com/item/32979661350.html (higher input voltage)  
 60V buck converter: https://www.aliexpress.com/item/4001282565135.html  
-High power buck converter: https://www.aliexpress.com/item/32933666759.html  
+High power buck converter: https://www.aliexpress.com/item/32933666759.html 
+Temperature switch: https://www.aliexpress.com/item/4000683400658.html
+Fan: https://www.aliexpress.com/item/32640103358.html (12v, 2pin), for 60V buck: https://www.aliexpress.com/item/32843426443.html
 
 INA3221: https://www.aliexpress.com/item/4000480784866.html  
 INA226 up to 0.8 A: https://www.aliexpress.com/item/33005541425.html or INA226 up to 8A https://www.aliexpress.com/item/32833590942.html  
