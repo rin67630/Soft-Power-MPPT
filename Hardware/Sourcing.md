@@ -6,7 +6,7 @@ Prototyping boards: https://www.aliexpress.com/item/32588853051.html
 Screw terminals: https://www.aliexpress.com/item/32807534570.html and https://www.aliexpress.com/item/1005001725925575.html  
 Heat Sinks: https://www.aliexpress.com/item/32825341178.html and https://www.aliexpress.com/item/32825417247.html  
 
-Low power buck converters: https://www.aliexpress.com/item/4000938525410.html or https://www.aliexpress.com/item/32979661350.html (less efficient, less owerful, but 40v input voltage instead of 28V for the first one)  
+Low power buck converters: https://www.aliexpress.com/item/4000938525410.html or https://www.aliexpress.com/item/32979661350.html (less efficient, less powerful, but 40v input voltage instead of 28V for the first one)  
 60V buck converter: https://www.aliexpress.com/item/4001282565135.html  
 High power buck converter: https://www.aliexpress.com/item/32933666759.html  
 Ideal diode: https://www.aliexpress.com/item/32977096276.html  
