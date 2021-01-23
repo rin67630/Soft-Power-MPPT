@@ -1,6 +1,6 @@
 # Sourcing 
 
-this file is given for convenience. I am not affiliated in any way with AliExpress, and do not even recommend them, but they have enough choice to be able to sell almost anything.
+this file is given for convenience. I am not affiliated in any way with AliExpress, and do not even recommend them, but they have enough choice to be able to sell almost anything I have been using.
 
 Prototyping boards: https://www.aliexpress.com/item/32588853051.html  
 Screw terminals: https://www.aliexpress.com/item/32807534570.html and https://www.aliexpress.com/item/1005001725925575.html  
@@ -16,10 +16,11 @@ High Power shunts: https://www.aliexpress.com/item/4001233004428.html
 SMD Shunts: https://www.aliexpress.com/item/32368758351.html   
 
 Wemos D1 mini: https://www.aliexpress.com/item/32651747570.html or Wemos D1 mini Pro: https://www.aliexpress.com/item/1005001621776421.html  
-64x48 pixel OLED: https://www.aliexpress.com/item/32801063529.html or 128*64 pixel OLED https://www.aliexpress.com/item/32796086867.html  
+64x48 pixel OLED: https://www.aliexpress.com/item/32801063529.html or 128x64 pixel OLED https://www.aliexpress.com/item/32796086867.html  
 
-Resistor Kit 30 values: https://www.aliexpress.com/item/32475181535.html  
-High Power shunts: https://www.aliexpress.com/item/4001233004428.html  
+Resistor Kit 30 values: https://www.aliexpress.com/item/32475181535.html
+10uF capacitors: https://www.aliexpress.com/item/32952790541.html
+Trim potentiometers: https://www.aliexpress.com/item/1005001649630759.html
 
 2 Channel Relay Module Board: https://www.aliexpress.com/item/4000418641261.html  
 MOS Driver Module: https://www.aliexpress.com/item/1005001645129771.html  
