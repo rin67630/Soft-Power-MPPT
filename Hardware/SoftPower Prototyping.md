@@ -18,7 +18,7 @@ If you only have 2-blocks, you can solder them directly onto the GND holes.
 Then solder the 8 pins on the INA module and then on the top line of the prototyping board between the rows H to Q. 
 
 ## Preparing the two HW813 buck converters:
-On the back, cover the soldering bridges labeled “ADJ” to “1,8V” with some scotch tape. Then, glue a heat sink. I am using Pattex   
+On the back, cover the soldering bridges labeled “ADJ” to “1,8V” with some scotch tape. Then, glue a heat sink. I am using Pattex Fix Nail power from the construction market.  
 Solder a five pin male header to the 4 pads of the module leaving one pin right of the pad VO+ free.
 Solder a thin yellow wire between that free pin and the upper right corner of the trimming pot. It is tiny, you need a fine solder tip!
 Bring first a pinhead of tin to the edge of the potentiometer, tin the ned of the wire and then solder the wire inplace.
