@@ -109,7 +109,9 @@ Two versions are supported:
     -  SDA to D2
     -  GND to GND
 
-## INA3221 power measurement module
+## Power measurement
+
+### INA3221 module
 
 The INA3221 power measurement module provides three independent measurement channels each consisting of voltage, current, power measurement.
 - channel 1 is used to measure the photovoltaic module
@@ -120,9 +122,9 @@ The INA3221 power measurement module provides three independent measurement chan
 ![image](https://user-images.githubusercontent.com/14197155/105282377-7e84c680-5bae-11eb-81cc-30ba40c3fb61.png) ![image](https://user-images.githubusercontent.com/14197155/105282569-f94de180-5bae-11eb-9613-98fb4ebb6170.png)
 
 
-## INA226 power measurement module(s)
+### INA226 module(s)
 
-The INA226 power measurement module provides only one measurement channel, but they are more versatile.
+The INA226 power measurement module provides only one measurement channel, but two shunt resistor sizes are sold and they are more versatile.
 
 ### Addressing
 
@@ -131,7 +133,7 @@ If you use more than one module, you must provide different I2C addresses, by so
 
 ### Current measuring range
 
-**Note:** The INA3221 board is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. The INA226 is sold with either a 0,1 Ohm or 0,01 Ohm shunt with a measurement range 0..0,8A and 0..8,2A respectively. (Calculated with I = V/R, eg from INA226 datasheet VShunt = 81,92mV.)
+**Note:** The INA3221 board is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. The INA226 is sold with either a 0,1 Ohm or 0,01 Ohm shunt with a measurement range 0..0,8A and 0..8,2A respectively. (Calculated with I = V/R, eg from [INA226 datasheet](https://www.ti.com/lit/ds/symlink/ina226.pdf) VShunt = 81,92mV.)
 
 The original shunts can be relatively easy unsoldered by generously adding tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip. You can do it! Even I can, as an old man with beginning Parkinson! If the maximum current is greater than the shut will support the shunts on the INA3221 board can be replaced with a 0,01 Ohm shunt resulting in a measurement range 0..15A with an accuracy of 5mA. Alternatively, remove the on-board shunt and use an external shunt sized for the maximum current.
 
