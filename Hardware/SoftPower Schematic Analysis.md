@@ -89,7 +89,7 @@ The HW813 and D-SUN require soldering a wire to a really tiny trim potentiometer
 ## ESP8266 microcontroller:
 
 You need to use an ESP8266, model 12E. The best is to use the Wemos D1 mini, which is the most convenient to use, since it has a smaller footprint and provide the ability to stack an OLED display on it.  
-![image](https://user-images.githubusercontent.com/14197155/105284419-b1c95480-5bb2-11eb-986b-175e385d049a.png)
+![image](https://user-images.githubusercontent.com/14197155/105284419-b1c95480-5bb2-11eb-986b-175e385d049a.png)  
 The D1 Mini exists also in the Pro-version, which provides more EEPROM and the possibility to use an external antenna. That more expensive version is recommended but not required.  
 I have also made builds using the Lolin Node MCU and they are surely also doable using the Adafruit HUZZAH.
 
@@ -150,61 +150,56 @@ The technique of current injection is described in document https://github.com/r
 
 ## Connectors
 
-The prototyping board is equipped with following connectors:
+The prototyping board is equipped with following screw terminals :
 
-**Photovoltaic panel**
+**Left connector on INA3221**  
+- Panel_in   negative.  
+- Panel_in   positive.  
+- Power_Output to SZBK Input positive
 
-- Panel_in   positive.
-- Gnd        negative.
+**Mid connector on INA3221** 
+- Power_Input from Ideal Diode positive  
+- Battery_Out positive  
 
-**SZBK07 (mid-power 200W option)**
+**Right connector on INA3221**  
+- Convenience output wo current monitoring positive  
+- Convenience output with current monitoring positive  
+- Convenience output negative  
 
-- Inject CV Injection
-- Enable 
-- Power_Input positive
-- Gnd 
-- Power_Out positive
 
-**Main battery**
+**On Board**  
+- Enable to SZBK07  
+- CV Injection to SZBK07  
 
-- positive
-- negative
+**I2C female header**  
+- +3,3V  
+- GND  
+- SCL  
+- SDA  
 
-**Secondary battery or convenience output**
+**2x Relay/FET control male headers**  
+- 0..3.3V to control first relay  
+- 0..3.3V to control second relay  
+- Gnd.  
+- +5V.  
 
-- positive
-- himnegative
-
-**I2C connector
-- +3,3V
-- GND
-- SCL
-- SDA
-
-**Relay/FET control**
-
-- 0..3.3V to control first relay
-- 0..3.3V to control second relay
-- Gnd.
-- +5V.
-
-**User defined measurement input**
-
-- 0..3.3V analog input.
-- 0..3.3V to control first relay
-- Gnd
-- +5V.
+**User defined measurement female header**  
+- 0..3.3V analog input.  
+- 0..3.3V to control first relay  
+- Gnd  
+- +5V.  
 
 **12V Fan connector**
 
 ## Performance
 
-- Quiescent current from the 12V battery: ~25mA, mainly from the WiFi chip, could be reduced to <1mA at night(2)
+- Quiescent current from the 12V battery: ~25mA, mainly from the WiFi chip
 - Low-Power Efficiency at 1W 92%
 - Low-Power Efficiency at 10W 95%
 - Mid Power Efficiency at 200W 97%
 
-(2) currently not realized, since my user measurement functions must go on permanently, which are preventing sleep.
+A reduction to <1mA at night could be realized with a sleep option.  
+I do not want it for myself, since my user measurement functions on the same ESP8266 must go on permanently.
 
 ## Commissioning
 
