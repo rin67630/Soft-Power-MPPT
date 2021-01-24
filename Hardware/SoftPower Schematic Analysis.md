@@ -129,13 +129,15 @@ The INA226 power measurement module provides only one measurement channel, but t
 If you use more than one module, you must provide different I2C addresses, by soldering a small tin bridge:
 ![image](https://user-images.githubusercontent.com/14197155/105281711-0538a400-5bad-11eb-97eb-b8db0fc177ce.png)
 
-### Increasing current measuring range
+### Current measuring range
 
-**Note:** The INA boards are normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. For extended power range 300W using a SZBK07 we will have to replace the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA. The original shunts can be relatively easy unsoldered by generously adding tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip. You can do it! Even I can, as an old man with beginning Parkinson!
+**Note:** The INA3221 board is normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W. The INA226 is sold with either a 0,1 Ohm or 0,01 Ohm shunt with a measurement range 0..0,8A and 0..8,2A respectively. (Calculated with I = V/R, eg from INA226 datasheet VShunt = 81,92mV.)
+
+The original shunts can be relatively easy unsoldered by generously adding tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip. You can do it! Even I can, as an old man with beginning Parkinson! If the maximum current is greater than the shut will support the shunts on the INA3221 board can be replaced with a 0,01 Ohm shunt resulting in a measurement range 0..15A with an accuracy of 5mA. Alternatively, remove the on-board shunt and use an external shunt sized for the maximum current.
 
 ## Current injection
 
-The technique of current injection is described in document https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/About%20CV%20Injection.md. The bypass filter consists of a 8,2K<sup>*</sup> resistor and a 10 microfarad* condenser, the injection current resistor is a 500K trim potentiometer, which can be replaced by a fixed resistor, once the project is stable, currently the value is around 63K, excepted for the high voltage module which needs 3,3K.
+The technique of current injection is described in document https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/About%20CV%20Injection.md. The bypass filter consists of a 8,2K<sup>*</sup> resistor and a 10 microfarad<sup>*</sup> condenser, the injection current resistor is a 500K trim potentiometer, which can be replaced by a fixed resistor, once the project is stable, currently the value is around 63K, excepted for the high voltage module which needs 3,3K.
 
 <sup>*</sup> The values are not critical, anything +/- 50% will do.
 
