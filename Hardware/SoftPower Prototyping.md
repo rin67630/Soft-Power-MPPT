@@ -43,25 +43,30 @@ If you suply 12V, (+ to O-09 and - to J-09), you should get 5V (+ at N-03 and - 
  
 ## Preparing the Wemos connectors.
 Solder the female short pin connectors between H02 to H09 and between Q-02 and Q-09.
-Solder the female long pin connectors through the Wemos D1. you can then plug the WomosD1 onto the board:  
+Solder the female long pin connectors through the Wemos D1. you can then plug the WemosD1 onto the board and optionally the OLED display on top:  
 ![image](https://user-images.githubusercontent.com/14197155/105387729-208bc980-5c16-11eb-9954-28ac80c3b4aa.png)
 
 ## Placing the components
-Place the components according to the picture bending the pins to adjacent destinations, so you do not need extra wires.  
-![image](https://user-images.githubusercontent.com/14197155/105641693-c5600e00-5e85-11eb-8bb6-8d5f98e87f82.png)  
-Solder the GND trace according to the picture.
+- Place the components according to the picture bending the pins to adjacent destinations, so you do not need extra wires. (Shown grey in othe picture)   
+- Solder the GND trace according to the picture. (Shown fat black in othe picture)
+- Solder the red +5V Vcc line according to picture (the dotted red line would have been for a HW813 module)
+- Solder the orange +3.3V Vdd line according to picture (the dotted orange line passes on the other side of the board)  
+- Solder the 2 violet Relay lines according to picture  
+- Solder the white A0 line according to picture (shown double grey between Q08 and U07)
+- Solder the 3 blue Enable lines according to picture
+- Solder the brown and green I2C lines according to picture
+- Solder the 2 yellow injection lines according to picture
 
-## Solder Vcc and Vdd lines, Relay lines and A0 line
-Solder the red +5V Vcc line according to picture  
-Solder the orange +3.3V Vdd line according to picture (the dotted line passes on the other side of the board)  
-Solder the Relay violet lines according to picture  
-Solder the A0 white line according to picture (shown double grey between Q08 and U07)  
-![image](https://user-images.githubusercontent.com/14197155/105642319-5be1fe80-5e89-11eb-9e2e-aff18c57b4fa.png)
+The curved thick power lines orange for panel, red for Battery and violet for Convenience are intended to be soldered lose between the prototype board and the attached INA3221.
+![image](https://user-images.githubusercontent.com/14197155/105644819-f1848a80-5e97-11eb-913d-eac73545989e.png)  
 
+The finished board: 
+![image](https://user-images.githubusercontent.com/14197155/105644985-1e856d00-5e99-11eb-9342-bf364a7fe85f.png)
+(the green I2C line is grey in my build)
+The front side:  
+![image](https://user-images.githubusercontent.com/14197155/105645020-5b516400-5e99-11eb-8048-57ead5567a85.png)
 
-
-
-
-
+Tomorrow I will build it into the box...  
+Enjoy!  
 
 ...to be continued.
