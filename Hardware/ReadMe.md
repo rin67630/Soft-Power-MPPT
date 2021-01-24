@@ -1,19 +1,16 @@
-This folder contains the schematics and hardware description of my Soft – Power – MPPT solar charging solution, specialized for efficient low-power operation.
+This folder contains the schematics and hardware description of my SoftPower MPPT solar charging solution, specialized in efficient (91% at 1W - 97% at 200w!) extremely low quiescent current operation.
+ 
+The schematics feature several possible hardware configurations to show the conceptual flexibilty:
+1. The preferred base design with a single INA-3221, measuring voltage and current for panel, battery and the convenience output. The A0 analog input is still free for extra usage.
+2. Version with three Ina-226 (instead of the Ina3221) to take advantage of the higher voltage support of up to 36V.  
+3. Version with just two INA-226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage.  
+4. Version with only one INA-226, measuring the battery voltage and current, the A0 analog input measures the panel voltage.  
+5. Version same as 4., just shown without the medium power option.  
+6. Variation of version 2. to run panels with voltages up to 60Voc, the panel current is measured on the low side.  
 
-This schematics now contains several possible hardware variants:
-1. the preferred design with one INA-3221, measuring voltage and current for panel, battery, convenience output, the A0 analog input is free for extra usage.
+Configuration 1 to 5 include efficient (91 to 96%) extremely low quiescent current (7 to 25ma) low-power solutions that can handle panels up to 20W
+Configuration 1 to 4 and 6 include efficient (94 to 97%) low quiescent current (34ma) mid-power solutions that can handle panels up to 300W
 
-Further variants, _that will be described in detail later_ just to give an outlook of the conceptual flexibilty.  
-2. replacing the INA-3221 through 3x INA-226 taking advantage of an increased voltage up to 36V.  
-3. reduced with only two INA-226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage.  
-4. further reduced with only one INA-226, measuring the battery voltage and current, the A0 analog input measures the panel voltage.  
-5. same than 4, just shown without the high power option.  To be part of an integrated device design.  
-6. modified version 2 to run panels with voltages up to 60Voc, the panel current is measured low.side.  
-
-All schematics can be used for
-- Micro-power version with extremely low quiescent current that can handle panels up to 20W (as is, no power buck converter)
-- Mid-power version with low quiescent current that can handle panels up to 300W, upon adding a power buck converter to the micropower version.
-
-A High-power version >300W will never be build, commercial stuff covers the requirements.
+A High-power solution >300W will never be build since commercial solutions cover that demand already.
 
 Enjoy!
