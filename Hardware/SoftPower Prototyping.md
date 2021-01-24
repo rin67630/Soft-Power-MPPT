@@ -46,9 +46,12 @@ Solder the female short pin connectors between H02 to H09 and between Q-02 and Q
 Solder the female long pin connectors through the Wemos D1. you can then plug the WemosD1 onto the board and optionally the OLED display on top:  
 ![image](https://user-images.githubusercontent.com/14197155/105387729-208bc980-5c16-11eb-9954-28ac80c3b4aa.png)
 
+Who has the skills and wants to make a PCB for the project? I just never made it and don't want to learn that now...
+
 ## Placing the components
-- Place the components according to the picture bending the pins to adjacent destinations, so you do not need extra wires. (Shown grey in othe picture)   
-- Solder the GND trace according to the picture. (Shown fat black in othe picture)
+- Place the components according to the picture bending the pins to adjacent destinations, so you do not need extra wires. 
+  (shown grey in the drawing)   
+- Solder the GND trace according to the picture. (shown fat black in the drawing)
 - Solder the red +5V Vcc line according to picture (the dotted red line would have been for a HW813 module)
 - Solder the orange +3.3V Vdd line according to picture (the dotted orange line passes on the other side of the board)  
 - Solder the 2 violet Relay lines according to picture  
