@@ -47,9 +47,19 @@ Solder the female long pin connectors through the Wemos D1. you can then plug th
 ![image](https://user-images.githubusercontent.com/14197155/105387729-208bc980-5c16-11eb-9954-28ac80c3b4aa.png)
 
 ## Placing the components
-Place the components bending the pins to adjacent destinations
-Solder the GND trace and the components  
-![image](https://user-images.githubusercontent.com/14197155/105641693-c5600e00-5e85-11eb-8bb6-8d5f98e87f82.png)
+Place the components according to the picture bending the pins to adjacent destinations, so you do not need extra wires.  
+![image](https://user-images.githubusercontent.com/14197155/105641693-c5600e00-5e85-11eb-8bb6-8d5f98e87f82.png)  
+Solder the GND trace according to the picture.
+
+## Solder Vcc and Vdd lines, Relay lines and A0 line
+Solder the red +5V Vcc line according to picture  
+Solder the orange +3.3V Vdd line according to picture (the dotted line passes on the other side of the board)  
+Solder the Relay violet lines according to picture  
+Solder the A0 white line according to picture (shown double grey between Q08 and U07)  
+![image](https://user-images.githubusercontent.com/14197155/105642319-5be1fe80-5e89-11eb-9e2e-aff18c57b4fa.png)
+
+
+
 
 
 
