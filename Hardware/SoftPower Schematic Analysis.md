@@ -122,17 +122,26 @@ The INA3221 power measurement module provides three independent measurement chan
 - channel 3 is used to measure the convenience output/secondary battery.  
 N.B. There are two different versions of INA3221 on the market. You should avoid the left pink one one, for which the tree measurement channels are connected together at V+.  
 The right black one is the right one to go, it has independent inputs and is also less expensive:  
-![image](https://user-images.githubusercontent.com/14197155/105282377-7e84c680-5bae-11eb-81cc-30ba40c3fb61.png) ![image](https://user-images.githubusercontent.com/14197155/105282569-f94de180-5bae-11eb-9613-98fb4ebb6170.png)  
+![image](https://user-images.githubusercontent.com/14197155/105282377-7e84c680-5bae-11eb-81cc-30ba40c3fb61.png) ![image](https://user-images.githubusercontent.com/14197155/105282569-f94de180-5bae-11eb-9613-98fb4ebb6170.png)
+N.B. The INA3221 boards are to my knowledge only sold with 0.1 Ohm shunts. I did not find a veersion with 0.01 Ohm. 
+That leads to a measurement range 0..1.5A with an accuracy of 0.5mA, which is fine for the operation up to 20W.  
+For the extended power range 200W using a SZBK07 we will have to replace the shunts with 0.01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA.
+If you want to push it to the theoretical maximum of the SZBK07, you can use 0.005 Ohm shunts, I would however prefer using an external shunt in that case.  
 
 
 ## INA226 power measurement module(s):
 The INA226 power measurement module provides only one measurement channel, but they are more versatile.  
-# Addressing:  
+They can also be purchased with 0.1 Ohm or 0.01 Ohm shunts. 
+The 0.1 Ohm version can handle a measurement range 0..0.8A with an accuracy of 0.25mA, which is fine for the operation up to 10W.  
+The 0.01 Ohm version can handle a measurement range 0..8A with an accuracy of 0.25mA, which is fine for the operation up to 100W.
+For an extended power range 200W using a SZBK07 we will have to replace the shunts with 0.005 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA.
+
+### Addressing:  
 If you use more than one module, you must provide different I2C addresses, by soldering a small tin bridge:  
 ![image](https://user-images.githubusercontent.com/14197155/105281711-0538a400-5bad-11eb-97eb-b8db0fc177ce.png)  
-# Increasing current measuring range:  
-N.B. The INA boards are normally sold with 0,1 Ohm shunts resulting in a measurement range 0..1,5A with an accuracy of 0,5mA, which is fine for the operation up to 20W.  
-For the extended power range 300W using a SZBK07 we will have to replace the shunts with 0,01 Ohm shunts resulting in a measurement range 0..15A with an accuracy of 5mA. The original shunts can be relatively easy unsoldered by generously adding tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip. You can do it! Even I can, as an old man with beginning Parkinson! 
+
+### Increasing current measuring range:  
+The original shunts can be relatively easy unsoldered by generously adding tin to both ends, then heating the ends in short sequence and shifting the resistor away with the soldering tip. You can do it! Even I can, as an old man with beginning Parkinson! 
 
 ## Current injection
 
@@ -148,7 +157,7 @@ The prototyping board is equipped with following connectors:
 - Panel_in   positive.
 - Gnd        negative.
 
-**SZBK07 (mid-power 300W option)**
+**SZBK07 (mid-power 200W option)**
 
 - Inject CV Injection
 - Enable 
@@ -166,6 +175,12 @@ The prototyping board is equipped with following connectors:
 - positive
 - himnegative
 
+**I2C connector
+- +3,3V
+- GND
+- SCL
+- SDA
+
 **Relay/FET control**
 
 - 0..3.3V to control first relay
@@ -176,8 +191,11 @@ The prototyping board is equipped with following connectors:
 **User defined measurement input**
 
 - 0..3.3V analog input.
+- 0..3.3V to control first relay
 - Gnd
 - +5V.
+
+**12V Fan connector**
 
 ## Performance
 
