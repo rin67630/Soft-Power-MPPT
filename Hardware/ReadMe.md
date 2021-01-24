@@ -10,9 +10,9 @@ Further variants, _that will be described in detail later_ just to give an outlo
 5. same than 4, just shown without the high power option.  To be part of an integrated device design.  
 6. modified version 2 to run panels with voltages up to 60Voc, the panel current is measured low.side.  
 
-All three schematics can be used for
-- Micro-power version with extremely low quiescent current that can handle panels up to 20W (as is, no SZBK07 power buck converter)
-- Mid-power version with low quiescent current that can handle panels up to 300W, upon adding a SZBK07 power buck converter to the micropower version.
+All schematics can be used for
+- Micro-power version with extremely low quiescent current that can handle panels up to 20W (as is, no power buck converter)
+- Mid-power version with low quiescent current that can handle panels up to 300W, upon adding a power buck converter to the micropower version.
 
 A High-power version >300W will never be build, commercial stuff covers the requirements.
 
