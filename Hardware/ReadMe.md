@@ -27,6 +27,6 @@ Don't ask for more power: a High-power version >200W will never be build, commer
 Enjoy!
 
 **Last but not least:**
-I am giving a very detailed on how to solder Soft Power on a protoyping board. It got now very close to become a full blown PCB.  
+I am giving very detailed explanations and pictures on how to solder Soft Power on a protoyping board. It got now very close to become a full blown PCB.  
 I just have not time to learn how to handle a PCB CAD and must concentrate on software.  
 It would be GREAT, if someone familiar with KiCAD or other ECAD designers would contribute...
