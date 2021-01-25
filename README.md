@@ -30,6 +30,15 @@ These basic reporting and statistic functions will be available.
 - computation of the internal resistance of the battery
 - weather display from openweather.org
 - ability to network measures over UDP
+You can adjust your dashboards online any time ad gusto!
+
+## The candies extra:
+The board provides additionally:  
+- a convenience DC output switchable and with voltage controlled by software
+- two control outputs to switch relay or FET boards
+- an I2C port to add sensors
+- an analog input port to measure something else
+
 
 Enjoy!\
 ![grafik](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)
