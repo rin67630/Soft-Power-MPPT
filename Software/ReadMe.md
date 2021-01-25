@@ -42,7 +42,7 @@ You need
 The other libraries should be already present.
 
 ## Download instructions
-You can download all the files from the main page of Soft-Power upon clicking on the green Code button and selecting "download Zip".  
+You can download all the files from the main page of Soft-Power upon clicking on the green Code button and selecting "download Zip".    
 This will save a file Soft-Power-MPPT-main.zip.  
 From that compressed file, extract the folder "Software" and copy it into your Arduino working space.  
 Rename that folder SoftPowerMPPT.  
@@ -51,10 +51,11 @@ You will now find the project in File/Sketchbook/SoftPowerMPPT and after startin
 If later you just need to update some tabs individually, you just can copy the content directly into the Arduino IDE.
 
 ## Configuration instructions
-The software is written in such a way that you can use it just upon defining your options in the folder a0_Parameters.
-If you are not familiar with the code, this is the only folder that you should change:
+The software is written in such a way that you can use it just upon defining your options in the folder a0_Parameters.  
+If you are not familiar with the code, *this is the only folder that you should change*:  
 
-If you have several devices, change the hostname.
+### Parameter list
+If you have several devices, change the hostname, else you can leave my preferred Host Name.
 Then proceed with the hardware configuration:
 - #define WEATHER_SOURCE_IS_URL specifies that you get the weather information from an URL, the other options are given in the comment, so you also have the option to  
 #define WEATHER_SOURCE_IS_NONE, if you do not want to process weather information.
@@ -67,6 +68,11 @@ Then proceed with the hardware configuration:
 #define PANEL_SOURCE_IS_INA if you are using an INA sensor for the panel (with INA3221 or at least two INA226) or  
 #define PANEL_SOURCE_IS_URL to get the battery information from another ESP as a slave device and  
 #define PANEL_SOURCE_IS_NONE to not process panel information at all ( which only makes sense in my other projects ).
+
+- #define CONVENIENCE_SOURCE_IS_A0 specifies that you get the convenience voltage over A0 (that would be the case if you only have one INA226), the other options being  
+#define CONVENIENCE_SOURCE_IS_INA if you are using an INA sensor for the convenience  (with INA3221 or at least two INA226) or  
+#define CONVENIENCE_SOURCE_IS_URL to get/control the convenience information from another ESP as a slave device and  
+#define CONVENIENCE_SOURCE_IS_NONE to not process convenience information at all ( which only makes sense in my other projects or if you decides not to populate the convenience output).
 
 - #define BATTERY_IS_12V_FLA specifies that you are using a 12 V flooded acid battery, the other options being #define BATTERY_IS_12V_AGM to use a 12 V AGM battery and so on...
 - #define DISPLAY_IS_OLED64x48 define if you are using an OLED display and which one.
