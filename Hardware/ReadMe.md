@@ -3,9 +3,10 @@ This folder contains the schematics and hardware description of my Soft – Powe
 This schematics now contains several possible hardware variants:
 1. The preferred design with one INA-3221, measuring voltage and current for panel, battery, convenience output, the A0 analog input is free for extra usage.
 2. A minimal version with only one INA-226, measuring the battery voltage and current, used as a device power supply.
-3. A passive display and logging version, used to retrofit existing SCC's. (which must however have hava a common ground between panel and battery, whic is mainly not the case for cheap PWM modules)   
+3. A passive display and logging version, used to retrofit existing SCC's with powerful dashboard and logging functions.  
+(which must however have a **common ground** between panel and battery, which is mainly the case for real MPPT devices, but **not** for cheap PWM modules or those just *pretending* to be MPPT)   
 
-Further variants, _that will be described in detail later_ just to give an outlook of the conceptual flexibilty.  
+Further variants, _ will be described in detail later_ just to give an outlook of the conceptual flexibility.  
 5. replacing the INA-3221 through 3x INA-226 taking advantage of an increased voltage up to 36V.  
 5. reduced with only two INA-226, measuring voltage and current for panel, battery, the A0 analog input measures the convenience output voltage.    
 6. modified version 2 to run panels with voltages up to 60Voc, the panel current is measured low.side.  
