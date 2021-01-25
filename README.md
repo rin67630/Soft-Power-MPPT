@@ -29,7 +29,7 @@ These basic reporting and statistic functions will be available.
 - energy not harvested (after battery full)
 - computation of the internal resistance of the battery
 - weather display from openweather.org
-- ability to network measures over UDP
+- ability to network measures over UDP  
 You can adjust your dashboards online any time ad gusto!
 
 ## The candies extra:
