@@ -19,7 +19,7 @@ I used that feature to organize my code in functional blocks:
 4. a1 Libs_Vars: libraries and variables required by the program.
 5. b_Functions: the function subroutines used by the program.
 6. c_Setup: The setup process that runs once upon booting the ESP
-7. d_Menu: The serial menu that can be used to at just parameters and request some reports on the serial line.
+7. d_Menu: The serial menu that can be used to adjust parameters and request some reports on the serial line.
 8. e_Data: The main processing routine
 9. f_Display: The code intended to display current information on the OLED displays
 10. g_Serial: The code intended to issue the serial reports called by the menu.
