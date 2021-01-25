@@ -37,8 +37,7 @@ The board provides additionally:
 - a convenience DC output switchable and with voltage controlled by software
 - two control outputs to switch relay or FET boards
 - an I2C port to add sensors
-- an analog input port to measure something else
-
+- an analog input port to measure something else  
 
 Enjoy!\
 ![grafik](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)
