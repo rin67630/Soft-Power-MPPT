@@ -61,13 +61,13 @@ Who has the skills and wants to make a PCB for the project? I just never made it
 - Solder the 2 yellow injection lines according to picture
 
 The curved thick power lines orange for panel, red for Battery and violet for Convenience are intended to be soldered lose between the prototype board and the attached INA3221.
-![image](https://user-images.githubusercontent.com/14197155/105644819-f1848a80-5e97-11eb-913d-eac73545989e.png)  
+![image](https://user-images.githubusercontent.com/14197155/105707897-ecfdb780-5f13-11eb-83aa-26e06ef165fb.png)  
 
 The finished board: 
-![image](https://user-images.githubusercontent.com/14197155/105644985-1e856d00-5e99-11eb-9342-bf364a7fe85f.png)
+![image](https://user-images.githubusercontent.com/14197155/105708022-1cacbf80-5f14-11eb-9ccf-d8e765fa80ce.png)  
 (the green I2C line is grey in my build)
 The front side:  
-![image](https://user-images.githubusercontent.com/14197155/105645020-5b516400-5e99-11eb-8048-57ead5567a85.png)
+![image](https://user-images.githubusercontent.com/14197155/105708145-4bc33100-5f14-11eb-941c-fee3354e1f9f.png)  
 
 Tomorrow I will build it into the box...  
 Enjoy!  
