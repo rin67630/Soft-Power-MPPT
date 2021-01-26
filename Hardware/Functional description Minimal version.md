@@ -33,7 +33,10 @@ As explained in that document, there is a neutral voltage, for which the injecti
 This corresponds to a PWM value of 250. At a PWM value of 0, the voltage will increase, at a PWM value of 1024, the voltage will decrease.  
 The trim potentiometer should be set to such a value, that at PWM = 0 the maximum voltage of the battery ( in case of FLA 15,5 V equalizing voltage) is reached.  
 According to that setting, you will also have a minimum voltage reachable at PWM = 1024 that will roughly be around 10V. Please note as these two values.  
-The PWM values can be changed from the dashboard, explained in the software description.
+This is an example of the correlation PWM-Voltage for th HW613 Buck converter.
+![image](https://user-images.githubusercontent.com/14197155/105856555-aa0e1380-5fe9-11eb-8df3-5ba0f8b9e277.png)
+  
+To test, the PWM values can be changed from the dashboard, explained in the software description.
 
 ## Enable
 The D0 port of the Wemos D0 enables the U1 converter when HIGH. This is also the initial value of D0 upon booting.  
