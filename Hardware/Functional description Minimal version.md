@@ -1,6 +1,20 @@
 # Functional description of "Soft Power 1xINA226 Minimum"
 
-Please confer to the schematic diagram https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/Soft%20Power%201xINA226%20Minimum.pdf  
+## Overview
+![image](https://user-images.githubusercontent.com/14197155/105853471-066f3400-5fe6-11eb-9537-036f289e1d2b.png)
+
+The voltage from the photovoltaic panel goes to the low-power Buck converter BD1, and will be there converted to the battery voltage Vbat going to the battery.
+From the battery, the Buck converter BD2 produces a user – freely definable convenience voltage 
+From the battery, the back converter BD6 produces the 5V required by the microcontroller
+
+BD5 is a power measuring module INA226 or INA3221 that measures voltage and current from the battery, from the panel, and from the convenience output.
+
+BD7 is microcontroller ESP8266 (the module name is Wemos D1 mini) that controls the power measuring modules and the setpoints of BD1 and BD2.
+
+Optionally, For higher power requirements the Buck converter BD8 can take over the panel to battery power conversion, as soon as the power required exceeds 15W. 
+Under 15W, the low-power module realizes the power conversion with a better efficiency.
+
+Please confer to the schematic diagram https://github.com/rin67630/Soft-Power-MPPT/blob/main/Hardware/Soft%20Power%201xINA226%20Minimum.pdf for the detailed analysis-
 
 ## Power conversion from panel to battery
 The photovoltaic panel is connected over P1,2 to the first buck converter U1 over a blocking diode D1, which prevents reverse current flowing from the battery into the panel, 
