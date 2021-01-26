@@ -1,4 +1,4 @@
-# Soft-Power Hardware Description
+# Soft-Power Hardware Principles
 
 Instrumentation control is provided by:  
 1. A convenience power output that can be controlled by software between 5V and 12V that can switched on and off by software as required. This can be used for any discretionary purpose by the user such as to charge a smaller secondary battery, control devices/track sun...
@@ -15,9 +15,10 @@ Instrumentation control is provided by:
 ## Schematic diagrams:
 
 Unfortunately, there is no " one size fits all " hardware.  
-There is currently no buck converter having at the same time a very low quiescent current, providing high power and being able to manage relatively high input voltage (see next chapter about converters used). For that reason, the design will consist of a base module, containing low-power, very low quiescent current buck converters, able to handling input power up to 20W. That base module can be used alone.  Cf: Soft Power 1xINA226 Minimum.pdf
-To handle more power, an optional external buck converter can be added. The software will use the low-power modules in the low-power range and switch over to the more powerful buck converter as a power increases. Cf: Soft Power 1xINA3221 w Power Extension.pdf 
-For people already having a SCC, but without Dashborard and extensive reporting abilities I provide Soft Power 1xINA3221 Passive Logger.pdf.
+There is currently no buck converter having at the same time a very low quiescent current, providing high power and being able to manage relatively high input voltage (see next chapter about converters used). For that reason, the design will consist of a base module, containing low-power, very low quiescent current buck converters, able to handling input power up to 20W.  
+That base module can be used alone.  Cf: Soft Power 1xINA226 Minimum.pdf
+To handle more power, an optional external buck converter can be added. The software will use the low-power modules in the low-power range and switch over to the more powerful buck converter as a power increases. Cf: Soft Power 1xINA3221 w Power Extension.pdf  
+For people already having a SCC, but without Dashboard and extensive reporting abilities I provide a plain data logger. Cf. Soft Power 1xINA3221 Passive Logger.pdf.
 
 All three hardware versions use the same base module. 
 
