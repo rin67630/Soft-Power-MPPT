@@ -1,16 +1,4 @@
-# SoftPower Schematic Analysis
-
-## Aims of the project
-
-Soft power is a project intending to address a specific niche in the solar charge controller market: Providing solar charging services with MPPT strategies to _low and mid-range solar panels_ for powering instrumentation projects off grid, consuming as low as 30mA but 24/365. The specifics of the project are requiring an extremely low quiescent consumption. The concept is suitable for an efficient operation under bad weather conditions, while optimizing the power harvesting from the solar panel.
-
-It includes the charging profiles for various battery chemistries:
-
-1. Flooded lead acid batteries
-2. AGM lead acid batteries
-3. GEL lead acid batteries
-4. LiPo batteries (3s)
-5. LiFePo batteries (4s)
+# Soft-Power Hardware Description
 
 Instrumentation control is provided by:  
 1. A convenience power output that can be controlled by software between 5V and 12V that can switched on and off by software as required. This can be used for any discretionary purpose by the user such as to charge a smaller secondary battery, control devices/track sun...
@@ -27,28 +15,13 @@ Instrumentation control is provided by:
 ## Schematic diagrams:
 
 Unfortunately, there is no " one size fits all " hardware.  
-There is currently no buck converter having at the same time a very low quiescent current, providing high power and being able to manage relatively high input voltage (see next chapter about converters used). For that reason, the design will consist of a base module, containing low-power, very low quiescent current buck converters, able to handling input power up to 20W. That base module can be used alone.  
-To handle more power, an optional external buck converter can be added. The software will use the low-power modules in the low-power range and switch over to the more powerful buck converter as a power increases.
+There is currently no buck converter having at the same time a very low quiescent current, providing high power and being able to manage relatively high input voltage (see next chapter about converters used). For that reason, the design will consist of a base module, containing low-power, very low quiescent current buck converters, able to handling input power up to 20W. That base module can be used alone.  Cf: Soft Power 1xINA226 Minimum.pdf
+To handle more power, an optional external buck converter can be added. The software will use the low-power modules in the low-power range and switch over to the more powerful buck converter as a power increases. Cf: Soft Power 1xINA3221 w Power Extension.pdf 
+For people already having a SCC, but without Dashborard and extensive reporting abilities I provide Soft Power 1xINA3221 Passive Logger.pdf.
 
-The base module has a versatile design. It uses a standard framework, but is offered in several flavors, depending on the INA modules used.
+All three hardware versions use the same base module. 
 
-The recommended variant is "SoftPower 1xINA3221", staging a chip able to measure three channels.
-It will measure the voltage, the current and the power coming from the solar panel, fed/retrieved from the battery and provided by the convenience output.
-The A0 analog input is left free for an extra usage.  
-Since the INA3221 module is specified for a maximum of 26 V, this variant is reserved for the "12V class" of panels (Voc=~20V, Vpp=~18V) and "12V" batteries.
-
-The second variant "SoftPower 3xINA226" is functionally identical, the measurements are however realized by three separate INA226 modules, able to handle up to 36V.
-with this variant you can use 24V class panels (Voc=~40V, Vpp=~36V) and "24V" batteries. The low power buck converters must be D-SUN.
-
-The third variant "SoftPower 2xINA226" skips the INA226 dedictated to measure the convenience output. The convenience voltage will be measured over A0.
-You lose the measure of the convenience current and the A0 analog input is not available anymore for extra usage.  
-
-The 4th variant "SoftPower 1xINA226" skips additionally the INA226 dedictated to measure the panel voltage and power. The panel voltage will be measured over A0.
-You lose additionally the measure of the panel current and the monitoring of the conversion efficiency. The voltage of the convenience output is estimated ~5%. 
-
-The 5th schematic diagram "SoftPower Bare minimum Micropower" is the same as above, I just removed the power option for clarity. This is the typical usage for micropower solutions with a solar panel up to 20W.
-
-The 6th variant "SoftPower 3xINA226 Hi Volt" is a special flavor for higher voltage solar panels up to 60 V. It uses a buck converter able to handle that voltage, the higher panel voltage does not allow to use a low power tandem buck converter either, so that module must not be populated. The high panel voltage also exceeds the maximum voltage for the INA226 chip, so low side current monitoring is used for the first INA226 and the panel voltage goes over a 2:1 voltage divider before feeding Vbus Pin. 
+The operating concept is described in SoftPower Schematic Analysis.md
 
 ## Buck converters used:
 
@@ -62,15 +35,6 @@ If the USB port is not a requirement, the smaller and more efficient HW613 modul
 The SZBK07 buck converter is an option to boost the power from 20W to 300W for projects requiring more energy.
 The HW636 buck converter is an option to boost the power from 20W to 250W and to manage panels up to 60Voc. 
 
-The buck converters have following functions:
-
-- HW613, D-SUN: low power (up to 20W) conversion of the panel voltage to battery voltage.
-- Red one: fixed conversion of the battery voltage to 5V as required by the ESP + offering an USB port.
-- HW613, D-SUN: convenience user power output or secondary battery charge.
-- SZBK07, HW636: _optional_ mid-power conversion of the panel voltage to battery voltage.
-  n.b. the mid-power modules have usually a low side current shunt: never connect both Vin- and Vout- to GND simultaneously!
-
-N.B. High voltage variant: The HW636 is one of the few modules on the market that can handle up to 60V input. _However, it has an important caveat_: it cannot safely supply more than 20V at the output without _destroying the LT3800 chip!_ Sadly, its trimpot does not prevent this. The very best solution is to replace it's 50K potentiometer by a 20K model to avoid this risk. Alternatively, before powering up the module screw the trimpot counterclockwise until a small clicking sound is heard at the minimum, then power it up and increase the voltage to the floating battery voltage, typically 13.8V for a lead-acid battery. This buck converter also has a built-in reverse feed current protection, so an ideal diode is not required.
 
 ## Preparation of the modules for injection:
 
@@ -198,12 +162,5 @@ The prototyping board is equipped with following screw terminals :
 A reduction to <1mA at night could be realized with a sleep option.  
 I do not want it for myself, since my user measurement functions on the same ESP8266 must go on permanently.
 
-## Commissioning
-
-...to be described further, but the most important first:
-
-- The U1 and evtl. U6 buck converters must be set to the float voltage of the battery before starting operations. This is fail-safe, without an operating ESP8266 the hardware will charge _and not overcharge_ the battery.
-- If you use a HW813 as U3, you must set it a +5V you can do that with the trim pot or, better, cut the trace to the trim pot and solder a bridge on the 5V setting.
-- U7 should be set at 11v using the trim pot.
 
 Enjoy!
