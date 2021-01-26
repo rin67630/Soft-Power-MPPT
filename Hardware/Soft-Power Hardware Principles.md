@@ -42,7 +42,9 @@ The HW636 buck converter is an option to boost the power from 20W to 250W and to
 The HW613 and D-SUN require soldering a wire to a really tiny trim potentiometer to allow voltage injection. That requires a bit of soldering experience and a fine tip. It is doable, even for an old man with some early signs of Parkinson.
 
 1. HW613 - preferred for panels up to 24Voc
-![image](https://user-images.githubusercontent.com/14197155/104938984-1f596300-59b0-11eb-8d2a-57a3ed7b8cc6.png)
+![image](https://user-images.githubusercontent.com/14197155/104938984-1f596300-59b0-11eb-8d2a-57a3ed7b8cc6.png)  
+Another view on the module sowing better the injection point:  
+![image](https://user-images.githubusercontent.com/14197155/105875981-c36d8a80-5ffe-11eb-9f2e-29757c07320c.png)
 2. D-SUN - for panels up to 40Voc
 ![image](https://user-images.githubusercontent.com/14197155/104938919-0b156600-59b0-11eb-9405-7e87dc7c254f.png)
 3. SZBK07 - mid-power option for up to 300W
