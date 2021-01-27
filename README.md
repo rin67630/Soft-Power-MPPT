@@ -26,18 +26,19 @@ The board provides additionally:
 ![image](https://user-images.githubusercontent.com/14197155/105948031-88a13c00-606a-11eb-92d5-1ef73b2c2c20.png)
 
 The main board is able to handle panels up to 20 W, an optional second converter takes over power up to 200W.  
-This split design optimizes efficiency in every power range.
-The result is a solution that has a no-load consumption of ~25mA while providing a full WiFi connectivity.
-The efficiency is ~90% at 1W solar panel harvesting. (commercial MPPT solar chargers are _consuming_ power in that range!)
+This split design optimizes efficiency in every power range.  
+The result is a solution that has a no-load consumption of ~25mA while providing a full WiFi connectivity.  
+The efficiency is ~90% at 1W solar panel harvesting. (commercial MPPT solar chargers are _consuming_ power in that range!)  
 The efficiency is ~ 95% at 10W solar panel harvesting and increases to 97% at 100W solar panel harvesting.
 
-Soft-Power can be wired on a simple prototyping board, without needing a dedicated PCB.
+Soft-Power can be wired on a simple prototyping board, without needing a dedicated PCB.  
+But I would be grateful if someone would contribute with a PCB file ;-)
 
 ### Software
 Soft-Power provides MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
-It features a powerful cloud-based dashboard.
+It features a powerful cloud-based dashboard.  
 ![image](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)
-These basic reporting and statistic functions will be available.
+These basic reporting and statistic functions will be available.  
 - battery voltage and current monitoring (with trending in the cloud and download to excel)
 - total current to/from Battery and power
 - statistics and Coulomb/Ah integration
@@ -46,7 +47,7 @@ These basic reporting and statistic functions will be available.
 - computation of the internal resistance of the battery
 - weather display from openweather.org
 - ability to network measures over UDP 
-- control the auxiliary DC output and the relays 
+- control the auxiliary DC output and the relays  
 You can adjust your dashboards online any time ad gusto!
 
 
