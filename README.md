@@ -19,7 +19,7 @@ It includes the charging profiles for various battery chemistries:
 5. LiFePo batteries (4s)
 
 **The candies extra:**   
-- an auxiliary DC output switchable and with voltage controlled by software to charge a second smaller battery or just to do neat things...
+- an auxiliary DC output switchable and with voltage controlled by software to charge a second smaller battery or just to do neat remote controlled things...
 - two control outputs to switch relay or FET boards 
 - an I2C port to add sensors
 - an analog input port to measure something else  
