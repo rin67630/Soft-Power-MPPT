@@ -37,17 +37,17 @@ But I would be grateful if someone would contribute with a PCB file ;-)
 ### Software
 Soft-Power provides MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
 It features a powerful cloud-based dashboard.  
-![image](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)
-These basic reporting and statistic functions will be available.  
+![image](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)  
+Provided functions:
 - battery voltage and current monitoring (with trending in the cloud and download to excel)
 - total current to/from Battery and power
-- statistics and Coulomb/Ah integration
+- statistics and Ah integration
 - logging of events (low/high voltage, cycles, begin / end of full charge)
 - clipping time (after battery full)
 - computation of the internal resistance of the battery
 - weather display from openweather.org
 - ability to network measures over UDP 
-- control the auxiliary DC output and the relays  
+- remote control the auxiliary DC output and the relays  
 You can adjust your dashboards online any time ad gusto!
 
 
