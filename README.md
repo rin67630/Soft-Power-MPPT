@@ -1,7 +1,7 @@
 # Soft-Power: the different MPPT Solar Charge Controller 
 __based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)__
 
-Soft power is a project intending to address a specific niche in the solar charge controller market:  
+Soft power is a project intending to address a specific niche under charge controllers:  
 Providing solar charging services with MPPT strategies to _low and mid-range solar panels (10 to 200W)_  
 to power instrumentation projects off grid, consuming as low as 50mA, but steadily 24/365 without sleep possibility.
 
