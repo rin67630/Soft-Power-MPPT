@@ -1,24 +1,14 @@
 # Soft-Power: the Swiss-Army-Knife MPPT Solar Charge Controller 
 __based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)__
 
-Soft power is a project intending to address a specific niche in the solar charge controller market:  
-Providing solar charging services with MPPT strategies to _low and mid-range solar panels_ for powering instrumentation projects off grid, consuming as low as 30mA but 24/365. The specifics of the project are requiring an extremely low quiescent consumption. The concept is suitable for an efficient operation under bad weather conditions, while optimizing the power harvesting from the solar panel.
+Soft power is a project intending to address a specific niche in the solar charge controller market: Providing solar charging services with MPPT strategies to  
+_low and mid-range solar panels (10 to 200W)_ for powering instrumentation projects off grid, consuming as low as 50mA, but steadily 24/365. 
 
-## The challenge:
-The challenge might seem simple: Run a Raspberry Pi or an Arduino, plus a radio transmitter and a few instruments as a continuous no-sleep environmental measuring station
-placed in the public domain or others property on solar power 24/365 in a Scottish type climate   
+## What makes Soft-Power different?
+The specifics of the project are requiring an extremely low quiescent consumption. The concept is suitable for an efficient operation under bad weather conditions, while optimizing the power harvesting from the solar panel, even when it produces only a few percent of its nominal power.
 
-A Raspberry Pi + radio + instruments will need ~150Wh daily... easy with a 100W panel and a 100Ah battery?  
-An Arduino + radio + instruments will need ~30Wh daily... easy with a 20W panel and a 20Ah battery?  
-In a sunny region that might work, not in Scotland!  
-You must dimension panel and battery to last two weeks of cloudy winter weather with barely 5% solar contribution for only a few hours a day! 
- 
-Commercial MPPT solar charge controllers **will require 60-100mA for themselves**, that is up to 30Wh a day- far less than what the panel delivers in bad winter days!
-
-## My solution:
-So I decided to build my own MPPT solar charge controller, optimized for efficiency and very low quiescent consumption.  
-It manages to draw as less as 20mA including WiFi transmission of data to a powerful cloud dashboard. 
-
+### Hardware
+Additionally, I designed the project hardware in a very versatile way:
 It includes the charging profiles for various battery chemistries:
 
 1. Flooded lead acid batteries
@@ -27,31 +17,38 @@ It includes the charging profiles for various battery chemistries:
 4. LiPo batteries (3s)
 5. LiFePo batteries (4s)
 
-The ESP has enough resources left (see my other project SPL-Booster) to manage the measurement as well.
+## The candies extra:
+The board provides additionally:  
+- an auxiliary DC output switchable and with voltage controlled by software to charge a second smaller battery or just to do neat things...
+- two control outputs to switch relay or FET boards 
+- an I2C port to add sensors
+- an analog input port to measure something else  
+![image](https://user-images.githubusercontent.com/14197155/105948031-88a13c00-606a-11eb-92d5-1ef73b2c2c20.png)
 
+The main board is able to handle panels up to 20 W, an optional second converter takes over power up to 200W.  
+This split design optimizes efficiency in every power range.
+The result is a solution that has a no-load consumption of ~25mA while providing a full WiFi connectivity.
+The efficiency is ~90% at 1W solar panel harvesting. (commercial MPPT solar chargers are _consuming_ power in that range!)
+The efficiency is ~ 95% at 10W solar panel harvesting and increases to 97% at 100W solar panel harvesting.
+
+Soft-Power can be wired on a simple prototyping board, without needing a dedicated PCB.
+
+### Software
 Soft-Power provides MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
-Meanwhile the solution has grown to a versatile harware choice of various hardware configurations to match different power requirements/ panel data.
-All versions can be wired on a simple prototyping board, without needing a dedicated PCB.
-
-## Dashboard feature list:
-![grafik](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)
+It features a powerful cloud-based dashboard.
+![image](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)
 These basic reporting and statistic functions will be available.
 - battery voltage and current monitoring (with trending in the cloud and download to excel)
 - total current to/from Battery and power
 - statistics and Coulomb/Ah integration
 - logging of events (low/high voltage, cycles, begin / end of full charge)
-- energy not harvested (after battery full)
+- clipping time (after battery full)
 - computation of the internal resistance of the battery
 - weather display from openweather.org
-- ability to network measures over UDP  
+- ability to network measures over UDP 
+- control the auxiliary DC output and the relays 
 You can adjust your dashboards online any time ad gusto!
 
-## The candies extra:
-The board provides additionally:  
-- a convenience DC output switchable and with voltage controlled by software
-- two control outputs to switch relay or FET boards
-- an I2C port to add sensors
-- an analog input port to measure something else  
 
-Enjoy!\
+Enjoy!
 
