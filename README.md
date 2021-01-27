@@ -17,22 +17,20 @@ It includes the charging profiles for various battery chemistries:
 4. LiPo batteries (3s)
 5. LiFePo batteries (4s)
 
-## The candies extra:
-The board provides additionally:  
+**The candies extra:**   
 - an auxiliary DC output switchable and with voltage controlled by software to charge a second smaller battery or just to do neat things...
 - two control outputs to switch relay or FET boards 
 - an I2C port to add sensors
 - an analog input port to measure something else  
-![image](https://user-images.githubusercontent.com/14197155/105948031-88a13c00-606a-11eb-92d5-1ef73b2c2c20.png)
-
+![image](https://user-images.githubusercontent.com/14197155/105948031-88a13c00-606a-11eb-92d5-1ef73b2c2c20.png)  
 The main board is able to handle panels up to 20 W, an optional second converter takes over power up to 200W.  
 This split design optimizes efficiency in every power range.  
 The result is a solution that has a no-load consumption of ~25mA while providing a full WiFi connectivity.  
 The efficiency is ~90% at 1W solar panel harvesting. (commercial MPPT solar chargers are _consuming_ power in that range!)  
 The efficiency is ~ 95% at 10W solar panel harvesting and increases to 97% at 100W solar panel harvesting.
 
-Soft-Power can be wired on a simple prototyping board, without needing a dedicated PCB.  
-But I would be grateful if someone would contribute with a PCB file ;-)
+Soft-Power can be wired on a simple well described prototyping board, without needing a dedicated PCB. *But I would be grateful, if someone contributes with a PCB file ;-)*  
+The BOM cost is < 30 USD.
 
 ### Software
 Soft-Power provides MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
