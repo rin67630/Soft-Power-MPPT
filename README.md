@@ -34,8 +34,7 @@ Soft-Power can be wired on a simple well described prototyping board, without ne
 The BOM cost is < 30 USD.
 
 ### Software
-Soft-Power provides MPPT solar charging + networking and reporting abilities to plain DC buck converters, by adding an ESP8266 WiFi microcontroller to it.
-It features a powerful cloud-based dashboard.  
+Soft-Power provides a powerful cloud-based dashboard:    
 ![image](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)  
 Provided functions:
 - battery voltage and current monitoring (with trending in the cloud and download to excel)
