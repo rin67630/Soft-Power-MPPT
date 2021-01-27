@@ -1,4 +1,4 @@
-# Soft-Power: the Swiss-Army-Knife MPPT Solar Charge Controller 
+# Soft-Power: the different MPPT Solar Charge Controller 
 __based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)__
 
 Soft power is a project intending to address a specific niche in the solar charge controller market:  
