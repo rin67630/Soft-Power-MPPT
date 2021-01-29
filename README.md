@@ -9,7 +9,7 @@ to power instrumentation projects off grid, consuming as low as 50mA, but steadi
 The specifics of the project are requiring an extremely low quiescent consumption. The concept is suitable for an efficient operation under bad weather conditions, while optimizing the power harvesting from the solar panel, even when it produces only a few percent of its nominal power.
 
 ## Why is it so important to optimize for bad weather?
-During a week wintertime in Northern maritime regions, you frequently get many hundreds cloudy hours with the panel delivering less than 5% of its nominal power, and you have just a few hours with direct sun irradiance. Both are approximately harvesting the same amount of energy, but traditional solar charge controllers will not be able to handle efficiently the low-power range, frequently harvesting zero, when not consuming power...
+During a week wintertime in Northern maritime regions, you frequently get many hundreds cloudy hours with the panel delivering less than 5% of its nominal power, and you have just a few hours with direct sun irradiance. Both could approximately harvest the same amount of energy, but traditional solar charge controllers will not be able to handle efficiently the low-power range, frequently harvesting zero, when not consuming power...
 Soft-Power stages two different buck converters, each one being efficient in its own power range 0..15W and 15W..200W.
 
 ### Hardware
