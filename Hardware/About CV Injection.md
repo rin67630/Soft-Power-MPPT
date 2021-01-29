@@ -15,6 +15,8 @@ So feeding some current into the potentiometer will reduce the output voltage, d
 
 Of course, with that technique the output voltage cannot vary from zero to the maximum. By fooling the feedback circuit the overall gain of the feedback loop is also reduced.
 In my experience, every buck converter I have tested by injecting current to change the voltage from -70% to +10% was safe and efficient.
+This is an example of the correlation PWM-Voltage for th HW613 Buck converter.
+![image](https://user-images.githubusercontent.com/14197155/105856555-aa0e1380-5fe9-11eb-8df3-5ba0f8b9e277.png)
 
 By the way, this technique is also used by many modules providing a current limitation functionality. For example, an op amp monitors the output current and injects
 voltage into the feedback loop to reduce output voltage as the current increases.
