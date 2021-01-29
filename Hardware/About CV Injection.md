@@ -29,7 +29,7 @@ voltage into the feedback loop to reduce output voltage as the current increases
 ## The possibilities
 With a microcontroller the injection technique can be used to do neat things controlling an existing buck converter:
 - Digital: A direct digital output 3.3V to 5V over a 1k resistor and a diode can shut down a buck converter. A high signal will increase the feedback voltage in such a way, the chip will virtually stop. 
-- Software CV: A PWM digital output followed by a 1KOhm/1microfarad low pass filter and a high-value resistor (approximately 3 times the value of the potentiometer), the output of the converter can be varied approximately +10% -30%, which is also the maximum variation you can reach, to keep the feedback loop working safely and not impact too much the output voltage stability.
+- Software CV: A PWM digital output followed by a 1KOhm/1microfarad low pass filter and a high-value resistor (approximately 3 times the value of the potentiometer), the output of the converter can be varied approximately +10% -30%. 
 - Software CC: The same circuit and a current measurement chip, like an INA226 or ACS712, together with a software feedback loop can provide a kind of
 current control. This software loop will however be considerably slower than the analog equivalent describe before and must be processed fast enough. 
 - Software MPPT: The same circuit and a double current/voltage measurement by two chips, like INA226 and the above-described software current feedback loop, can provide solar panel maximum power point tracking functionality. 
