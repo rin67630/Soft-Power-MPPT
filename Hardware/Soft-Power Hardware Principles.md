@@ -101,6 +101,10 @@ The 0.1 Ohm version can handle a measurement range from 0 to 0.8A with an accura
 The 0.01 Ohm version can handle a measurement range from 0 to 8A with an accuracy of 0.25mA, which is fine for the operation up to 100W.
 For an extended power range up to 200W using a SZBK07 we will have to replace the shunts with 0.005 Ohm shunts resulting in a measurement range from 0 to 15A with an accuracy of 5mA.
 
+## Calculate the R4 resistance.
+If you use the A0 input, to measure the panel voltage, you need a resitor R4 to reduce the voltage to the 0..3.2V input of the Wemos D1.
+the rule to calculate that resistor is simple: 100K for every volt exceeding 3.2V. So if you want the panel range of 23.2V you put 20x100k=2M, if you want the panel range of 43.2V you put 40x100k=4M, which is not a standard, so you will use 3.9M instead, giving you a range of 0..42.2V.
+
 ### Addressing:  
 If you use more than one module, you must provide different I2C addresses, by soldering a small tin bridge:  
 ![image](https://user-images.githubusercontent.com/14197155/105281711-0538a400-5bad-11eb-97eb-b8db0fc177ce.png)  
