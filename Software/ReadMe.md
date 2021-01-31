@@ -3,7 +3,7 @@ The software is _still under development_: the display, menu, serial functions a
 The MPPT control loop and the battery loading processes are still missing, since I am still in the process of analyzing the behavior of the hardware, before determining the best algorithm.
 
 # Explanations about the software.
-I like software being easy to read, close to naturally language.  
+I like software being easy to read, close to natural language.  
 The Arduino IDE is a very accessible development environment, that hides the complexity of C++ language to the beginners.
 My code makes also extensive use of compiler directives to determine different options and avoid having to dig into the code to change a user setting.  
 For the sake of clarity I made an extensive use of comments, especially commenting why I realized the code that way.  
