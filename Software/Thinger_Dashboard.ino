@@ -10,10 +10,9 @@ click at the top left on "settings" and within the pop-up window on "developer",
 starting from the currently brace ( do not copy this comment).
 
 Enjoy your dashboard, and modify it ad libitum.
-
- {
- "description": "SoftPowerMeter",
-  "name": "SoftPower Efficiency Meter",
+{
+  "description": "Soft-Power 1xINA226, 2x D-SUN",
+  "name": "Soft-Power",
   "properties": {
     "columns": 4,
     "show_template": true
@@ -21,68 +20,28 @@ Enjoy your dashboard, and modify it ad libitum.
   "tabs": [
     {
       "icon": "fas fa-tachometer-alt",
-      "name": "Solar Swiss Army Knife",
+      "name": "Soft Power",
       "widgets": [
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
+              "id": "Soft-Power",
               "interval": 2,
-              "mapping": "current",
-              "resource": "energy",
-              "update": "interval",
-              "user": "User_replace_me"
-            },
-            "source": "device"
-          },
-          "layout": {
-            "col": 2,
-            "row": 15,
-            "sizeX": 1,
-            "sizeY": 2
-          },
-          "panel": {
-            "color": "#ffffff"
-          },
-          "properties": {
-            "color": "#1E313E",
-            "decimal_places": 2,
-            "gradient": true,
-            "icon": "",
-            "majorTicks": 1,
-            "max": 1,
-            "min": -1,
-            "plateColor": "#ffffff",
-            "showValue": true,
-            "size": "50px",
-            "textColor": "#1E313E",
-            "tickColor": "#000000",
-            "unit": "A Battery",
-            "unit_size": "20px",
-            "weight": "font-thin"
-          },
-          "type": "text"
-        },
-        {
-          "data": {
-            "device": {
-              "id": "Device_replace_me",
-              "interval": 2,
-              "mapping": "current",
-              "resource": "energy",
+              "mapping": "Iaux",
+              "resource": "measure",
               "update": "events",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 2,
-            "row": 0,
+            "col": 3,
+            "row": 12,
             "sizeX": 1,
             "sizeY": 6
           },
           "panel": {
-            "color": "#e8cdfe"
+            "color": "#f5f9b7"
           },
           "properties": {
             "majorTicks": 1,
@@ -92,56 +51,56 @@ Enjoy your dashboard, and modify it ad libitum.
             "showValue": true,
             "textColor": "#1E313E",
             "tickColor": "#000000",
-            "unit": "A Battery"
+            "unit": "A Aux"
           },
           "type": "tachometer"
         },
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
+              "id": "Soft-Power",
               "interval": 2,
-              "mapping": "power",
-              "resource": "energy",
-              "update": "events",
-              "user": "User_replace_me"
+              "mapping": "Waux",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
             "col": 3,
-            "row": 0,
+            "row": 18,
             "sizeX": 1,
             "sizeY": 6
           },
           "panel": {
-            "color": "#fed3ef"
+            "color": "#f5f9b7"
           },
           "properties": {
-            "majorTicks": 5,
-            "max": 46,
-            "min": -5,
+            "majorTicks": 1,
+            "max": 10,
+            "min": 0,
             "plateColor": "#ffffff",
             "showValue": true,
             "textColor": "#1E313E",
             "tickColor": "#000000",
-            "unit": "Power"
+            "unit": "W Aux"
           },
           "type": "tachometer"
         },
         {
           "data": {
             "device_property": {
-              "device": "SoftPowerMeter",
+              "device": "Soft-Power",
               "mapping": "pressure",
               "property": "persistance",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device_property"
           },
           "layout": {
-            "col": 3,
-            "row": 6,
+            "col": 0,
+            "row": 18,
             "sizeX": 1,
             "sizeY": 6
           },
@@ -163,16 +122,16 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device_property": {
-              "device": "SoftPowerMeter",
+              "device": "Soft-Power",
               "mapping": "temperature",
               "property": "persistance",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device_property"
           },
           "layout": {
-            "col": 2,
-            "row": 6,
+            "col": 0,
+            "row": 12,
             "sizeX": 1,
             "sizeY": 6
           },
@@ -194,18 +153,18 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device_property": {
-              "device": "SoftPowerMeter",
+              "device": "Soft-Power",
               "mapping": "summary",
               "property": "persistance",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device_property"
           },
           "layout": {
-            "col": 3,
-            "row": 12,
+            "col": 0,
+            "row": 24,
             "sizeX": 1,
-            "sizeY": 3
+            "sizeY": 5
           },
           "panel": {
             "color": "#dddddd",
@@ -225,18 +184,18 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device_property": {
-              "device": "SoftPowerMeter",
+              "device": "Soft-Power",
               "mapping": "wind",
               "property": "persistance",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device_property"
           },
           "layout": {
-            "col": 2,
-            "row": 12,
+            "col": 0,
+            "row": 29,
             "sizeX": 1,
-            "sizeY": 3
+            "sizeY": 5
           },
           "panel": {
             "color": "#dddddd",
@@ -256,21 +215,21 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
+              "id": "Soft-Power",
               "resource": "DC_out2",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 1,
-            "row": 10,
+            "col": 3,
+            "row": 4,
             "sizeX": 1,
-            "sizeY": 3
+            "sizeY": 2
           },
           "panel": {
             "color": "#f5f9b7",
-            "title": ""
+            "title": "On/Off"
           },
           "properties": {
             "icon": "fa-power-off",
@@ -278,82 +237,34 @@ Enjoy your dashboard, and modify it ad libitum.
             "iconSize": 25,
             "offColor": "#888888",
             "onColor": "#00bb00",
-            "style": "button"
+            "style": "switch"
           },
           "type": "boolean"
         },
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
+              "id": "Soft-Power",
               "resource": "relay2",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 1,
-            "row": 13,
+            "col": 0,
+            "row": 3,
             "sizeX": 1,
-            "sizeY": 2
+            "sizeY": 3
           },
           "panel": {
             "color": "#bbbbbb",
             "title": "Relay 2"
           },
           "properties": {
-            "style": "switch"
-          },
-          "type": "boolean"
-        },
-        {
-          "data": {
-            "device": {
-              "id": "Device_replace_me",
-              "resource": "relay1",
-              "user": "User_replace_me"
-            },
-            "source": "device"
-          },
-          "layout": {
-            "col": 0,
-            "row": 13,
-            "sizeX": 1,
-            "sizeY": 2
-          },
-          "panel": {
-            "color": "#bbbbbb",
-            "title": "Relay 1"
-          },
-          "properties": {
-            "style": "switch"
-          },
-          "type": "boolean"
-        },
-        {
-          "data": {
-            "device": {
-              "id": "Device_replace_me",
-              "resource": "DC_out1",
-              "user": "User_replace_me"
-            },
-            "source": "device"
-          },
-          "layout": {
-            "col": 0,
-            "row": 10,
-            "sizeX": 1,
-            "sizeY": 3
-          },
-          "panel": {
-            "color": "#b7f9f7",
-            "title": ""
-          },
-          "properties": {
             "icon": "fa-power-off",
             "iconColor": "#ffffff",
-            "iconSize": 25,
-            "offColor": "#888888",
+            "iconSize": "",
+            "offColor": "#6a6762",
             "onColor": "#00bb00",
             "style": "button"
           },
@@ -362,12 +273,9 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
-              "interval": 2,
-              "mapping": "panel",
-              "resource": "energy",
-              "update": "events",
-              "user": "User_replace_me"
+              "id": "Soft-Power",
+              "resource": "relay1",
+              "user": "SoftPower1"
             },
             "source": "device"
           },
@@ -375,77 +283,101 @@ Enjoy your dashboard, and modify it ad libitum.
             "col": 0,
             "row": 0,
             "sizeX": 1,
+            "sizeY": 3
+          },
+          "panel": {
+            "color": "#bbbbbb",
+            "title": "Relay 1"
+          },
+          "properties": {
+            "icon": "fa-power-off",
+            "iconColor": "#ffffff",
+            "iconSize": "",
+            "offColor": "#686664",
+            "onColor": "#00bb00",
+            "style": "button"
+          },
+          "type": "boolean"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "resource": "DC_out1",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 2,
+            "row": 4,
+            "sizeX": 1,
+            "sizeY": 2
+          },
+          "panel": {
+            "color": "#b7f9f7",
+            "title": "High Power"
+          },
+          "properties": {
+            "icon": "fa-power-off",
+            "iconColor": "#ffffff",
+            "iconSize": 25,
+            "max": 100,
+            "min": 0,
+            "offColor": "#888888",
+            "onColor": "#00bb00",
+            "step": 1,
+            "style": "switch"
+          },
+          "type": "boolean"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "interval": 2,
+              "mapping": "Vpan",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 1,
+            "row": 6,
+            "sizeX": 1,
             "sizeY": 6
           },
           "panel": {
-            "color": "#b7f9f7"
+            "color": "#d6ffca"
           },
           "properties": {
             "majorTicks": 1,
-            "max": 20,
+            "max": 24,
             "min": 10,
             "plateColor": "#ffffff",
             "showValue": true,
             "textColor": "#1E313E",
             "tickColor": "#000000",
-            "unit": "V Panel"
+            "unit": "V Pan"
           },
           "type": "tachometer"
         },
         {
           "data": {
-            "bucket": {
-              "backend": "dynamodb",
-              "id": "HOUR",
-              "mapping": [
-                "current",
-                "voltage"
-              ],
-              "user": "User_replace_me"
-            },
-            "source": "bucket"
-          },
-          "layout": {
-            "col": 0,
-            "row": 26,
-            "sizeX": 4,
-            "sizeY": 9
-          },
-          "panel": {
-            "color": "#ffffff"
-          },
-          "properties": {
-            "axis": true,
-            "color": {
-              "current": "#026cee",
-              "voltage": "#23d004"
-            },
-            "fill": true,
-            "legend": true,
-            "multiple_axes": true,
-            "timespan": {
-              "magnitude": "day",
-              "mode": "relative",
-              "period": "latest",
-              "value": 2
-            }
-          },
-          "type": "chart"
-        },
-        {
-          "data": {
             "device": {
-              "id": "Device_replace_me",
-              "mapping": "int_resistance",
-              "resource": "energy",
+              "id": "Soft-Power",
+              "mapping": "ohm",
+              "resource": "measure",
               "update": "events",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 3,
-            "row": 15,
+            "col": 0,
+            "row": 6,
             "sizeX": 1,
             "sizeY": 2
           },
@@ -474,16 +406,16 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device_property": {
-              "device": "SoftPowerMeter",
+              "device": "Soft-Power",
               "mapping": "Today",
               "property": "BAT",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device_property"
           },
           "layout": {
             "col": 0,
-            "row": 15,
+            "row": 10,
             "sizeX": 1,
             "sizeY": 2
           },
@@ -512,16 +444,16 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device_property": {
-              "device": "SoftPowerMeter",
+              "device": "Soft-Power",
               "mapping": "Yesterday",
               "property": "BAT",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device_property"
           },
           "layout": {
-            "col": 1,
-            "row": 15,
+            "col": 0,
+            "row": 8,
             "sizeX": 1,
             "sizeY": 2
           },
@@ -550,48 +482,48 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
+              "id": "Soft-Power",
               "interval": 2,
-              "mapping": "voltage",
-              "resource": "energy",
+              "mapping": "Vaux",
+              "resource": "measure",
               "update": "interval",
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 1,
-            "row": 0,
+            "col": 3,
+            "row": 6,
             "sizeX": 1,
             "sizeY": 6
           },
           "panel": {
-            "color": "#d6ffca"
+            "color": "#f5f9b7"
           },
           "properties": {
             "majorTicks": 1,
-            "max": 15,
-            "min": 10,
+            "max": 9,
+            "min": 0,
             "plateColor": "#ffffff",
             "showValue": true,
             "textColor": "#1E313E",
             "tickColor": "#000000",
-            "unit": "V Battery"
+            "unit": "V Aux"
           },
           "type": "tachometer"
         },
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
-              "resource": "CV",
-              "user": "User_replace_me"
+              "id": "Soft-Power",
+              "resource": "scc",
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 0,
-            "row": 6,
+            "col": 2,
+            "row": 2,
             "sizeX": 1,
             "sizeY": 2
           },
@@ -599,8 +531,8 @@ Enjoy your dashboard, and modify it ad libitum.
             "color": "#b7f9f7"
           },
           "properties": {
-            "max": 1024,
-            "min": 0,
+            "max": 0,
+            "min": 1024,
             "step": 10
           },
           "type": "slider"
@@ -608,15 +540,15 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
-              "resource": "CC",
-              "user": "User_replace_me"
+              "id": "Soft-Power",
+              "resource": "aux",
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 1,
-            "row": 6,
+            "col": 3,
+            "row": 2,
             "sizeX": 1,
             "sizeY": 2
           },
@@ -633,23 +565,24 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
+              "id": "Soft-Power",
               "interval": 5,
-              "mapping": "CV",
-              "resource": "energy",
-              "update": "events",
-              "user": "User_replace_me"
+              "mapping": "scc_mvolt",
+              "resource": "control",
+              "update": "interval",
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 0,
-            "row": 8,
+            "col": 2,
+            "row": 0,
             "sizeX": 1,
             "sizeY": 2
           },
           "panel": {
-            "color": "#b7f9f7"
+            "color": "#b7f9f7",
+            "title": "Bat Setpoint"
           },
           "properties": {
             "color": "#1E313E",
@@ -659,6 +592,7 @@ Enjoy your dashboard, and modify it ad libitum.
             "min": 0,
             "size": "40px",
             "step": 10,
+            "unit": "mV",
             "unit_size": "20px",
             "weight": "font-thin"
           },
@@ -667,23 +601,24 @@ Enjoy your dashboard, and modify it ad libitum.
         {
           "data": {
             "device": {
-              "id": "Device_replace_me",
+              "id": "Soft-Power",
               "interval": 5,
-              "mapping": "CC",
-              "resource": "energy",
-              "update": "events",
-              "user": "User_replace_me"
+              "mapping": "aux_mvolt",
+              "resource": "control",
+              "update": "interval",
+              "user": "SoftPower1"
             },
             "source": "device"
           },
           "layout": {
-            "col": 1,
-            "row": 8,
+            "col": 3,
+            "row": 0,
             "sizeX": 1,
             "sizeY": 2
           },
           "panel": {
-            "color": "#f5f9b7"
+            "color": "#f5f9b7",
+            "title": "Aux Setpoint"
           },
           "properties": {
             "color": "#1E313E",
@@ -693,6 +628,7 @@ Enjoy your dashboard, and modify it ad libitum.
             "min": 0,
             "size": "40px",
             "step": 10,
+            "unit": "mV",
             "unit_size": "20px",
             "weight": "font-thin"
           },
@@ -704,27 +640,27 @@ Enjoy your dashboard, and modify it ad libitum.
               "backend": "dynamodb",
               "id": "MIN",
               "mapping": [
-                "current",
-                "voltage"
+                "Ibat",
+                "Vbat"
               ],
-              "user": "User_replace_me"
+              "user": "SoftPower1"
             },
             "source": "bucket"
           },
           "layout": {
-            "col": 0,
-            "row": 17,
-            "sizeX": 4,
-            "sizeY": 9
+            "col": 1,
+            "row": 24,
+            "sizeX": 3,
+            "sizeY": 10
           },
           "panel": {
-            "color": "#ffffff"
+            "color": "#b7f9f7"
           },
           "properties": {
             "axis": true,
             "color": {
-              "current": "#2e90d1",
-              "voltage": "#2de151"
+              "Ibat": "#0155f1",
+              "Vbat": "#1eda03"
             },
             "fill": true,
             "legend": true,
@@ -737,6 +673,205 @@ Enjoy your dashboard, and modify it ad libitum.
             }
           },
           "type": "chart"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "interval": 2,
+              "mapping": "Vbat",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 2,
+            "row": 6,
+            "sizeX": 1,
+            "sizeY": 6
+          },
+          "panel": {
+            "color": "#b7f9f7"
+          },
+          "properties": {
+            "majorTicks": 1,
+            "max": 15,
+            "min": 10,
+            "plateColor": "#ffffff",
+            "showValue": true,
+            "textColor": "#1E313E",
+            "tickColor": "#000000",
+            "unit": "V Bat"
+          },
+          "type": "tachometer"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "interval": 2,
+              "mapping": "Ibat",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 2,
+            "row": 12,
+            "sizeX": 1,
+            "sizeY": 6
+          },
+          "panel": {
+            "color": "#b7f9f7"
+          },
+          "properties": {
+            "majorTicks": 1,
+            "max": 3,
+            "min": -1,
+            "plateColor": "#ffffff",
+            "showValue": true,
+            "textColor": "#1E313E",
+            "tickColor": "#000000",
+            "unit": "A Bat"
+          },
+          "type": "tachometer"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "interval": 2,
+              "mapping": "Wpan",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 1,
+            "row": 18,
+            "sizeX": 1,
+            "sizeY": 6
+          },
+          "panel": {
+            "color": "#d6ffca",
+            "colors": []
+          },
+          "properties": {
+            "majorTicks": 5,
+            "max": 46,
+            "min": -5,
+            "plateColor": "#ffffff",
+            "showValue": true,
+            "textColor": "#1E313E",
+            "tickColor": "#000000",
+            "unit": "W Pan"
+          },
+          "type": "tachometer"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "interval": 2,
+              "mapping": "Ipan",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 1,
+            "row": 12,
+            "sizeX": 1,
+            "sizeY": 6
+          },
+          "panel": {
+            "color": "#d6ffca"
+          },
+          "properties": {
+            "majorTicks": 1,
+            "max": 3,
+            "min": -1,
+            "plateColor": "#ffffff",
+            "showValue": true,
+            "textColor": "#1E313E",
+            "tickColor": "#000000",
+            "unit": "A Pan"
+          },
+          "type": "tachometer"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "interval": 2,
+              "mapping": "Wbat",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 2,
+            "row": 18,
+            "sizeX": 1,
+            "sizeY": 6
+          },
+          "panel": {
+            "color": "#b7f9f7"
+          },
+          "properties": {
+            "majorTicks": 5,
+            "max": 46,
+            "min": -5,
+            "plateColor": "#ffffff",
+            "showValue": true,
+            "textColor": "#1E313E",
+            "tickColor": "#000000",
+            "unit": "W Bat"
+          },
+          "type": "tachometer"
+        },
+        {
+          "data": {
+            "device": {
+              "id": "Soft-Power",
+              "interval": 5,
+              "mapping": "efficiency",
+              "resource": "measure",
+              "update": "interval",
+              "user": "SoftPower1"
+            },
+            "source": "device"
+          },
+          "layout": {
+            "col": 1,
+            "row": 0,
+            "sizeX": 1,
+            "sizeY": 6
+          },
+          "panel": {
+            "color": "#e8cdfe"
+          },
+          "properties": {
+            "majorTicks": 10,
+            "max": 100,
+            "min": -50,
+            "plateColor": "#ffffff",
+            "showValue": true,
+            "textColor": "#1E313E",
+            "tickColor": "#000000",
+            "unit": "% Efficiency"
+          },
+          "type": "tachometer"
         }
       ]
     }
