@@ -7,19 +7,13 @@ void setup()
   Wire.begin(SDA, SCL);
   Console3.printf("\n\n\nESP-Karajan at work,\nSerial @ %u Baud\n", SERIAL_SPEED);
 
-  EEPROM.begin(512);
-  if (!SPIFFS.begin())
-  {
-    Console3.println("Failed to mount file system");
-    return;
-  }
   pinMode(RELAY1   , OUTPUT);
   pinMode(RELAY2   , OUTPUT);
-  pinMode(DC_OUT1 , OUTPUT);
-  pinMode(DC_OUT2 , OUTPUT);
-  pinMode(CC_CONTR , OUTPUT);
-  pinMode(CV_CONTR , OUTPUT);
-
+  pinMode(LP_BUCK  , OUTPUT);
+  pinMode(HP_BUCK , OUTPUT);
+  pinMode(AUX_BUCK  , OUTPUT);
+  pinMode(PWM_BAT , OUTPUT);
+  pinMode(PWM_AUX ,   OUTPUT);
   /*
     // Witty Color LEDs
     pinMode(STDLED, OUTPUT);
@@ -27,21 +21,60 @@ void setup()
     pinMode(GRNLED, OUTPUT);
     pinMode(BLULED, OUTPUT);
   */
+  
+  bat_injection = INJ_NEUTRAL;
+  digitalWrite(RELAY1, not relay1_value);
+  digitalWrite(RELAY2, not relay2_value);
+  digitalWrite(HP_BUCK, high_power_buck_value);
+  digitalWrite(LP_BUCK, not high_power_buck_value);
+  digitalWrite(AUX_BUCK, aux_buck_value);
+  analogWrite (PWM_BAT, bat_injection);
+  analogWrite (PWM_AUX, aux_injection);
+
+#ifndef DISPLAY_IS_NONE
+  // Initialising the UI will init the display too.
+  display.init();
+  delay(1000);
+#ifdef DISPLAY_REVERSED
+  display.flipScreenVertically();
+#endif
+  display.clear();
+  delay(50);  
+  display.setFont(ArialMT_Plain_10);
+  display.setTextAlignment(TEXT_ALIGN_LEFT);
+  display.drawString(0, 0,  HOST_NAME);
+  display.drawString(0, 12, "Getting online..");
+  display.display();
+#endif
+
 
   // Networking and Time
   getWiFi();
   ArduinoOTA.setHostname(HOST_NAME);
 
   //WiFi.printDiag(Serial);
-  Console3.printf("MAC address: %s , \nHostname: %s \nIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+  Console3.printf("\MAC address: %s , \nHostname: %s \nIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
   Console3.println(WiFi.localIP());
+
+#ifndef DISPLAY_IS_NONE
+  display.drawString(0, 24, "IP=");
+  sprintf(charbuff, "IP= %03d.%03d",  ip[2], ip[3]); display.drawString(0, 24, charbuff);
+  display.display();
+  delay(6000);
+#endif
+
   getNTP();
   delay(3000);
 
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   getTimeData();         // breaks down the Epoch into discrete values.
+
   sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, Epoch, DayName, Day, MonthName, Year);
   Console3.println(charbuff);
+  
+  
+
+
 
   // Over the Air Framework
   ArduinoOTA.onStart([]() {
@@ -84,32 +117,43 @@ void setup()
   //myPlace.setLocation( 51.3683, 6.9293 );
   //myPlace.setUnit("metric");
 
-#if defined PANEL_SOURCE_IS_INA
-  // INA 226 Panel Sensor
-  INA2.begin( AMPERE , SHUNT, 0x41);      // Define max Ampere, Shunt value, Address
-  INA2.setBusConversion(8500);            // Maximum conversion time 8.244ms
-  INA2.setShuntConversion(8500);          // Maximum conversion time 8.244ms
-  INA2.setAveraging(100);                 // Average each reading n-times
-  INA2.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
-  INA2.AlertOnBusOverVoltage(true, 18900); // Trigger alert if over 13,8V on bus
-#endif
-  
-#if defined BATTERY_SOURCE_IS_INA
-  // INA 226 Battery Sensor
-  INA1.begin( AMPERE , SHUNT, 0x40);      // Define max Ampere, Shunt value, Address
-  INA1.setBusConversion(8500);            // Maximum conversion time 8.244ms
-  INA1.setShuntConversion(8500);          // Maximum conversion time 8.244ms
-  INA1.setAveraging(100);                 // Average each reading n-times
-  INA1.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
-  INA1.AlertOnBusOverVoltage(true, 13900); // Trigger alert if over 13,8V on bus
 
-  ina1_voltage = INA1.getBusMilliVolts(0);
-  ina1_current = INA1.getBusMicroAmps(0);
-  battery.voltage = ina1_voltage / 1000;
-  battery.current = ina1_current / 1000000;
+
+#if defined AUX_SOURCE_IS_INA
+  // INA 226 Panel Sensor
+  INA.begin( AMPERE2 , SHUNT2, 2);      // Define max Ampere, Shunt value, Address
+  INA.setBusConversion(8244);            // Maximum conversion time 8.244ms
+  INA.setShuntConversion(8244);          // Maximum conversion time 8.244ms
+  INA.setAveraging(32);                  // Average each reading n-times
+  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
+  //  INA.alertOnPowerOverLimit(true;50000); // Set alert when power over 5W.
+#endif
+
+#if defined PAN_SOURCE_IS_INA
+  // INA 226 Panel Sensor
+  INA.begin( AMPERE0 , SHUNT0, 0);      // Define max Ampere, Shunt value, Address
+  INA.setBusConversion(8244);            // Maximum conversion time 8.244ms
+  INA.setShuntConversion(8244);          // Maximum conversion time 8.244ms
+  INA.setAveraging(32);                  // Average each reading n-times
+  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
+  //  INA.alertOnPowerOverLimit(true;450000); //Set alert when power over 45W.
+#endif
+
+#if defined BAT_SOURCE_IS_INA
+  // INA 226 Battery Sensor
+  INA.begin( AMPERE1 , SHUNT1, 1);      // Define max Ampere, Shunt value, Address
+  INA.setBusConversion(8244);            // Maximum conversion time 8.244ms
+  INA.setShuntConversion(8244);          // Maximum conversion time 8.244ms
+  INA.setAveraging(32);                 // Average each reading n-times
+  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
+  //  INA.alertOnPowerOverLimit(true;450000); //Set alert when power over 45W.
+#endif
+
+#if defined BAT_SOURCE_IS_NONE
+  dashboard.Vbat = (MAX_VOLT + MIN_VOLT) / 2;
+  dashboard.Ibat = 0;
 #else
-  battery.voltage = (MAX_VOLT + MIN_VOLT) / 2;
-  battery.current = 0;
+
 #endif
 
   // IOT initialisation
@@ -119,61 +163,86 @@ void setup()
   // resource output example (i.e. reading a sensor value) https://docs.thinger.io/coding#define-output-resources
   //https://docs.thinger.io/coding#read-multiple-data
 
-  thing["control"] << [](pson & in) {
+  thing["menu"] << [](pson & in) {
     displayPage    = in["displayPage"];
     displaySubPage = in["displaySubPage"];
     serialPage     = in["serialPage"];
   };
-  
-  thing["relay1"] << [](pson & in){
-    if (in.is_empty()){
-      in = Relay1_value;
-    }
-    else {
-      Relay1_value = in;
-    }
-  };
-    thing["relay2"] << [](pson & in){
-    if (in.is_empty()){
-      in = Relay2_value;
-    }
-    else {
-      Relay2_value = in;
-    }
-  };
-    thing["DC_out1"] << [](pson & in){
-    if (in.is_empty()){
-      in = DC_Out1_value;
-    }
-    else {
-      DC_Out1_value = in;
-    }
-  };
-      thing["DC_out2"] << [](pson & in){
-    if (in.is_empty()){
-      in = DC_Out2_value;
-    }
-    else {
-      DC_Out2_value = in;
-    }
-  };
-  thing["CC"] << inputValue(CC_value);
-  thing["CV"] << inputValue(CV_value);
 
-  thing["energy"] >> [](pson & out)
+  thing["relay1"] << [](pson & in) {
+    if (in.is_empty()) {
+      in = relay1_value;
+    }
+    else {
+      relay1_value = in;
+    }
+  };
+  thing["relay2"] << [](pson & in) {
+    if (in.is_empty()) {
+      in = relay2_value;
+    }
+    else {
+      relay2_value = in;
+    }
+  };
+  thing["DC_out1"] << [](pson & in) {
+    if (in.is_empty()) {
+      in = high_power_buck_value;
+    }
+    else {
+      high_power_buck_value = in;
+    }
+  };
+  thing["DC_out2"] << [](pson & in) {
+    if (in.is_empty()) {
+      in = aux_buck_value;
+    }
+    else {
+      aux_buck_value = in;
+    }
+  };
+
+  thing["scc"] << inputValue(bat_injection);
+  thing["aux"] << inputValue(aux_injection);
+
+  thing["control"] >> [](pson & out)
   {
-    out["voltage"]         = battery.voltage;
-    out["panel"]           = battery.panel;
-    out["current"]         = battery.current;
-    out["power"]           = battery.power;
-    out["int_resistance"]  = battery.ohm;
-    out["percent_charged"] = percent_charged;
-    out["CC"]              = CC_value;
-    out["CV"]              = CV_value;    
-    out["Relay1"]           = Relay1_value;
-    out["Relay2"]           = Relay2_value;
-    out["DC1"]              = DC_Out1_value;
-    out["DC2"]              = DC_Out2_value;
+    out["scc_inj"]         = bat_injection;
+    out["scc_mvolt"]       = bat_injection_mvolt;
+    out["scc_tar"]         = scc_target;
+    out["aux_inj"]         = aux_injection;
+    out["aux_mvolt"]       = aux_injection_mvolt;
+    out["aux_tar"]         = aux_target;
+    out["relay1"]          = relay1_value;
+    out["relay2"]          = relay2_value;
+    out["DC1"]             = high_power_buck_value;
+    out["DC2"]             = aux_buck_value;
+  };
+
+  thing["measure"] >> [](pson & out)
+  {
+    out["Ibat"]            = dashboard.Ibat ;
+    out["Vbat"]            = dashboard.Vbat ;
+    out["Wbat"]            = dashboard.Wbat ;
+    out["Ipan"]            = dashboard.Ipan ;
+    out["Vpan"]            = dashboard.Vpan ;
+    out["Wpan"]            = dashboard.Wpan ;
+    out["Iaux"]            = dashboard.Iaux ;
+    out["Vaux"]            = dashboard.Vaux ;
+    out["Waux"]            = dashboard.Waux ;
+    out["ohm"]             = dashboard.internal_resistance ;
+    out["efficiency"]      = dashboard.efficiency;
+    out["percent_charged"] = dashboard.percent_charged;
+  };
+
+  thing["weather"] >> [](pson & out)
+  {
+    out["temperature"] = outdoor_temperature;
+    out["humidity"]    = outdoor_humidity;
+    out["pressure"]    = outdoor_pressure;
+    out["wind"]        = wind_speed;
+    out["direction"]   = wind_direction;
+    out["summary"]     = weather_summary;
   };
 
   thing["DAY"] >> [](pson & out)
@@ -209,30 +278,34 @@ void setup()
 
   thing["HOUR"] >> [](pson & out)
   {
-    out["temperature"] = outdoor_temperature;
-    out["humidity"]    = outdoor_humidity;
-    out["pressure"]    = outdoor_pressure;
-    out["wind"]        = wind_speed;
-    out["direction"]   = wind_direction;
-    out["summary"]     = weather_summary;
-#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["voltage"]         = battery.voltage;
-    out["current"]         = battery.current;
-    out["power"]           = battery.power;
-    out["percent_charged"] = percent_charged;
-#endif
+    out["temperature"]  = outdoor_temperature;
+    out["humidity"]     = outdoor_humidity;
+    out["pressure"]     = outdoor_pressure;
+    out["wind"]         = wind_speed;
+    out["direction"]    = wind_direction;
+    out["summary"]      = weather_summary;
+    out["Vbat"]         = dashboard.Vbat;
+    out["Ibat"]         = dashboard.Ibat;
+    out["Wbat"]         = dashboard.Wbat;
+    out["Ipan"]         = dashboard.Ipan ;
+    out["Vpan"]         = dashboard.Vpan ;
+    out["Wpan"]         = dashboard.Wpan ;
+    out["Ohm"]          = dashboard.internal_resistance ;
+    out["percent_charged"] = dashboard.percent_charged;
   };
 
   thing["MIN"] >> [](pson & out)
   {
-
-#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["voltage"]         = battery.voltage;
-    out["panel"]           = battery.panel;
-    out["current"]         = battery.current;
-    out["power"]           = battery.power;
-    out["percent_charged"] = percent_charged;
-#endif
+    out["Ibat"]         = dashboard.Ibat ;
+    out["Vbat"]         = dashboard.Vbat ;
+    out["Wbat"]         = dashboard.Wbat ;
+    out["Ipan"]         = dashboard.Ipan ;
+    out["Vpan"]         = dashboard.Vpan ;
+    out["Wpan"]         = dashboard.Wpan ;
+    out["Iaux"]         = dashboard.Iaux ;
+    out["Vaux"]         = dashboard.Vaux ;
+    out["Waux"]         = dashboard.Waux ;
+    out["efficiency"]   = dashboard.efficiency;
   };
 
   //Communication with Thinger.io
@@ -241,24 +314,24 @@ void setup()
   // Retrieve Persistance values
 
   pson persistance;
-#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
+#if (defined BAT_SOURCE_IS_INA) || (defined BAT_SOURCE_IS_UDP)
   thing.get_property("persistance", persistance);
   currentInt          = persistance["currentInt"];
   nCurrent            = persistance["nCurrent"];
   AhBat[25]           = persistance["Ah/hour"];
   AhBat[26]           = persistance["Ah/yesterday"];
   voltageDelta        = persistance["voltageDelta"];
-  voltageAt0H          = persistance["voltageAt0H"];
-  battery.ohm = persistance["resistance"];
+  voltageAt0H         = persistance["voltageAt0H"];
+  dashboard.internal_resistance       = persistance["resistance"];
 #endif
   outdoor_temperature = persistance["temperature"];
   outdoor_humidity    = persistance["humidity"];
   outdoor_pressure    = persistance["pressure"];
-  wind_speed  = persistance["wind"];
-  wind_direction = persistance["direction"];
+  wind_speed          = persistance["wind"];
+  wind_direction      = persistance["direction"];
 
   pson BATmAh;
-  thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=current1, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=AhBat22-24
+  thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=dashboard.Ibat, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=AhBat22-24
   AhBat[0]  = BATmAh["00h"];
   AhBat[1]  = BATmAh["01h"];
   AhBat[2]  = BATmAh["02h"];
