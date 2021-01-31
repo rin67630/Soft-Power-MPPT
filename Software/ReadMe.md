@@ -161,11 +161,8 @@ Finally enter your injection factors (cf. hardware commissioning instructions)
 - #define INJ_AUX_MIN  2750   //   Minimum Auxiliary Voltage Setpoint at injection=1024 (in mV)
 - #define INJ_AUX_MAX  8550   //   Maximum Auxiliary Voltage Setpoint at injection=0 (in mV)
 
-
-to be continued...
-
-## Instructions to begin with Tinger.io
-to be continued...
+That should be all...  
+Compile and enjoy!
 
 
 Stay tuned!
