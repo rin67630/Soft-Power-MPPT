@@ -2,7 +2,7 @@ void loop()
 {
   // run when idle.
   ArduinoOTA.handle();
-  menuRun();
+   menuRun();
   yield();              //Yield for WiFi
 
   runEvery(125)         //125mS cf Every Macro in Functions
@@ -26,7 +26,6 @@ void loop()
           if (Minute == 0)        // Starting a new hour..
           {
             NewHour = true;
-            NAT[Hour] = 0;
             if (Hour == 0)        // Starting a  new day..
             {
               NewDay = true;
@@ -65,15 +64,13 @@ void loop()
 //       digitalWrite(REDLED, false);
         break;
       case 8:          // Reinitializations
-        if (Second % 10 == 5) // every 6 seconds
+        if (Second % 10 == 5) 
         {
-          sound.A0dBMin  = 90;
-          sound.A0dBMax = nA0dB6S = A0dBSum6S = 0;
+          // every 6 seconds
         }
         if (MinuteExpiring)
         {
-          A0dBMin1min = 90;
-          A0dBMax1min = A0dBSumExp1min = 0;
+          //Minutely
           if (HourExpiring)
           {
             //Hourly
@@ -89,7 +86,7 @@ void loop()
         HourExpiring = false;
         NewDay = false;
         DayExpiring = false;
-        trigNAT = false;
+        triglEvent = false;
         break;
     } // end Switch slice
   } // end Every 125mS
