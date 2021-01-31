@@ -54,7 +54,7 @@ void serialRun()
       }
       if (MinuteExpiring && serialMin)
       {
-        Console1.printf("Bat_Volt:1%2.3f Bat_Watt:%2.3f Bat_Level:%2.1f \n", battery.voltage - 10, battery.power, percent_charged / 10);
+        Console1.printf("Bat_Volt:1%2.3f Bat_Watt:%2.3f Bat_Level:%2.1f \n", dashboard.Vbat - 10, dashboard.Wbat, dashboard.percent_charged / 10);
       }
       if (SerialEvent && trigEvent)
       {
@@ -121,7 +121,7 @@ void serialRun()
       serialPage = 0;
       break;
     case 'b':
-      Console1.printf("Ah: %+2.3f, Panel: %2.3f, Volt: %2.3f, Amp: %2.3f, Watt: %2.3f, microV: %6.0f,%%Batt: %2.1f IntRes: %1.3f\n", AhBat[27], battery.panel, battery.voltage, battery.current, battery.power, ina1_shunt, percent_charged, battery.ohm);
+      Console1.printf("Ah: %+2.3f, Panel: %2.3f, Volt: %2.3f, Amp: %2.3f, Watt: %2.3f, microV: %6.0f,%%Batt: %2.1f IntRes: %1.3f\n", AhBat[27], dashboard.Vpan, dashboard.Vbat, dashboard.Ibat, dashboard.Wbat, ina1_shunt, dashboard.percent_charged, dashboard.internal_resistance);
       break;
   }  // end switch (serialPage)
 }
