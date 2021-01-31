@@ -1,63 +1,15 @@
 void wirelessRun()
 {
   yield();
-
-#if defined (PUBLISH_REPORT)  // Read with NetCat Bash command nc -u -l [UDP_PORT +1]
-  if (DayExpiring || triglEvent)
-  {
-    UDP.beginPacket(UDP_TARGET, UDP_PORT + 1);
-    if (DayExpiring)
-    {
-      sprintf(charbuff, " \nDaily Report for \n%s, %02d %s %04d ", DayName , Day , MonthName, Year);
-      UDP.print(charbuff);
-
-      UDP.print("\nHour|  Ah    |\n");
-      for  (byte n = 0; n < 30; n++)
-      {
-        if (n == 24)
-        {
-          UDP.print("Extra ""hours"" cf. Man.\n");
-        }
-        else
-        {
-          UDP.printf("%02u  |  %+02.3f |\n", n, AhBat[n]);
-        }
-      }
-    }
-    if (triglEvent)
-    {
-      UDP.printf("Event reporting to be defined");
-    }
-    UDP.endPacket();
-  }
-#endif
-
-  if (NewMinute)
-  {
-#if defined (PUBLISH_BATTERY)
-    memcpy(batteryPayload, &battery, sizeof(battery));
-    UDP.beginPacket(UDP_TARGET, UDP_PORT);
-    UDP.write(batteryPayload, sizeof(battery));
-    UDP.endPacket();
-#else
-    yield();
-#endif
-  }
-  yield();
-
   if (GracePause) GracePause--;
 #if defined (THINGER)
 
   MillisMem = millis();
   if (not GracePause) thing.handle();               // do not call permanently Thinger if it takes too long to respond.
-  if (millis() - MillisMem > 100) GracePause = 60;  // if the Thinger call took longer than 100mS, make 60s pause before retrying
+  if (millis() - MillisMem > 500) GracePause = 30;  // if the Thinger call took longer than 500mS, make 30s pause before retrying
 
-
-
-#if (defined (BATTERY_SOURCE_IS_URL) || defined (BATTERY_SOURCE_IS_INA))
-  //if (MinuteExpiring) thing.stream("energy"); // Slow update
   thing.stream("energy");                       // Fast update
-#endif
+
 
 #if defined (WRITE_BUCKETS)
   if (triglEvent)   thing.write_bucket("EVENT", "EVENT");
@@ -70,14 +22,13 @@ void wirelessRun()
   {
     //Persistance
     pson persistance;
-#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
+#if (defined BAT_SOURCE_IS_INA) || (defined BAT_SOURCE_IS_UDP)
     persistance["currentInt"]    = currentInt ;
     persistance["nCurrent"]      = nCurrent;
     persistance["Ah/hour"]       = AhBat[25];
     persistance["Ah/yesterday"]  = AhBat[26];
     persistance["voltageDelta"]  = voltageDelta;
     persistance["voltageAt0H"]   = voltageAt0H;
-    persistance["resistance"]    = battery.ohm;
 #endif
     persistance["temperature"]   = outdoor_temperature;
     persistance["humidity"]      = outdoor_humidity;
@@ -122,7 +73,48 @@ void wirelessRun()
     thing.set_property("BAT", BATmAh);
   }
 #endif // defined Thinger
-}
 
-// WiFi.forceSleepBegin();  can it save power?
-// WiFi.forceSleepWake();
+#if defined (PUBLISH_REPORT)  // Read with NetCat Bash command nc -u -l [UDP_PORT +1]
+  if (DayExpiring || triglEvent)
+  {
+    UDP.beginPacket(UDP_TARGET, UDP_PORT + 1);
+    if (DayExpiring)
+    {
+      sprintf(charbuff, " \nDaily Report for \n%s, %02d %s %04d ", DayName , Day , MonthName, Year);
+      UDP.print(charbuff);
+
+      UDP.print("\nHour|  Ah    |\n");
+      for  (byte n = 0; n < 30; n++)
+      {
+        if (n == 24)
+        {
+          UDP.print("Extra ""hours"" cf. Man.\n");
+        }
+        else
+        {
+          UDP.printf("%02u  |  %+02.3f |\n", n, AhBat[n]);
+        }
+      }
+    }
+    if (triglEvent)
+    {
+      UDP.printf("Event reporting to be defined");
+    }
+    UDP.endPacket();
+  }
+#endif
+
+  if (NewMinute)
+  {
+#if defined (PUBLISH_BATTERY)
+    memcpy(batteryPayload, &battery, sizeof(battery));
+    UDP.beginPacket(UDP_TARGET, UDP_PORT);
+    UDP.write(batteryPayload, sizeof(battery));
+    UDP.endPacket();
+#else
+    yield();
+#endif
+  }
+  yield();
+
+}
