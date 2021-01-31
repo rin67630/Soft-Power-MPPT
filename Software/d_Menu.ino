@@ -30,14 +30,24 @@ void menuRun()
       break;
 
     case '+': //Increase Offset
-      CC_value ++;
-      Console1.print ("+1CC=");
-      Console1.println (CC_value);
+      aux_injection ++;
+      Console1.print ("+1aux=");
+      Console1.println (aux_injection);
       break;
     case '-': //Reduce Offset
-      CC_value --;
-      Console1.print ("-1CC=");
-      Console1.println (CC_value);
+      aux_injection --;
+      Console1.print ("-1aux=");
+      Console1.println (aux_injection);
+      break;
+    case '>': //Increase Offset by 20
+      aux_injection = aux_injection + 20;
+      Console1.print ("+10aux=");
+      Console1.println (aux_injection);
+      break;
+    case '<': //Reduce Offset by 20
+      aux_injection = aux_injection - 20;
+      Console1.print ("-10aux=");
+      Console1.println (aux_injection);
       break;
 
     // ***Options for periodical Reports**
@@ -95,22 +105,22 @@ void menuRun()
       serialPage = 'T';
       Console1.print ("\nTrace Report :");
       break;
-   case 'B':  //Battery Report one shot
+    case 'B':  //Battery Report one shot
       serialPage = 'B';
       Console1.println ("\nBattery History :");
       break;
-   case 'b':  //Battery Report one shot
+    case 'b':  //Battery Report one shot
       serialPage = 'b';
       Console1.println ("\nBattery Status :");
       break;
-   case 'W':  //Weather Report one shot
+    case 'W':  //Weather Report one shot
       serialPage = 'W';
       Console1.println ("\nWeather report :");
       break;
     case '~':
       WiFi.printDiag(Serial);
-     Console1.printf("\nmac address: %s , \nHostname: %s\n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
-     Console1.print("\nIP address: "); Console1.println(WiFi.localIP());         
+      Console1.printf("\nmac address: %s , \nHostname: %s\n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+      Console1.print("\nIP address: "); Console1.println(WiFi.localIP());
       break;
   } //end switch (inbyte)
 
