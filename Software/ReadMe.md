@@ -74,11 +74,29 @@ Then proceed with the hardware configuration:
 #define CONVENIENCE_SOURCE_IS_URL to get/control the convenience information from another ESP as a slave device and  
 #define CONVENIENCE_SOURCE_IS_NONE to not process convenience information at all ( which only makes sense in my other projects or if you decides not to populate the convenience output).
 
+Better not to chang this block at the beginning.
 - #define BATTERY_IS_12V_FLA specifies that you are using a 12 V flooded acid battery, the other options being #define BATTERY_IS_12V_AGM to use a 12 V AGM battery and so on...
 - #define DISPLAY_IS_OLED64x48 define if you are using an OLED display and which one.
-- #define DISPLAY_REVERSED if you're display should be used downunder (for Australians for example ;-)
+- #define DISPLAY_REVERSED if you're display should be used downunder (by Australians for example ;-)
+- #define THINGER            //(Comment out, if no thinger.io used)
+- #define WRITE_BUCKETS      //(Comment out, if this is the second device for Thinger)
+- //'define DWITTER          //(Comment out, if no dwitter.io used) 
+- #define Console0 Serial    // Port for user inputs  
+- #define Console1 Serial    // Port for user output
+- #define Console2 Serial1   // Port for midnight report e.g. on thermal printer
+- #define Console3 Serial    // Port for boot messages
+- #define SERIAL_SPEED  9600 //9600  115200 230400
+- //define PUBLISH_REPORT           // Issue events&midnight reports to UDP Port + 1, comment out else
+- //#define PUBLISH_BATTERY         // If this is the battery master, comment out else
+- #define UDP_TARGET "192.168.1.1"  // IP to forward data
+- #define UDP_PORT   4214           // Port to forward data
 
-Additional configuration options may be introduced, hoping that they will more or less self explanatory.
+#### Credentials
+Enter here your Thinger credentials: user name, device password *not the web password*, device name, if different from "Soft-Power".
+- #define THINGER_USERNAME    "User"       
+- #define THINGER_CREDENTIALS "Device password"    
+- #define THINGER_DEVICE HOST_NAME
+
 
 to be continued...
 
