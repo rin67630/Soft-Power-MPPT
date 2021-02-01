@@ -44,7 +44,7 @@ The other libraries should be already present.
 ## Download instructions
 You can download all the files from the main page of Soft-Power upon clicking on the green Code button and selecting "download Zip".    
 This will save a file Soft-Power-MPPT-main.zip.  
-From that compressed file, extract the folder "Software" and copy it into your Arduino working space.  
+From that compressed file, extract the folder "Software" and copy it into your Arduino working space which is usually in Documents/Arduino.  
 Rename that folder SoftPowerMPPT.  
 You will now find the project in File/Sketchbook/SoftPowerMPPT and after starting, it you will find all tabs present.  
 
