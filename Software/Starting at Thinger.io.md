@@ -56,7 +56,7 @@ e.g. upon clicking on edit the widget you might get something like:
 ![image](https://user-images.githubusercontent.com/14197155/106430945-dbb12f80-646c-11eb-9a95-b2874cdfbfeb.png)
 meaning that that widget is getting its information from device resource named measure, using the value Ipan, which will be sampled every 2 seconds.
 The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
-...
+```C++
   thing["measure"] >> [](pson & out)
   {
     out["Ibat"]            = dashboard.Ibat ;
@@ -72,10 +72,10 @@ The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
     out["efficiency"]      = dashboard.efficiency;
     out["percent_charged"] = dashboard.percent_charged;
   };
-...  
+``` 
 You might also have other widgets getting their data from "device properties".
 The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
-...
+```C++
   pson persistance;
   thing.get_property("persistance", persistance);
   currentInt          = persistance["currentInt"];
@@ -90,7 +90,7 @@ The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
   outdoor_pressure    = persistance["pressure"];
   wind_speed          = persistance["wind"];
   wind_direction      = persistance["direction"];
-...
+```
 Device properties are a kind of memory in the cloud, where the ESP can write data and retrieve it.
 This is an essential feature to store information that must survive a reset.
 
@@ -98,7 +98,7 @@ Last but not least, widgets can get the information from Data Buckets.
 Data buckets are time series information useful to plot longtime trends.
 the structure of the data is defined in the Arduino IDE under c-Setup:
 e.g. for the data being written every minute:
-...
+```C++
   thing["MIN"] >> [](pson & out)
   {
     out["Ibat"]         = dashboard.Ibat ;
@@ -112,22 +112,15 @@ e.g. for the data being written every minute:
     out["Waux"]         = dashboard.Waux ;
     out["efficiency"]   = dashboard.efficiency;
   };
-...
+```
 and the transmission is triggered in the Arduino IDE under c-Wireless:
-...
+```C++
 #if defined (WRITE_BUCKETS)
   if (triglEvent)   thing.write_bucket("EVENT", "EVENT");
   if (NewDay)       thing.write_bucket("DAY", "DAY");
   if (HourExpiring) thing.write_bucket("HOUR", "HOUR");
   if (NewMinute)    thing.write_bucket("MIN", "MIN");
 #endif
-...
+```
 You have even got more possibilities, but that was the most important ones as a starting manual.
 Enjoy your Thinger.io dashboards!
-
-
-
-
-
-
-
