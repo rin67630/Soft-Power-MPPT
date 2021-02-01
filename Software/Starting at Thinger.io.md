@@ -37,20 +37,20 @@ Then click on the name of your newly created dashboard, you will get that pictur
 ![image](https://user-images.githubusercontent.com/14197155/106428750-c090f080-6469-11eb-9144-6d397d9651bf.png)  
 upon clicking on the right slider you enter the design mode (you can do that anytime from anywhere).  
 You may now enter widgets yourself, but for the first dashboard, I can provide a preconfigured powerful dashboard:  
-Click on Settings, on the pop-up click on the tab "Developer"
+Click on Settings, on the pop-up click on the tab "Developer"  
 You will get a small JSON list corresponding to an empty dashboard.  
 
 On a second instance of your browser, open the file:
 https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/Thinger_Dashboard.ino
-(you may also open the same file in your Arduino IDE)
-from that file select the JSON code into the clipboard **that beginnins just after**  
-"Enjoy your dashboard, and modify it ad libitum." 
-and ending with  a star slash at the last line.  
-Do not copy everything, just that.
-**your copied content must start and end with a curly brace.**
+(you may also open the same file in your Arduino IDE)  
+From that file select the JSON code into the clipboard **that beginnins just after**   
+"Enjoy your dashboard, and modify it ad libitum." .. 
+..and ending with  a star slash at the last line.  
+Do not copy everything, just that!  
+**your copied content must start and end with a curly brace.**  
 
-**Replace** all the content of the dashboard configuration by the content of your clipboard.
-Click on "save".
+**Replace** all the content of the dashboard configuration by the content of your clipboard.  
+Click on "save".  
 Enjoy your standard Soft-Power dashboard!
 
 You may than any time enter the design mode by clicking on the right slider.
