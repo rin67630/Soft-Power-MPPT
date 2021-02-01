@@ -32,6 +32,11 @@ Move the slider to the left minimum and take notice of the voltage (which should
 
 - Move the slider to the right maximum and take notice of the voltage in in the aO_Parameters of the configuration (#define INJ_HP_MAX  15280).
 
+Reconnect you battery.
+
 You can then recompile the programm to take the new adjustments in account and enjoy your Soft-Power-MPPT. device.
+your Soft-Power is now adjusted and ready to use.
+
+Enjoy!
 
 
