@@ -53,7 +53,8 @@ Do not copy everything, just that!
 Click on "save".  
 Enjoy your standard Soft-Power dashboard!
 
-You may than any time enter the design mode by clicking on the right slider.
+** Further design possibilities
+You may any time enter the design mode by clicking on the right slider.
 every widget has at its upper right corner 3 icons ![image](https://user-images.githubusercontent.com/14197155/106430653-67768c00-646c-11eb-8eee-5a0c796d9060.png)  
 corresponding to: duplicate, edit, trash.
 e.g. upon clicking on edit the widget you might get something like:  
