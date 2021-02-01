@@ -28,13 +28,13 @@ for each one, enter exactly the buckets ID. you may enter what you want as a buc
 As a data source select " from device write call" out of the drop-down lists.
 Click on "Add bucket"  
 Finally you must get that picture:  
-![image](https://user-images.githubusercontent.com/14197155/106426214-80c80a00-6465-11eb-9a7a-1ead53ddb8f5.png)
+![image](https://user-images.githubusercontent.com/14197155/106426214-80c80a00-6465-11eb-9a7a-1ead53ddb8f5.png)  
 
 You can finally enter your first dashboard: Select Dashboards, then  Add Dashboard.  
 - you may enter any dashboard ID, dashboard name, dashboard description.
 Click on Add Dashboard
 Then click on the name of your newly created dashboard, you will get that picture:
-![image](https://user-images.githubusercontent.com/14197155/106428750-c090f080-6469-11eb-9144-6d397d9651bf.png)
+![image](https://user-images.githubusercontent.com/14197155/106428750-c090f080-6469-11eb-9144-6d397d9651bf.png)  
 upon clicking on the right slider, it becomes screen and you enter the design mode (you can do that anytime from anywhere)
 You may now enter widgets but for the first dashboard I can provide a preconfigured powerful dashboard:
 Click on Settings, on the pop-up click on the tab "Developer"
@@ -51,9 +51,10 @@ Click on "save".
 Enjoy your standard Soft-Power dashboard!
 
 You may than any time enter the design mode by clicking on the right slider.
-every widget has at its upper right corner 3 icons ![image](https://user-images.githubusercontent.com/14197155/106430653-67768c00-646c-11eb-8eee-5a0c796d9060.png) corresponding to: duplicate, edit, trash.
+every widget has at its upper right corner 3 icons ![image](https://user-images.githubusercontent.com/14197155/106430653-67768c00-646c-11eb-8eee-5a0c796d9060.png)  
+corresponding to: duplicate, edit, trash.
 e.g. upon clicking on edit the widget you might get something like:  
-![image](https://user-images.githubusercontent.com/14197155/106430945-dbb12f80-646c-11eb-9a95-b2874cdfbfeb.png)
+![image](https://user-images.githubusercontent.com/14197155/106430945-dbb12f80-646c-11eb-9a95-b2874cdfbfeb.png)  
 meaning that that widget is getting its information from device resource named measure, using the value Ipan, which will be sampled every 2 seconds.
 The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
 ```C++
