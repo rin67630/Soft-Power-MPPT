@@ -52,11 +52,28 @@ Enter here your Thinger credentials: user name, device password *not the web pas
 If you already have successfully used your ESP device in your Wi-Fi network, you can skip that block, else...  
 
 Comment "#define SMARTCONFIG" by putting two slashes at the beginning.  
-Enter your Wi-Fi credentials  
-Compile and upload  
-Run the ESP.  
+Enter your Wi-Fi credentials   
+Run the ESP unplugged from Soft-Power connected to an USB  
+Compile and upload. 
+At the IDE, Tools, start the serial monitor, set to 9600 Baud.
+You should see something like that:
+´´´
+0⸮~?⸮4⸮Ҷ⸮⸮OAqr⸮⸮
+ESP-Karajan at work,
+Serial @ 9600 Baud
+MAC address: D8:F1:5B:11:0E:AC , 
+Hostname: Soft-Power
+IP address::192.168.188.32
+Now is 16:57:29. The Epoch is: 1612195049
+Date is Monday, 01 February 2021
+Communicating on UDP port: 4214
+OTA-Ready
+´´´
+The first gibberish line is normal.
+This is the regular booting report. If it get stuck after Serial @ 9600 Baud, your Wi-Fi connection where not successful. 
+Correct your credentials and repeat the procedure, until you get an IP.  
 
-Remove the two slashes, you may remove your credentials, they are stored in the ESP and will not be used anymore.  
+then return to the Arduino IDE, remove the two slashes before the line "#define SMARTCONFIG", you may remove your credentials, they are stored in the ESP and will not be used anymore.  
 - #define SMARTCONFIG  // (WiFi Credentials over GogglePlay/Apple App SmartConfig)
   // alternatively to Smartconfig App, you can comment out Smartconfig 
   // and enter your credentials to initalize for a new WiFi
@@ -64,6 +81,8 @@ Remove the two slashes, you may remove your credentials, they are stored in the 
 - #define WIFI_PASS          "PASS"
 - #define wifiMaxTries         10
 - #define wifiRepeatInterval   100
+
+Upload the software again, and check, that you get the boot report correctly.
 
 You should have opened a a free account at openweathermap.org, and have noted the map app ID.  
 You can also search and call your city, then note its location ID "https://openweathermap.org/city/2928809" (the last number after the slash)  
@@ -113,5 +132,3 @@ Finally enter your injection factors (cf. hardware commissioning instructions)
 That should be all...  
 Compile and enjoy!
 
-
-Stay tuned!
