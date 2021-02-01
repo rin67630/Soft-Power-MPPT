@@ -14,7 +14,7 @@ Then you can remove the battery voltage, the ESP should continue being powered f
 
 - Else, correct the voltage to be exactly the same that what you had set up using the hardware only.
 To do that at the dashboard use the blue slider  
-![image](https://user-images.githubusercontent.com/14197155/106478854-f229ac00-64a9-11eb-943e-c67a4a8e8d9e.png)
+![image](https://user-images.githubusercontent.com/14197155/106478854-f229ac00-64a9-11eb-943e-c67a4a8e8d9e.png)  
 Note its PWM value in the software at a0_Parameters at the line #define INJ_NEUTRAL 400.  
 
 - Move the slider to the right maximum and adjust the trim pot RP1 to the equalization voltage (15.2V for lead acid battery), take notice of the voltage.  
