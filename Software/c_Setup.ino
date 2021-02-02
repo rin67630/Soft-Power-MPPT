@@ -49,6 +49,9 @@ void setup()
 
 
   // Networking and Time
+#ifdef ERASE_WIFI_CREDENTIALS
+  WiFi.disconnect(true);
+#endif
   getWiFi();
   ArduinoOTA.setHostname(HOST_NAME);
 
@@ -71,10 +74,6 @@ void setup()
 
   sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, Epoch, DayName, Day, MonthName, Year);
   Console3.println(charbuff);
-  
-  
-
-
 
   // Over the Air Framework
   ArduinoOTA.onStart([]() {
@@ -108,16 +107,11 @@ void setup()
     }
   });
 
+
   // Begin listening to UDP port
   UDP.begin(UDP_PORT);
   Console3.print("Communicating on UDP port: ");
   Console3.print(UDP_PORT);
-
-  // Weather
-  //myPlace.setLocation( 51.3683, 6.9293 );
-  //myPlace.setUnit("metric");
-
-
 
 #if defined AUX_SOURCE_IS_INA
   // INA 226 Panel Sensor
@@ -207,9 +201,9 @@ void setup()
 
   thing["control"] >> [](pson & out)
   {
-    out["scc_inj"]         = bat_injection;
-    out["scc_mvolt"]       = bat_injection_mvolt;
-    out["scc_tar"]         = scc_target;
+    out["bat_inj"]         = bat_injection;
+    out["bat_mvolt"]       = bat_injection_mvolt;
+    out["bat_tar"]         = bat_target;
     out["aux_inj"]         = aux_injection;
     out["aux_mvolt"]       = aux_injection_mvolt;
     out["aux_tar"]         = aux_target;
