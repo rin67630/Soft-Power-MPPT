@@ -1,9 +1,10 @@
 # Starting at Thinger.io
 
 Using Thinger.io is not a precondition, but it makes Soft-Power really comfortable and provides a lot of the visibility. 
+The following instructions will help you creating an account and the first device at Thinger.io, that is compatible with the Soft-Power example given out of the box.
 
 First you need to register at www.Thinger.io, take note of your username and password.
-The recoomended username is "SoftPower1" (without the quotes)
+The recommended username is "SoftPower1" (without the quotes) 
 After confirming your registration go to:
 https://console.thinger.io/#!/console/ (this will be your main starting point: good to bookmark it!)
 The most important feature for a beginning are:
@@ -13,7 +14,7 @@ The most important feature for a beginning are:
 
 First you will need to create a device: Select Devices, then Add Device.
 - leave the device type unchanged
-- as a device ID use "Soft-Power" (without the quotes) you must change that for your second device.
+- as a device ID I recommend to use "SoftPower" (without the quotes), you must change that for your second device.
 - enter whatever you want as a device description
 - enter a password as a device credentials (not your password for Thinger.io)
 Click on "Add Device"
@@ -42,16 +43,18 @@ You will get a small JSON list corresponding to an empty dashboard.
 
 On a second instance of your browser, open the file:
 https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/Thinger_Dashboard.ino
-(you may also open the same file in your Arduino IDE)  
-From that file select the JSON code into the clipboard **that beginnins just after**   
-"Enjoy your dashboard, and modify it ad libitum." .. 
-..and ending with  a star slash at the last line.  
-Do not copy everything, just that!  
+from that file copy everything **but not the first line and the last line**.  
 **your copied content must start and end with a curly brace.**  
 
 **Replace** all the content of the dashboard configuration by the content of your clipboard.  
 Click on "save".  
-Enjoy your standard Soft-Power dashboard!
+Enjoy your standard Soft-Power dashboard!  
+![image](https://user-images.githubusercontent.com/14197155/106634824-751d3600-6580-11eb-932a-027b90c51213.png)
+The dashboard is best viewed on a vertical tablet: change the zoom level of your browser to get the best display.
+
+*n.b. this default dashboard is provided for a username "SoftPower1" and a device name "SoftPower".  
+If you want to use it for a different user name or a different device name the best is to use the find/replace functionality if the Arduino IDE 
+to replace all occurences of the above-mentioned names by your own's before copying the content to Thinger.io.*
 
 ** Further design possibilities
 You may any time enter the design mode by clicking on the right slider.
