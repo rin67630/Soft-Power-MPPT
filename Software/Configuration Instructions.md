@@ -1,11 +1,16 @@
 # Configuration instructions
+Warning: a few settings must interactivity match between the configuration at Thinger.io and the configuration file in the ESP.
+So, if you are not an expert, may I strongly recommend not to change the username, nor to change the HOST_NAME unless you get familiar with the operation of the whole ecosystem.
+
 The software is written in such a way that you can use it just upon defining your options in the folder a0_Parameters.  
-If you are not familiar with the code, *this is the only folder that you should change*:  
+If you are not familiar with the code, *this (and eventually Thinger_Dashboard) are the only folder that you should change*:  
 
 ## Parameter list
-If you have several devices, change the hostname, else you can leave my preferred Host Name.
+If you have several devices, change the HOST_NAME and let it be "Soft_Power", which must be matching the device name that you created at Thinger.io
+The HOST_NAME also matches the device content of the default dashboard.
+
 Then proceed with the hardware configuration:
-### Hadware configuration
+### Hardware configuration
 - #define WEATHER_SOURCE_IS_URL specifies that you get the weather information from an URL, the other options are given in the comment, so you also have the option to  
 #define WEATHER_SOURCE_IS_NONE, if you do not want to process weather information.
 
@@ -44,14 +49,14 @@ Do not change this block: (unless you know what you do...)
 
 ### Credentials
 Enter here your Thinger credentials: user name, device password *not the web password*, device name, if different from "Soft-Power".  
-- #define THINGER_USERNAME    "User"       
-- #define THINGER_CREDENTIALS "Device password"    
+- #define THINGER_USERNAME    "SoftPower1"       // it is better not to change the username, unless you know what you do.
+- #define THINGER_CREDENTIALS "Device password"  // this is the device password that matches the password that you defined in Thinger.io for your device.  
 - #define THINGER_DEVICE HOST_NAME
 
 #### WiFi credentials
 If you already have successfully used your ESP device in your Wi-Fi network, you can skip that block, else...  
 
-Comment "#define SMARTCONFIG" by putting two slashes at the beginning.  
+Put two slashes in front of "#define SMARTCONFIG" (this comments out this line) 
 Enter your Wi-Fi credentials   
 Run the ESP unplugged from Soft-Power connected to an USB  
 Compile and upload. 
@@ -70,17 +75,13 @@ Communicating on UDP port: 4214
 OTA-Ready
 ´´´
 The first gibberish line is normal.
-This is the regular booting report. If it get stuck after Serial @ 9600 Baud, your Wi-Fi connection where not successful. 
+This is the regular booting report.  
+If it get stuck after Serial @ 9600 Baud, your Wi-Fi connection where not successful. 
 Correct your credentials and repeat the procedure, until you get an IP.  
 
-then return to the Arduino IDE, remove the two slashes before the line "#define SMARTCONFIG", you may remove your credentials, they are stored in the ESP and will not be used anymore.  
+Then return to the Arduino IDE, remove the two slashes before the line "#define SMARTCONFIG", 
+(you may remove your credentials, they are stored in the ESP and will not be used anymore).  
 - #define SMARTCONFIG  // (WiFi Credentials over GogglePlay/Apple App SmartConfig)
-  // alternatively to Smartconfig App, you can comment out Smartconfig 
-  // and enter your credentials to initalize for a new WiFi
-- #define WIFI_SSID          "SSID"
-- #define WIFI_PASS          "PASS"
-- #define wifiMaxTries         10
-- #define wifiRepeatInterval   100
 
 Upload the software again, and check, that you get the boot report correctly.
 
