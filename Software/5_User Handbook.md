@@ -1,6 +1,6 @@
 # User Handbook
 
-##Thinger operation.
+## Thinger operation.
 
 ### Default template dashboard
 I have provided Soft-Power with a comfortable default template a dashboard.  
@@ -85,7 +85,8 @@ This is the data bucket to record events:
 - Transition from battery charging states.
 - Other errors to be defined...
 
-
+## Operation on the serial line
+t.b.continued.
   
 
 
