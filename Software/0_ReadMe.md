@@ -31,8 +31,8 @@ I used that feature to organize my code in functional blocks:
 The code separation into functional blocks makes it much easier to jump between several tasks.
 
 ## Tutorials
-https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/1_Install%20IDE%20and%20download%20Software.md
-https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/2_Configuration%20Instructions.md
-https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/3_Starting%20at%20Thinger.io.md
-https://github.com/rin67630/Soft-Power-MPPT/edit/main/Software/4_Final%20adjustments.md
+https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/1_Install%20IDE%20and%20download%20Software.md  
+https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/2_Configuration%20Instructions.md  
+https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/3_Starting%20at%20Thinger.io.md  
+https://github.com/rin67630/Soft-Power-MPPT/edit/main/Software/4_Final%20adjustments.md  
 
