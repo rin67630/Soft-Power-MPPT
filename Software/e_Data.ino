@@ -4,7 +4,7 @@ void data125mSRun()
   digitalWrite(RELAY1, not relay1_value);
   digitalWrite(RELAY2, not relay2_value);
   digitalWrite(HP_BUCK, high_power_buck_value);
-  digitalWrite(LP_BUCK, not high_power_buck_value); 
+  digitalWrite(LP_BUCK, not high_power_buck_value);
   digitalWrite(AUX_BUCK, aux_buck_value);
   analogWrite (PWM_BAT, bat_injection);
   analogWrite (PWM_AUX, aux_injection);
@@ -14,6 +14,11 @@ void data125mSRun()
 void data1SRun()
 {
   yield();
+
+// High power buck is activated up from 15W from panel, low power buck activated down from 10W
+  if (dashboard.Wpan > 15) high_power_buck_value = 1;
+  if (dashboard.Wpan < 10) high_power_buck_value = 0;
+
 
   // === (Getting Weather from OpenWeatherMap every 5 minutes
 #if defined WEATHER_SOURCE_IS_URL
@@ -70,12 +75,12 @@ void data1SRun()
   if (not aux_buck_value) aux_injection = 1024;
   if (not high_power_buck_value)
   {
-  bat_injection_mvolt = map(bat_injection,1024, 0, INJ_LP_MIN, INJ_LP_MAX);
-  }else{
-  bat_injection_mvolt = map(bat_injection,1024, 0, INJ_HP_MIN, INJ_HP_MAX);  
+    bat_injection_mvolt = map(bat_injection, 1024, 0, INJ_LP_MIN, INJ_LP_MAX);
+  } else {
+    bat_injection_mvolt = map(bat_injection, 1024, 0, INJ_HP_MIN, INJ_HP_MAX);
   }
-  aux_injection_mvolt = map(aux_injection,1024, 0, INJ_AUX_MIN, INJ_AUX_MAX);
-  
+  aux_injection_mvolt = map(aux_injection, 1024, 0, INJ_AUX_MIN, INJ_AUX_MAX);
+
   // === ( Getting panel voltage from A0 ) ===
 #if defined (PAN_SOURCE_IS_A0)
   // Performing 3 reads to get a reliable reading.
@@ -145,12 +150,12 @@ void data1SRun()
 #endif
 
 #if defined (PAN_SOURCE_IS_INA) && defined (BAT_SOURCE_IS_INA)
-if (dashboard.Wpan > 0.03)
-{
-dashboard.efficiency = constrain((dashboard.Wbat + dashboard.Waux) / dashboard.Wpan * 100, -50, 97.5);
-}else{
-dashboard.efficiency = 0;
-}
+  if (dashboard.Wpan > 0.03)
+  {
+    dashboard.efficiency = constrain((dashboard.Wbat + dashboard.Waux) / dashboard.Wpan * 100, -50, 97.5);
+  } else {
+    dashboard.efficiency = 0;
+  }
 #endif
 
   // continuing either with values from above, or from UDP transmission
@@ -175,62 +180,62 @@ dashboard.efficiency = 0;
     expired = false;
     if (phase_timer > phase_limit[phase]) expired = true;
 
-/*
-    switch (phase)
-    {
-      case NIGHT:        //0 panel voltage < battery voltage Low-Power mode
-        LP_buck_value = LOW;
-        if (dashboard.Vpan > (dashboard.Vbat + 1))
+    /*
+        switch (phase)
         {
-          phase_timer = 0;
-          if (dashboard.Vbat > LOWLIM)
-          {
-            phase = RECOVERY;
-            aux_injection = 1024;
+          case NIGHT:        //0 panel voltage < battery voltage Low-Power mode
             LP_buck_value = LOW;
-          }
-          else
-          {
-            phase = BULK;
-            aux_injection = 580;
-            LP_buck_value = HIGH;
-          }
-        }
-        break;
-      case RECOVERY:     //1 battery voltage < LOWLIM, panel current > low limit, cut off load
-        //Deeply discharged batteries are automatically trickle charged at 17.5% of current limit
-        //until the cell voltage exceeds 75% of FLOAT.
+            if (dashboard.Vpan > (dashboard.Vbat + 1))
+            {
+              phase_timer = 0;
+              if (dashboard.Vbat > LOWLIM)
+              {
+                phase = RECOVERY;
+                aux_injection = 1024;
+                LP_buck_value = LOW;
+              }
+              else
+              {
+                phase = BULK;
+                aux_injection = 580;
+                LP_buck_value = HIGH;
+              }
+            }
+            break;
+          case RECOVERY:     //1 battery voltage < LOWLIM, panel current > low limit, cut off load
+            //Deeply discharged batteries are automatically trickle charged at 17.5% of current limit
+            //until the cell voltage exceeds 75% of FLOAT.
 
-        break;
-      case BULK:         //2 battery voltage < FLOAT, current limited by battery
-        // Bulk is terminated once the charging voltage reaches Absorption level -> absorbption
-        break;
-      case MPPT:         //3 battery voltage < FLOAT, current limited by panel
-        // MPPT is terminated once the charging voltage reaches Absorption level -> absorbption
-        break;
-      case ABSORPTION:   //4  battery voltage > FLOAT < ABSORB, current limited by battery and time
-        // Absorption is terminated once the charging current drops to 38% current limit -> floatcharge.
-        break;
-      case FLOATCHARGE:  //5 battery voltage = FLOAT
-        // Floatcharge terminates only by night.
-        break;
-      case EQUALIZATION: //6 battery voltage = EQUALIZE, current limited by battery and time
-        // Equalization needs finished absorption and a manual trigger.
-        break;
-      case OVERCHARGE:   //7 battery voltage > ABSORB and not EQUALIZATION
-        // This is an error: stop charging and alert.
-        break;
-      case DISCHARGED:   //8 battery voltage < LOWLIM, panel current < low limit , cut off load
-        // This is an error: cut off load.
-        break;
-      case PAUSE:        //9  no charge, wait for a defined time
-        break;
-      case NOBAT:        //10 no battery current possible at Vbat = ABSORB
-        break;
-      case EXAMINE:      //11 evaluate battery condition
-        break;
-    }
-*/
+            break;
+          case BULK:         //2 battery voltage < FLOAT, current limited by battery
+            // Bulk is terminated once the charging voltage reaches Absorption level -> absorbption
+            break;
+          case MPPT:         //3 battery voltage < FLOAT, current limited by panel
+            // MPPT is terminated once the charging voltage reaches Absorption level -> absorbption
+            break;
+          case ABSORPTION:   //4  battery voltage > FLOAT < ABSORB, current limited by battery and time
+            // Absorption is terminated once the charging current drops to 38% current limit -> floatcharge.
+            break;
+          case FLOATCHARGE:  //5 battery voltage = FLOAT
+            // Floatcharge terminates only by night.
+            break;
+          case EQUALIZATION: //6 battery voltage = EQUALIZE, current limited by battery and time
+            // Equalization needs finished absorption and a manual trigger.
+            break;
+          case OVERCHARGE:   //7 battery voltage > ABSORB and not EQUALIZATION
+            // This is an error: stop charging and alert.
+            break;
+          case DISCHARGED:   //8 battery voltage < LOWLIM, panel current < low limit , cut off load
+            // This is an error: cut off load.
+            break;
+          case PAUSE:        //9  no charge, wait for a defined time
+            break;
+          case NOBAT:        //10 no battery current possible at Vbat = ABSORB
+            break;
+          case EXAMINE:      //11 evaluate battery condition
+            break;
+        }
+    */
   }// end if new minute
 
 
