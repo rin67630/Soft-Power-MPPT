@@ -1,15 +1,13 @@
 /*
 This is just a convenience file containing the JSON parameters to configure the example dashboard at thinger.io.
-To use it first replace using the Find...
-Replace using the facility of the Arduino IDE, 
-- all occurances of "Device_replace_me" by the HOST_NAME of your device.
-- all occurances of "User_replace_me" by your THINGER_USERNAME.
+if you are not using the default username and device name, you must replace (e.g.using the Find/Replace facility of the Arduino IDE):
+- all occurances of "Soft-Power" by the HOST_NAME of your device.
+- all occurances of "SoftPower1" by your THINGER_USERNAME.
 
 Then create an empty dashboard at thinger.io, open it, activate the configuration (the green slider at the top right),
 click at the top left on "settings" and within the pop-up window on "developer", replace the code there by the code below
-starting from the currently brace ( do not copy this comment).
+**starting from the next line until the last line** ( do not copy the last line):
 
-Enjoy your dashboard, and modify it ad libitum.
 {
   "description": "Soft-Power 1xINA226, 2x D-SUN",
   "name": "Soft-Power",
