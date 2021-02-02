@@ -24,7 +24,7 @@ void menuRun()
       Console1.printf("Par.List \n DPage: %d DSPage: %d SPage: %d\n", displayPage, displaySubPage, serialPage);
       break;
     case 'Z':  //Reset
-      Console1.println ("\nwill reset in 10s...");
+      Console1.println ("\nResetting in 10s...");
       delay(10000);
       ESP.restart();
       break;
