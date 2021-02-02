@@ -49,8 +49,8 @@ Do not change this block: (unless you know what you do...)
 
 ### Credentials
 Enter here your Thinger credentials: user name, device password *not the web password*, device name, if different from "Soft-Power".  
-- #define THINGER_USERNAME    "SoftPower1"       // it is better not to change the username, unless you know what you do.
-- #define THINGER_CREDENTIALS "Device password"  // this is the device password that matches the password that you defined in Thinger.io for your device.  
+- #define THINGER_USERNAME    "User Name"        // Enter your user Name at Thinger
+- #define THINGER_CREDENTIALS "Device password"  // This is the device password that matches the password that you defined in Thinger.io for your device.  
 - #define THINGER_DEVICE HOST_NAME
 
 #### WiFi credentials
