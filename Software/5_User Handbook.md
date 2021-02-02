@@ -61,7 +61,31 @@ This is the data buckets for minute paced information:
 - Wpan: the current from the panel
 - efficiency: The converter efficiency ( not the efficiency of the panel )
 
-#### 
+#### HOUR
+This is the data bucket for hourly information:
+- Ibat: the current to(-) or from(-) the battery
+- Ipan: the current from the panel
+- Ohm: the valuation of the internal resistance of the battery
+- Vbat: the voltage to(-) or from(-) the battery
+- Vpan: the voltage from the panel
+- Wbat: the current to(-) or from(-) the battery
+- Wpan: the current from the panel
+- several weather conditions reported by openweathermaps.org
+
+#### Day
+This is the data bucket for a daily summary:
+- Bnnh:  (24 columns containing the Ah by hour)
+- BAhDay: the total Ah of the day
+- BV@0h: the battery voltage at midnight ( time where usually the battery is at rest)
+- BV Diff: The difference of the battery voltage at midnight and the day before.
+
+#### EVENT
+This is the data bucket to record events:
+- Over/undervoltage
+- Transition from battery charging states.
+- Other errors to be defined...
+
+
   
 
 
