@@ -49,7 +49,10 @@ Open the Arduino IDE and load Soft Power.
 Get into the tab w_Thinger_Dashboard:  
 ![image](https://user-images.githubusercontent.com/14197155/106659252-c3d9c880-659e-11eb-8aa9-7342b6df893c.png)  
 Use Edit/Find to replace every occurence of SoftPower1 with the user name that you have chosen to register.
+Should you have used a device named differently than "SoftPower" :
+Use Edit/Find to replace every occurence of SoftPower with the device name that you created.
 Save.
+
 From the content of the  tab w_Thinger_Dashboard, copy everything **but not the first line and the last line**.  
 **your copied content must start and end with a curly brace.**  
 Return to the Thinger instance and  
@@ -60,9 +63,7 @@ Enjoy your standard Soft-Power dashboard!
 ![image](https://user-images.githubusercontent.com/14197155/106634824-751d3600-6580-11eb-932a-027b90c51213.png)  
 The dashboard is best viewed on a vertical tablet: change the zoom level of your browser to get the best display.
 
-*n.b. this default dashboard is provided for a username "SoftPower1" and a device name "SoftPower".  
-If you want to use it for a different user name or a different device name the best is to use the find/replace functionality if the Arduino IDE 
-to replace all occurences of the above-mentioned names by your own's before copying the content to Thinger.io.*
+
 
 ** Further design possibilities
 You may any time enter the design mode by clicking on the right slider.
