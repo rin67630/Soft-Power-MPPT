@@ -1,13 +1,13 @@
 #define HOST_NAME   "Soft-Power" // n.b: The HOST_NAME must match the device name of Thinger.
 
 //  ***Credentials***  (Adjust to your own values)
-// WifI
+// Wifi
 #define SMARTCONFIG  // (WiFi Credentials over GogglePlay/Apple App SmartConfig)
 // alternatively to Smartconfig App, you can comment out Smartconfig 
 // and enter your WiFi credentials to initalize for a new WiFi
 //#define ERASE_WIFI_CREDENTIALS 
-#define WIFI_SSID            "9"
-#define WIFI_PASS            "23454311"
+#define WIFI_SSID            "SSID"
+#define WIFI_PASS            "PASS"
 #define wifiMaxTries         10
 #define wifiRepeatInterval   100
 //Thinger
