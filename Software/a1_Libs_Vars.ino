@@ -52,6 +52,7 @@ SSD1306Wire display(0x3c, SDA, SCL);                  //OLED 128*64 soldered
 #define NOPANEL      11 // no panel current for more than 20h
 #define EXAMINE      12 // evaluate battery condition
 
+
 byte phase = EXAMINE;
 int phase_timer;
 unsigned int phase_duration[13];
@@ -192,9 +193,9 @@ struct dashboard {
 
 int bat_injection = 250;
 int bat_injection_mvolt;
-int scc_target = 250;
-int scc_delta = 10;
-int scc_corr   = 0;
+int bat_target = 250;
+int bat_delta = 10;
+int bat_corr   = 0;
 int aux_injection = 250;
 int aux_injection_mvolt;
 int aux_target = 250;
