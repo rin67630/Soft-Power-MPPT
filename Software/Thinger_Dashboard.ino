@@ -1,6 +1,6 @@
 /*
 {
-  "description": "SoftPower 1xINA226, 2x D-SUN",
+  "description": "SoftPower default dashboard",
   "name": "SoftPower",
   "properties": {
     "columns": 4,
