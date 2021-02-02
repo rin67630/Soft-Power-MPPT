@@ -49,7 +49,7 @@ from that file copy everything **but not the first line and the last line**.
 **Replace** all the content of the dashboard configuration by the content of your clipboard.  
 Click on "save".  
 Enjoy your standard Soft-Power dashboard!  
-![image](https://user-images.githubusercontent.com/14197155/106634824-751d3600-6580-11eb-932a-027b90c51213.png)
+![image](https://user-images.githubusercontent.com/14197155/106634824-751d3600-6580-11eb-932a-027b90c51213.png)  
 The dashboard is best viewed on a vertical tablet: change the zoom level of your browser to get the best display.
 
 *n.b. this default dashboard is provided for a username "SoftPower1" and a device name "SoftPower".  
