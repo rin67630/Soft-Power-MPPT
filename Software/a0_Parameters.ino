@@ -43,10 +43,10 @@
 #define AMPERE2   2         // Chose here about 2x the max expected Amps
 
 // ***Calibration***  (Leave as is for a first run)
-#define IFACTORP  1000000   // Panel Current correction factor 1000000 is normal,   -"- only used when PAN_SOURCE_IS_INA.
+#define IFACTORP  1000000   // Panel Current correction factor 1000000 is normal,    -"- only used when PAN_SOURCE_IS_INA.
 #define IFACTORB  1000000   // Battery Current correction factor 1000000 is normal,  -1000000 reverses shunt, change value to correct for wrong Amp values
-#define IFACTORA  1000000   // Aux Out Current correction factor 1000000 is normal,   -"- only used when AUX_SOURCE_IS_INA.
-#define PANEL_MAX 23300     // mV panel voltage  (Adjust to match panel voltage)
+#define IFACTORA  1000000   // Aux Out Current correction factor 1000000 is normal,  -"- only used when AUX_SOURCE_IS_INA.
+#define PANEL_MAX 23300     // mV panel voltage  (Adjust to match panel voltage),    -only used when PAN_SOURCE_IS_A0.
 #define INJ_NEUTRAL 430
 #define INJ_HP_MIN  00000   //   Minimum Battery Voltage Setpoint at injection=1024
 #define INJ_HP_MAX  00000   //   Maximum Battery Voltage Setpoint at injection=0 
