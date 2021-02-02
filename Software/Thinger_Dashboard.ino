@@ -1,16 +1,7 @@
 /*
-This is just a convenience file containing the JSON parameters to configure the example dashboard at thinger.io.
-if you are not using the default username and device name, you must replace (e.g.using the Find/Replace facility of the Arduino IDE):
-- all occurances of "Soft-Power" by the HOST_NAME of your device.
-- all occurances of "SoftPower1" by your THINGER_USERNAME.
-
-Then create an empty dashboard at thinger.io, open it, activate the configuration (the green slider at the top right),
-click at the top left on "settings" and within the pop-up window on "developer", replace the code there by the code below
-**starting from the next line until the last line** ( do not copy the last line):
-
 {
-  "description": "Soft-Power 1xINA226, 2x D-SUN",
-  "name": "Soft-Power",
+  "description": "SoftPower 1xINA226, 2x D-SUN",
+  "name": "SoftPower",
   "properties": {
     "columns": 4,
     "show_template": true
@@ -23,7 +14,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Iaux",
               "resource": "measure",
@@ -56,7 +47,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Waux",
               "resource": "measure",
@@ -89,7 +80,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device_property": {
-              "device": "Soft-Power",
+              "device": "SoftPower",
               "mapping": "pressure",
               "property": "persistance",
               "user": "SoftPower1"
@@ -120,7 +111,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device_property": {
-              "device": "Soft-Power",
+              "device": "SoftPower",
               "mapping": "temperature",
               "property": "persistance",
               "user": "SoftPower1"
@@ -151,7 +142,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device_property": {
-              "device": "Soft-Power",
+              "device": "SoftPower",
               "mapping": "summary",
               "property": "persistance",
               "user": "SoftPower1"
@@ -182,7 +173,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device_property": {
-              "device": "Soft-Power",
+              "device": "SoftPower",
               "mapping": "wind",
               "property": "persistance",
               "user": "SoftPower1"
@@ -213,7 +204,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "resource": "DC_out2",
               "user": "SoftPower1"
             },
@@ -242,7 +233,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "resource": "relay2",
               "user": "SoftPower1"
             },
@@ -271,7 +262,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "resource": "relay1",
               "user": "SoftPower1"
             },
@@ -300,7 +291,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "resource": "DC_out1",
               "user": "SoftPower1"
             },
@@ -332,7 +323,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Vpan",
               "resource": "measure",
@@ -365,7 +356,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "mapping": "ohm",
               "resource": "measure",
               "update": "events",
@@ -404,7 +395,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device_property": {
-              "device": "Soft-Power",
+              "device": "SoftPower",
               "mapping": "Today",
               "property": "BAT",
               "user": "SoftPower1"
@@ -442,7 +433,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device_property": {
-              "device": "Soft-Power",
+              "device": "SoftPower",
               "mapping": "Yesterday",
               "property": "BAT",
               "user": "SoftPower1"
@@ -480,7 +471,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Vaux",
               "resource": "measure",
@@ -513,7 +504,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "resource": "scc",
               "user": "SoftPower1"
             },
@@ -538,7 +529,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "resource": "aux",
               "user": "SoftPower1"
             },
@@ -563,9 +554,9 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 5,
-              "mapping": "scc_mvolt",
+              "mapping": "bat_mvolt",
               "resource": "control",
               "update": "interval",
               "user": "SoftPower1"
@@ -599,7 +590,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 5,
               "mapping": "aux_mvolt",
               "resource": "control",
@@ -675,7 +666,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Vbat",
               "resource": "measure",
@@ -708,7 +699,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Ibat",
               "resource": "measure",
@@ -741,7 +732,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Wpan",
               "resource": "measure",
@@ -775,7 +766,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Ipan",
               "resource": "measure",
@@ -808,7 +799,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 2,
               "mapping": "Wbat",
               "resource": "measure",
@@ -841,7 +832,7 @@ click at the top left on "settings" and within the pop-up window on "developer",
         {
           "data": {
             "device": {
-              "id": "Soft-Power",
+              "id": "SoftPower",
               "interval": 5,
               "mapping": "efficiency",
               "resource": "measure",
@@ -875,4 +866,4 @@ click at the top left on "settings" and within the pop-up window on "developer",
     }
   ]
 }
- */
+*/
