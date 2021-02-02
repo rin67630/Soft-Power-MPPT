@@ -2,9 +2,9 @@
 This file describes the procedure to adjust the PWM parameters once your software is installed and you have the Thinger.io dashboard running and operational.
 
 ## Shunt calibration.
-If you are using the original R100 shunts or are using external calibrated shunts, you may skip that step.
-Else, the current readings from shunts with a value below R100 might be inaccurate, do to the internal resistance of solder paste and PCB tracks.  
-If you will current readings are inaccurate, you can correct the values by adjusting the parameters: 
+If you are using the original R100 shunts or are using external calibrated shunts, you may skip that step.  
+Else, the current readings from shunts with a value below R100 might be inaccurate, do to the internal resistance of solder tin and PCB tracks.  
+If your current readings are inaccurate, you can correct the values by adjusting the parameters: 
 ´´´
 #define IFACTORP  1000000   // Panel Current correction factor 1000000 is normal,   -"- only used when PAN_SOURCE_IS_INA.
 #define IFACTORB  1000000   // Battery Current correction factor 1000000 is normal,  -1000000 reverses shunt, change value to correct for wrong Amp values
@@ -12,6 +12,8 @@ If you will current readings are inaccurate, you can correct the values by adjus
 ´´´
 You adjust the parameters with the rule of three, the factors being a divisor:  
 e.g. the real current flowing is 5.5A, your readings are 5.9A -> IFACTORx should be 5.9/5.5x10000= 107300.
+
+n.b. if the current shown are negative, you can correct that by entering and negative IFACTOR.
 
 ## Voltage calibration.
 If you are reading the panel voltage over the analog input A0, the voltage might be slightly inaccurate.
