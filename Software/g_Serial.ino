@@ -118,5 +118,10 @@ void serialRun()
     case 'b':
       Console1.printf("Ah: %+2.3f, Panel: %2.3f, Volt: %2.3f, Amp: %2.3f, Watt: %2.3f, microV: %6.0f,%%Batt: %2.1f IntRes: %1.3f\n", AhBat[27], dashboard.Vpan, dashboard.Vbat, dashboard.Ibat, dashboard.Wbat, ina1_shunt, dashboard.percent_charged, dashboard.internal_resistance);
       break;
+     case '~':   // WiFi status report
+       Console3.printf("RSSI: %d dBm\n", WiFi.RSSI());
+       
+     break;
+     
   }  // end switch (serialPage)
 }
