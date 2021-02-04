@@ -2,16 +2,16 @@ void loop()
 {
   // run when idle.
   ArduinoOTA.handle();
-   menuRun();
   yield();              //Yield for WiFi
 
   runEvery(125)         //125mS cf Every Macro in Functions
   {
+    menuRun();
     getEpoch();         // writes the Epoch (Numbers of seconds till 1.1.1970...
     getTimeData();      // get Second, Minute...Year.
-//    digitalWrite(STDLED, false);
+    //    digitalWrite(STDLED, false);
     data125mSRun();
-//    digitalWrite(STDLED, true);
+    //    digitalWrite(STDLED, true);
     delay(50);          // set as high as possible to save energy but low enough to get the tasks done.
 
     slice += 1;
@@ -46,25 +46,25 @@ void loop()
         }
         break;
       case 2:
-//       digitalWrite(GRNLED, true);
+        //       digitalWrite(GRNLED, true);
         data1SRun();
-//       digitalWrite(GRNLED, false);
+        //       digitalWrite(GRNLED, false);
         break;
       case 3:
         displayRun();
         break;
       case 5:
-//       digitalWrite(BLULED, true);
+        //       digitalWrite(BLULED, true);
         serialRun();
-//       digitalWrite(BLULED, false);
+        //       digitalWrite(BLULED, false);
         break;
       case 7:
-//       digitalWrite(REDLED, true);
-        wirelessRun();
-//       digitalWrite(REDLED, false);
+        //       digitalWrite(REDLED, true);
+        if (WiFi.status() == WL_CONNECTED) wirelessRun();
+        //       digitalWrite(REDLED, false);
         break;
       case 8:          // Reinitializations
-        if (Second % 10 == 5) 
+        if (Second % 10 == 5)
         {
           // every 6 seconds
         }
