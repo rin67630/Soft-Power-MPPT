@@ -1,5 +1,41 @@
 void menuRun()
 {
+  if (Year < 2020)
+  {
+    if (Serial.available() > 0)
+    {
+      // read in the user input
+      Day = Serial.parseInt();
+      Month = Serial.parseInt();
+      Year = Serial.parseInt();
+      Hour = Serial.parseInt();
+      Minute = Serial.parseInt();
+      Second = Serial.parseInt();
+      Console1.printf("I have understood %u/%u/%u %u:%u:%u\n", Day, Month, Year, Hour, Minute, Second);
+      boolean validDate = (inRange(Day, 1, 31) && inRange(Month, 1, 12) && inRange(Year, 2021, 2031));
+      boolean validTime = (inRange(Hour, 0, 23) && inRange(Minute, 0, 59) && inRange(Second, 0, 59));
+      if (validTime && validDate)
+      {
+        //setTime(Hour,Minute,Second,Day,Month,Year);
+        struct tm t;
+          time_t t_of_day;
+          t.tm_year = Year-1900;  // Year - 1900
+          t.tm_mon = Month-1;       // Month, where 0 = jan
+          t.tm_mday = Day-1;        // Day of the month
+          t.tm_hour = Hour;
+          t.tm_min = Minute;
+          t.tm_sec = Second;
+          t.tm_isdst = 1;         // Is DST on? 1 = yes, 0 = no, -1 = unknown
+        t_of_day = mktime(&t);
+        sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, t_of_day, DayName, Day, MonthName, Year);
+        Console3.println(charbuff);
+        struct timeval tv;
+          tv.tv_sec = t_of_day;  // epoch time (seconds)
+          tv.tv_usec = 0;    // microseconds
+         settimeofday(&tv,0);
+      }
+    }
+  }
   if (Console0.available())   inbyte = Console0.read(); //Serial input available
   switch (inbyte)
   {
@@ -28,26 +64,29 @@ void menuRun()
       delay(10000);
       ESP.restart();
       break;
-
+    case 'T': // Print time
+      Console1.println();
+      Console1.println(ctime(&now));
+      break;
     case '+': //Increase Offset
-      aux_injection ++;
-      Console1.print ("+1aux=");
-      Console1.println (aux_injection);
+      bat_injection ++;
+      Console1.print ("+1bat=");
+      Console1.println (bat_injection);
       break;
     case '-': //Reduce Offset
-      aux_injection --;
-      Console1.print ("-1aux=");
-      Console1.println (aux_injection);
+      bat_injection --;
+      Console1.print ("-1bat=");
+      Console1.println (bat_injection);
       break;
     case '>': //Increase Offset by 20
-      aux_injection = aux_injection + 20;
-      Console1.print ("+10aux=");
-      Console1.println (aux_injection);
+      bat_injection = bat_injection + 20;
+      Console1.print ("+10bat=");
+      Console1.println (bat_injection);
       break;
     case '<': //Reduce Offset by 20
-      aux_injection = aux_injection - 20;
-      Console1.print ("-10aux=");
-      Console1.println (aux_injection);
+      bat_injection = bat_injection - 20;
+      Console1.print ("-10bat=");
+      Console1.println (bat_injection);
       break;
 
     // ***Options for periodical Reports**
@@ -81,7 +120,6 @@ void menuRun()
     case 'e': //No Events
       SerialEvent = false;
       break;
-
     // ***On/Off for periodical Reports**
     case 'R': //Daily Report
       serialPage = 'R';
@@ -91,19 +129,6 @@ void menuRun()
       break;
     case 'p': //no more Periodical Reports
       serialPage = 0;
-      break;
-
-    case 'L': //serialPage Leq one shot
-      serialPage = 'L';
-      Console1.print ("\nLeq :");
-      break;
-    case 'N': //serialPage NAT List one shot
-      serialPage = 'N';
-      Console1.print ("\nNAT :");
-      break;
-    case 'T':  //Trace Report
-      serialPage = 'T';
-      Console1.print ("\nTrace Report :");
       break;
     case 'B':  //Battery Report one shot
       serialPage = 'B';
@@ -118,9 +143,10 @@ void menuRun()
       Console1.println ("\nWeather report :");
       break;
     case '~':
-      WiFi.printDiag(Serial);
-      Console1.printf("\nmac address: %s , \nHostname: %s\n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
-      Console1.print("\nIP address: "); Console1.println(WiFi.localIP());
+      serialPage = '~';
+      Console1.println ("\nWiFi report :");
+      WiFi.printDiag(Console3);
+      Console3.flush();
       break;
   } //end switch (inbyte)
 
