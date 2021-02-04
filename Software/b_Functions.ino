@@ -14,59 +14,40 @@ ThingerESP8266 thing(THINGER_USERNAME, THINGER_DEVICE, THINGER_DEVICE_CREDENTIAL
 // Functions
 
 // WiFi Managemement
-#if defined (SMARTCONFIG)
+
 void getWiFi()
 {
-  WiFi.mode(WIFI_STA);
-  //WiFi.disconnect();
-  wifi_station_set_auto_connect(true);
-  wifi_station_set_hostname(HOST_NAME);
-  while (WiFi.status() != WL_CONNECTED)
+#ifdef ERASE_WIFI_CREDENTIALS
+  WiFi.disconnect(true);
+#endif
+  WiFi.reconnect();
+  WiFi.waitForConnectResult();
+  WiFi.hostname(HOST_NAME);  
+  if (WiFi.status() != WL_CONNECTED)
   {
-    delay(500);
-    int cnt = 0;
-    //    Console3.print(".");
-    if (cnt++ >= wifiMaxTries) {
-      WiFi.beginSmartConfig();
-      while (1) {
-        delay(wifiRepeatInterval);
-        if (WiFi.smartConfigDone())
-        {
-          Console3.println("SmartConfig Success");
-          break;
-        }
+    WiFi.begin(WIFI_SSID, WIFI_PASS);
+    //    WiFi.setAutoConnect();
+    //    WiFi.setAutoReconnect();
+    wifiConnectCounter = 1;
+    Console3.println();
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      delay(wifiRepeatInterval);
+      Console3.print(".");
+      wifiConnectCounter++;
+      if (wifiConnectCounter > wifiMaxTries)
+      {
+        //        if (WiFi.status() == WL_NO_SSID_AVAIL) Console3.println("SSID?");
+        //        if (WiFi.status() == WL_CONNECT_WRONG_PASSWORD) Console3.println("PASS?");
+        Console3.println("SSID or PASS?");
+        WiFi.disconnect(true);
+        Console3.println("running offline, back in the 70's"); 
+       break;
       }
     }
+    ip = WiFi.localIP();
+    Serial.printf("RSSI: %d dBm\n", WiFi.RSSI());
   }
-  ip = WiFi.localIP();
-}
-#else
-void getWiFi()
-{
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
-  wifi_station_set_auto_connect(true);
-  wifi_station_set_hostname(HOST_NAME);
-  wifiConnectCounter = 1;
-  Console3.println();
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(wifiRepeatInterval);
-    Console3.print(".");
-    wifiConnectCounter++;
-    if (wifiConnectCounter > wifiMaxTries) {
-      delay(wifiRepeatInterval * 1000 * 1000);
-      wifiConnectCounter = 0;
-    }
-  }
-  ip = WiFi.localIP();
-}
-#endif
-
-void disConnect()
-{
-  //  WiFi.disconnect(); //temporarily disconnect WiFi as it's no longer needed
-  WiFi.mode(WIFI_OFF);
-  // WiFi.forceSleepBegin();  can it save power?
-  // WiFi.forceSleepWake();
 }
 
 void myIP()
@@ -104,7 +85,18 @@ void getTimeData()
   strftime (Date,      12, "%d/%m/%Y", timeinfo);
 }
 
-int do__perturb_and_observe_mppt() { // performs Perturb & Observe MPPT; changes pwm_value to maximise power
+void buffTimeData()
+{
+strftime(charbuff, sizeof(charbuff), "%R %x", timeinfo);
+}
+
+bool inRange(int x, int low, int high){
+  if(x>=low && x<=high)
+    return true;
+  return false;
+}
+
+int do_perturb_and_observe_mppt() { // performs Perturb & Observe MPPT; changes pwm_value to maximise power
   if (dashboard.Wbat < last_power) { // power has gone down - change direction
     bat_delta = - bat_delta;
   }       // "else" power is the same or increased  - keep direction
@@ -114,8 +106,8 @@ int do__perturb_and_observe_mppt() { // performs Perturb & Observe MPPT; changes
   analogWrite (PWM_AUX, bat_injection);
 }
 
-int do__incremental_conductance_mppt() { // performs Inc Conductance MPPT; changes pwm_value to maximise power
-//place code here
+int do_incremental_conductance_mppt() { // performs Inc Conductance MPPT; changes pwm_value to maximise power
+  //place code here
 }
 
 int do_CV () { // performs fix voltage operation at target
@@ -168,6 +160,6 @@ void do_CVCC () {   // stay at or below voltage and current targets
     bat_injection = constrain (bat_injection, 0, 255);
     analogWrite (PWM_BAT, bat_injection);
   } else {                // increase charging subject to capacity
-    do__perturb_and_observe_mppt();
+    do_perturb_and_observe_mppt();
   }
 }
