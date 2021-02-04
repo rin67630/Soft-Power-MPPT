@@ -53,5 +53,8 @@ Provided functions:
 You can adjust your dashboards online any time ad gusto!
 
 
+You are welcome to discuss with us on our Discord channel: https://discord.gg/NH4gbQUJX8 about Soft-Power.
+
+
 Enjoy!
 
