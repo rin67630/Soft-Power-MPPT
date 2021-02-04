@@ -1,233 +1,72 @@
-// *** libraries***
-#include <Wire.h>          // Libs for I2C
-#include <INA.h>           // Zanshin INA Library
-#include <ArduinoJson.h>   // Libs for Webscraping
-#include <WiFiUdp.h>
-#include <ArduinoOTA.h>
-#include <ESP8266WiFi.h>   // default from Espressif
-#include <ESP8266HTTPClient.h>
-#include <TZ.h>            // default from Espressif
-#include <FS.h>
-#if defined(THINGER)
-#include <ThingerESP8266.h>
-//#include <ThingerConsole.h>
-#endif
-#include <EEPROM.h>
+#define HOST_NAME   "SoftPower" // n.b: The HOST_NAME must match the device name of Thinger.
 
-#ifndef DISPLAY_IS_NONE
-#include "SSD1306Wire.h"  // from https://github.com/ThingPulse/esp8266-oled-ssd1306/
-#endif
-#ifdef DISPLAY_IS_OLED64x48
-SSD1306Wire display(0x3c, SDA, SCL, GEOMETRY_64_48 ); // WEMOS OLED 64*48 shield
-#endif
-#ifdef DISPLAY_IS_OLED128x64
-SSD1306Wire display(0x3c, SDA, SCL);                  //OLED 128*64 soldered
-#endif
+//  ***Credentials***  
+// WifI: for the very first run with a new ESP or on a new WiFi network 
+// remove the // from the next line and provide real SSID and PASS credentials.
+#define ERASE_WIFI_CREDENTIALS 
+#define WIFI_SSID          "SPLabs"
+#define WIFI_PASS          "!Dev#45219"
+#define wifiMaxTries       20
+#define wifiRepeatInterval 500
+// after a successful connection, you can revert to the defaults lines again.
 
-// ESP8266 pin definitions Lolin / D1 /Witty (see definitions for other boards in Parked code)
-#define SCL 5           // D1 GPIO05 for I2C (Wire) System Clock
-#define SDA 4           // D2 GPIO04 for I2C (Wire) System Data
-#define RST 0           // GPIO0
+//Thinger
+#define THINGER_USERNAME           "SoftPower1"       
+#define THINGER_DEVICE_CREDENTIALS "3tr67333"    
+#define THINGER_DEVICE HOST_NAME    
+//Location for weather
+#define OPEN_WEATHER_MAP_APP_ID      "208085abb5a3859d1e32341d6e1f9079" 
+#define OPEN_WEATHER_MAP_LOCATION_ID "2820158"
+#define OPEN_WEATHER_MAP_LANGUAGE    "en"
+#define OPEN_WEATHER_MAP_UNITS       "metric"
+//Time zone
+#define NTP_SERVER "de.pool.ntp.org"
+#define MYTZ TZ_Europe_Berlin
+#define TZ   1               // (utc+) TZ in hours
 
-#define RELAY1     D5   // GPIO14 Relay or FET control 1
-#define RELAY2     D6   // GPIO16 Relay or FET control 2
-#define LP_BUCK    D0   // GPIO12 Digital out control low Power buck
-#define HP_BUCK    D7   // GPIO12 Digital out control high Power buck
-#define PWM_BAT     D3   // GPIO0  PWM output to control scc buck
-#define PWM_AUX     D4   // GPIO2  PWM output to control aux buck (lights also the built-in LED)
-#define AUX_BUCK   D8   // GPIO15 Digital out control aux buck
-
-// Solar charger phases
-#define NIGHT        0  // panel voltage < battery voltage Low-Power mode
-#define RECOVERY     1  // battery voltage < LOWLIM, panel current > low limit, cut off load 
-#define BULK         2  // battery voltage < FLOAT, current limited by battery
-#define MPPT         3  // battery voltage < FLOAT, current limited by panel
-#define ABSORPTION   4  // battery voltage > FLOAT < ABSORB, current limited by battery and time
-#define FLOATCHARGE  5  // battery voltage = FLOAT
-#define EQUALIZATION 6  // battery voltage = EQUALIZE, current limited by battery and time
-#define OVERCHARGE   7  // battery voltage > ABSORB and not EQUALIZATION
-#define DISCHARGED   8  // battery voltage < LOWLIM, panel current < low limit , cut off load
-#define PAUSE        9  // no charge, wait for a defined time
-#define NOBAT        10 // no battery current possible at Vbat = ABSORB
-#define NOPANEL      11 // no panel current for more than 20h
-#define EXAMINE      12 // evaluate battery condition
+// ***Hardware Configuration***  (Adjust to your own hardware options)
+#define WEATHER_SOURCE_IS_URL   //_URL _NONE         Change end accordingly
+#define BAT_SOURCE_IS_INA       //_INA _UDP _NONE        Change end accordingly
+#define PAN_SOURCE_IS_A0        //_A0 _INA _UDP _NONE   Change end accordingly
+#define AUX_SOURCE_IS_NONE      //_A0 _INA  _NONE    Change end accordingly
+#define BATTERY_IS_12V_LIFEPO   //_12V_FLA _12V_AGM _12V_GEL _12V_LIFEPO 11V_LIPO
+#define DISPLAY_IS_OLED128x64   //_NONE _OLED64x48 _OLED128x64
+#define DISPLAY_REVERSED
 
 
-byte phase = EXAMINE;
-int phase_timer;
-unsigned int phase_duration[13];
-// phase_limit is the maximal duration (in minutes) for each phase, 0= no limit
-// phase_ratio_C is the ratio charging current to BATT_CAPACITY for each phase
-// phase_voltage is the battery voltage for each phase
+// ***Electrical parameters***   (Adjust, if you use other shunts than R100)
+#define SHUNT0   100000     // Nominal Shunt resistor value in microOhm (Channel 1 of the INA, connected to the battery)
+#define AMPERE0   2         // Chose here about 2x the max expected Amps
+#define SHUNT1   100000     // Nominal Shunt resistor value in microOhm (Channel 2 of the INA, connected to the panel)
+#define AMPERE1   2        // Chose here about 2x the max expected Amps 
+#define SHUNT2   100000     // Nominal Shunt resistor value in microOhm (Channel 3 of the INA, connected to the output)
+#define AMPERE2   2         // Chose here about 2x the max expected Amps
 
-int phase_limit[13] = {1000, 300, 900, 900, 480, 900, 240, 0, 0, 30, 0, 0, 10};
+// ***Calibration***  (Leave as is for a first run)
+#define IFACTORP  1000000   // Panel Current correction factor 1000000 is normal,   -"- only used when PAN_SOURCE_IS_INA.
+#define IFACTORB  1000000   // Battery Current correction factor 1000000 is normal,  -1000000 reverses shunt, change value to correct for wrong Amp values
+#define IFACTORA  1000000   // Aux Out Current correction factor 1000000 is normal,   -"- only used when AUX_SOURCE_IS_INA.
+#define PANEL_MAX 23300     // mV panel voltage  (Adjust to match panel voltage)
+#define INJ_NEUTRAL 430
+#define INJ_HP_MIN  00000   //   Minimum Battery Voltage Setpoint at injection=1024
+#define INJ_HP_MAX  00000   //   Maximum Battery Voltage Setpoint at injection=0 
+#define INJ_LP_MIN  10000   //   Minimum Battery Voltage Setpoint at injection=1024
+#define INJ_LP_MAX  14830   //   Maximum Battery Voltage Setpoint at injection=0 
+#define INJ_AUX_MIN  1870   //   Minimum Auxiliary Voltage Setpoint at injection=1024
+#define INJ_AUX_MAX  8740   //   Maximum Auxiliary Voltage Setpoint at injection=0 
 
-// Battery parameters
-#ifdef BATTERY_IS_12V_FLA
-float phase_ratio_C[] = {0, 0.05, 0.2, 0.2, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 12.4, 13.8, 13, 8, 14.6, 13.7, 15.2, 15.6, 11.0, 0, 0, 0, 0};
-#define MIN_VOLT 10.8
-#define MAX_VOLT 15.6
-#endif
-#ifdef BATTERY_IS_12V_AGM
-float phase_ratio_C[] = {0, 0.05, 0.2, 0.2, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 12.4, 13.8, 13, 8, 14.4, 13.7, 14.4, 15.6, 11.0, 0, 0, 0, 0};
-#define MIN_VOLT 10.8
-#define MAX_VOLT 15.6
-#endif
-#ifdef BATTERY_IS_12V_GEL
-float phase_ratio_C[] = {0, 0.05, 0.2, 0.2, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 12.4, 13.8, 13, 8, 14.4, 13.7, 15, 2, 15.6, 11.0, 0, 0, 0, 0};
-#define MIN_VOLT 10.8
-#define MAX_VOLT 15.6
-#endif
-#ifdef BATTERY_IS_12V_LIFEPO
-float phase_ratio_C[] = {0, 0.3, 1, 1, 0.5, 0.1, 0.3, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 11.4, 13.2, 13.2, 13.2, 12.0, 12.0, 12.0, 10.5, 0, 0, 0, 0};
-#define MIN_VOLT 10.36
-#define MAX_VOLT 14.97
-#endif
-#ifdef BATTERY_IS_11V_LIPO
-float phase_ratio_C[] = {0, 0.3, 1, 1, 0.5, 0.1, 0.3, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 10, 12.8, 12.8, 12.8, 12.8, 12.8, 12.8, 10.5, 0, 0, 0, 0};
-#define MIN_VOLT 10.05
-#define MAX_VOLT 14.45
-#endif
-boolean expired;
+#define BATT_CAPACITY 12 // Ah
 
-#define BAT_TEMP_COMP   30 //mV per°C under 25°C
-#define PANEL_TEMP_COMP 64 //mV per °C under 25°C
-
-
-// Concatenate URLs
-#define OPEN_WEATHER_MAP_URL  "http://api.openweathermap.org/data/2.5/weather?id=" OPEN_WEATHER_MAP_LOCATION_ID "&appid=" OPEN_WEATHER_MAP_APP_ID "&units=" OPEN_WEATHER_MAP_UNITS "&lang="  OPEN_WEATHER_MAP_LANGUAGE
-//#define OPEN_WEATHER_MAP_URL   "http://api.openweathermap.org/data/2.5/weather?id=2928810&appid=208085abb5a3859d1e32341d6e1f9079&lang=de&units=metric"
-#define DFLD_URL "http://api.dfld.de/noise/dfld.de/" DFLD_REGION "/" DFLD_STATION
-//#define DFLD_URL "http://api.dfld.de/noise/dfld.de/004/020"
-
-//***Variables for Time***
-tm*        timeinfo;                 //localtime returns a pointer to a tm struct static int Second;
-time_t     Epoch;
-time_t     now;
-byte Second;
-long SecondOfDay;
-byte GracePause;
-long MillisMem;
-byte Minute;
-byte Hour;
-byte Day;
-byte Month;
-unsigned int Year;
-byte Weekday;
-char DayName[12];
-char MonthName[12];
-char Time[10];
-char Date[12];
-byte slice;
-boolean Each6S;
-boolean NewMinute;
-boolean MinuteExpiring;
-boolean NewHour;
-boolean HourExpiring;
-boolean NewDay;
-boolean DayExpiring;
-
-// ***Variables for Menu***
-byte    inbyte;
-byte    displayPage;
-byte    displaySubPage;
-byte    serialPage;
-byte    serialPageMem;
-byte    wirelessPage;
-boolean serialDay;
-boolean serialHur;
-boolean serialMin;
-boolean serialSec;
-boolean SerialEvent;
-boolean triglEvent;
-
-static IPAddress ip;
-static IPAddress remip;
-
-//***Payload Variables***
-// INA226
-byte devicesFound =      0; ///< Number of INAs found
-float ina1_current;
-float ina1_voltage;
-float ina1_shunt;
-float ina1_power;
-float ina2_current;
-float ina2_voltage;
-float ina2_shunt;
-float ina2_power;
-float ina3_current;
-float ina3_voltage;
-float ina3_shunt;
-float ina3_power;
-float delta_current;
-float delta_voltage;
-float voltageAt0H ;
-float voltageDelta ;
-float currentInt = 0;
-int   nCurrent;
-float AhBat[31];
-float last_power;
-
-struct dashboard {
-  float Ibat ;
-  float Vbat ;
-  float Wbat ;
-  float Cbat ;  
-  float Ipan ;
-  float Vpan ;
-  float Wpan ;
-  float Cpan ; 
-  float Iaux ;
-  float Vaux ;
-  float Waux ;
-  float Caux ; 
-  float efficiency;
-  float internal_resistance;
-  float percent_charged;
-} dashboard;
-
-int bat_injection = 250;
-int bat_injection_mvolt;
-int bat_target = 250;
-int bat_delta = 10;
-int bat_corr   = 0;
-int aux_injection = 250;
-int aux_injection_mvolt;
-int aux_target = 250;
-int aux_delta = 10;
-int aux_corr   = 0;
-
-
-boolean relay1_value;
-boolean relay2_value;
-boolean high_power_buck_value;
-boolean aux_buck_value;
-
-char batteryPayload[sizeof(dashboard)];  //  Array of characters as image of the structure for UDP xmit/rcv
-
-//Weather
-float outdoor_temperature;
-float outdoor_humidity;
-float outdoor_pressure;
-float wind_speed;
-int   wind_direction;
-int   cloudiness;
-String weather_summary;
-long  sunrise;
-long  sunset;
-
-//Sound level from URL
-String  JSONpayload;
-byte    wifiConnectCounter;
-
-//*** Buffers ***
-static char charbuff[80];    //Char buffer for many functions
-
-int A0Raw;
-boolean trigEvent;
-String eventTime;
+//  ***Communicatin options*** (For geeks only, else leave as it is)
+//'define DWITTER               //(Comment out, if no dwitter.io used) 
+#define THINGER                 //(Comment out, if no thinger.io used)
+#define WRITE_BUCKETS           //(Comment out, if this is the second device for Thinger)
+//define PUBLISH_REPORT              // Issue events&midnight reports to UDP Port + 1, comment out else
+//#define PUBLISH_BATTERY            // If this is the battery master, comment out else
+//#define UDP_TARGET "192.168.188.75"  // IP to forward data
+#define UDP_PORT   4214              // Ports to forward/receive data
+#define Console0 Serial      // Port for user inputs  
+#define Console1 Serial      // Port for user output
+#define Console2 Serial1     // Port for midnight report e.g. on thermal printer
+#define Console3 Serial      // Port for boot messages
+#define SERIAL_SPEED            9600 //9600  115200 230400
