@@ -1,12 +1,13 @@
-#Off-line operation
+# Off-line operation
 Soft-Power works nominally interconnected with a powerful cloud dashboard at Thinger.io.  
-In situations, where new network is available, a fallback operating mode without network is possible.
+In situations, where new network is available, a fallback operating mode without network is possible.  
 
 In that case it is strongly recommended to monitor the boot process with a serial terminal set at 9600 Baud.
-You can use the built in serial monitor of the Arduino IDE or use any terminal program e.g. Simple USB Terminal on your Android phone.
+You can use the built in serial monitor of the Arduino IDE or use any terminal program e.g. Simple USB Terminal on your Android phone.  
 
-This is an example of the boot protocol with an unsuccessful connection
-'''
+This is an example of the boot protocol with an unsuccessful connection  
+
+```
 ESP-Karajan at work,Serial @ 9600 Baud
 Trying to connect
 
@@ -65,13 +66,16 @@ Running offline, back in the 70's
 Now is Thursday, 01 January 1970 08:00:18. Epoch =     28818
 
 Please enter date & time (dd/mm/yyyy hh:mm:ss) in the serial monitor, followed by [return]
-'''
+```
+
 At that stage you are required to enter the date and time over the serial monitor, Soft-Power with answer with:
-'''
+```
+
 I have understood 6/2/2021 22:53:0
 Epoch = 1612648380
 Welcome back in the present!, Menu ready to listen
-'''
+```
+
 From now on your system is operative.
 You will then be able to answer your first menu command:
 Type "T" [return]
@@ -135,7 +139,7 @@ n.b. these reports stop periodical reports, resume with “P” to return to per
 09:01:59.466 -> Bat_Volt-10:1.922 Bat_Watt:-0.593 Bat_Level:7.200  
 
 #### Menu command B:*
-'''
+```
 Battery History :
  Hour   |   00   |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |   11   |
  Bat Ah | -0.045 | -0.047 | -0.048 | -0.048 | -0.048 | -0.048 | -0.048 | -0.049 | -0.049 | +0.000 | +0.000 | +0.000 |
@@ -143,26 +147,12 @@ Battery History :
  Bat Ah | +0.000 | +0.000 | +0.000 | +0.000 | +0.000 | +0.000 | +0.000 | +0.000 | -0.044 | -0.044 | -0.044 | -0.044 |
 
 * with battery management, see Chapter x
-'''
+```
 
 ## Ongoing reporting:
 You can enable ongoing event + midnight summary reporting:
+```
 
-PKTime: (Peak Time of the event)
-Leq4:   (Level equivalent for the time defined by max-10dB to  max-10dB on the other side)
-t10:       (time defined by max-10dB to  max-10dB on the other side)
-Leq3::   (Level equivalent for the time above threshold)
-t AT:      (Time above threshold)
-
-NAT|PKTime  |PKdB|Leq4|t10|Leq3|tAT|
-…
- 15|21:52:29|74.7|70.5|026|70.1|057|
- 01|22:01:33|74.6|71.2|017|70.3|043|
- 02|22:03:44|71.2|67.3|019|66.7|045|
- 03|22:13:46|72.3|69.2|026|68.9|055|
- 04|22:16:25|71.8|69.3|021|68.8|048|
- 05|22:28:19|69.3|66.7|024|66.7|048|
- 
 Daily Report for Tuesday, 15 September 2020 
 Hour|  Ah    |
 00  | -0.427 |
@@ -195,7 +185,7 @@ Extra hours cf. Man.
 27  | +4.651 |
 28  | +0.000 |
 29  | +0.000 |
-'''
+```
 
 These reports will be standard wise routed over the Serial USB connection to the serial monitor of the Arduino IDE.  
 
