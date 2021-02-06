@@ -1,8 +1,9 @@
 # Off-line operation
-Soft-Power works nominally interconnected with a powerful cloud dashboard at Thinger.io.  
-In situations, where new network is available, a fallback operating mode without network is possible.  
+Soft-Power works normally internet-connected with a powerful cloud dashboard at Thinger.io.  
+In situations, where no network is available, a fallback operating mode without network is possible.  
 
 In that case it is strongly recommended to monitor the boot process with a serial terminal set at 9600 Baud.
+This is necessary, since off-line the ESP is not able to fetch the current time/date from the Internet. You will have to give that information manually.  
 You can use the built in serial monitor of the Arduino IDE or use any terminal program e.g. Simple USB Terminal on your Android phone.  
 
 This is an example of the boot protocol with an unsuccessful connection  
