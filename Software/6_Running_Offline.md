@@ -76,10 +76,10 @@ Epoch = 1612648380
 Welcome back in the present!, Menu ready to listen
 ```
 
-From now on your system is operative.
-You will then be able to answer your first menu command:
-Type "T" [return]
-The system replies with:
+From now on your system is operative.  
+You will then be able to answer your first menu command:  
+Type "T" [return]  
+The system replies with:  
 Sat Feb  6 22:54:01 2021 
 
 ## Menu system
@@ -105,6 +105,7 @@ control the information displayed on the OLED screen.
 ### Periodical reports over the USB serial line
 
 - 'P': //Periodical Reports on 		'p': //Periodical Reports off
+
 #### Options for periodical reports:
 - 'D':  //Day Report  		'd':  //no Day Report
 - 'H':  //Hour Report		  'h':  //no Hour Report
@@ -187,15 +188,14 @@ Extra hours cf. Man.
 29  | +0.000 |
 ```
 
-These reports will be standard wise routed over the Serial USB connection to the serial monitor of the Arduino IDE.  
+These reports will be standardwise routed over the Serial USB connection to the serial monitor of the Arduino IDE or a terminal program. 
 
 They can also be configured to be issued   
 - to Serial1 on pin D4 (GPIO2) and from there be forwarded to e.g. a thermal receipt printer or over an UART-USB converter to another USB-port of a host computer for reporting.  
 - to a UDP network port and be dumped on the host computer in a log file.  
 
-##Graphical reporting:
-over the menu command "ESP" (nomen est omen)  you can issue a one second paced report that provides data in a format suitable for serial plotting.  
+## Graphical reporting:
+Over the menu command "ESP" (nomen est omen)  you can issue a one second paced report that provides data in a format suitable for serial plotting.  
 Over the Ardunio Serial Plotter you can get a graphical output of the battery evolution history:  
 
 The plotter and reporting abilities of the Arduino IDE are however, limited and you can only have one output at a time.
-
