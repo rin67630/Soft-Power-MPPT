@@ -80,7 +80,68 @@ I need the date(dd/mm/yyyy) and time(hh:mm:ss)
 ```
 In that case "no wifihot found" means, the SSID wifihot was not detected.  
 Else it would list the router and attempt several connections, giving up after the third attempt, if your password does not match  
-If you never had an Internet connection and have no RTC shield, you will be requested to enter the current date and time, which is essential for proper operation of Soft-Power's statistic reports.  
+Another example with an existing SSID, but the wrong credentials:  
+```
+ESP-Karajan at work,Serial @ 9600 Baud
+Trying to connect
+
+mode : sta(d8:f1:5b:11:0e:ac)
+add if0
+
+.RSSI: 31 dBm
+.RSSI: 31 dBm
+.RSSI: 31 dBm
+.RSSI: 31 dBm
+.RSSI: 31 dBm
+scandone
+state: 0 -> 2 (b0)
+.RSSI: 31 dBm
+state: 2 -> 3 (0)
+state: 3 -> 5 (10)
+add 0
+aid 1
+cnt 
+.RSSI: -51 dBm
+.RSSI: -50 dBm
+.RSSI: -52 dBm
+.RSSI: -53 dBm
+.RSSI: -52 dBm
+.RSSI: -52 dBm
+state: 5 -> 2 (2a0)
+rm 0
+.RSSI: 31 dBm
+.RSSI: 31 dBm
+reconnect
+state: 2 -> 0 (0)
+scandone
+state: 0 -> 2 (b0)
+state: 2 -> 3 (0)
+state: 3 -> 5 (10)
+add 0
+aid 1
+cnt 
+.RSSI: -50 dBm
+.RSSI: -50 dBm
+.RSSI: -50 dBm
+.RSSI: -51 dBm
+.RSSI: -51 dBm
+.
+
+Bad SSID or PASS?
+state: 5 -> 0 (0)
+rm 0
+del if0
+usl
+mode : null
+force slp enable,type: 2
+fpm open,type:2 0
+
+Running offline, back in the 70's
+Now is Thursday, 01 January 1970 08:00:18. Epoch =     28818
+
+Please enter date & time (dd/mm/yyyy hh:mm:ss) in the serial monitor, followed by [return]
+```
+If the connection fails AND you never had an Internet connection and have no RTC shield, you will be requested to enter the current date and time, which is essential for proper operation of Soft-Power's statistic reports.  
 You must then enter the date and time manually in order to proceed.  
 
 The system answers with:  
