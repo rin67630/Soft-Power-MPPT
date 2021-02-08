@@ -4,30 +4,43 @@
 
 ### Default template dashboard
 I have provided Soft-Power with a comfortable default template a dashboard.  
-![image](https://user-images.githubusercontent.com/14197155/106634824-751d3600-6580-11eb-932a-027b90c51213.png)  
-This dashboard is organized in 4 Columns and  6 Rows
+![image](https://user-images.githubusercontent.com/14197155/107233248-ab483300-6a22-11eb-8ff1-b0c167e4400e.png)  
+This dashboard is organized in 4 Columns and  6 Rows according to following background color conventions:
+- Light gray: Weather reports
+- Darker gray: Relay control
+- Pink: Solar: charger control
+- Light green: solar panel measurements
+- Light cyan: battery measurements
+- Yellow: auxiliary output variable voltage control
 
-#### Column1 from top to bottom:
-- Control of the relay operation 1.
-- Control of the relay operation 2.
-- Evaluation of the internal resistance of the battery  
-  Balance of the Ah of the previous full day  
-  Ongoing balance of the Ah of the current  day
+#### Column1 light grey block: Weather report
 - Outside temperature from openweather.org
 - Outside pressure from openweather.org
 - Weather description  from openweather.org
 - Wind speed  from openweather.org
 
-#### Column 2  from top to bottom (panel, mainly light green background):
+#### Column1 mid grey block: Relay control
+- Control of the relay operation 1.
+- Control of the relay operation 2.
+
+#### Column1 light cyan block: Battery status
+- Evaluation of the internal resistance of the battery  
+  Balance of the Ah of the previous full day  
+  Ongoing balance of the Ah of the current  day
+
+#### Column 2/3  Converter control
 - Converter efficiency
+- Setpoint from the continuous voltage regulator expressed in mV
+  PWM value for the injection 1024 to 0 (more injection means less voltage) under some conditions (t.b.d) you can move the slider and change the PWM  
+  High Power Buck enable: under 10W power from the panel, the low-power buck is charging the battery, above the high-power buck converter is on duty.  
+  Under some conditions (t.b.d. mainly between 10W and 15W) you can move the slider and switch from one buck converter to the other one. 
+
+#### Column 2 Panel
 - Panel voltage
 - Panel current
 - Panel power
 
-#### Column 3 from top to bottom (battery, light blue background):
-- Setpoint from the continuous voltage regulator expressed in mV
-  PWM value for the injection 1024 to 0 (more injection means less voltage) under some conditions (t.b.d) you can move the slider and change the PWM  
-  High Power Buck enable: under 10W power from the panel, the low-power buck is charging the battery, above the high-power buck converter is on duty. Under some conditions (t.b.d. mainly between 10W and 15W) you can move the slider and switch from one buck converter to the other one.  
+#### Column 3 Battery:
 - Battery voltage
 - Battery current
 - Battery power  
@@ -35,13 +48,14 @@ This dashboard is organized in 4 Columns and  6 Rows
   Green is the battery voltage  
   Blue is the battery current  
   
-#### Column 4 from top to bottom (auxiliary output, yellow background): 
+#### Column 4 auxiliary Output: 
 - requested voltage of the auxiliary Output, expressed in mV. 
   PWM value for the injection 1024 to 0 (more injection means less voltage) under some conditions (t.b.d) you can move the slider and change the PWM  
   Auxiliary Output Buck enable
 - Auxiliary Output voltage
 - Auxiliary Output current
 - Auxiliary Output power
+
 
 ### Data Buckets
 Soft-Power reports long-term information in data buckets
@@ -86,6 +100,8 @@ This is the data bucket to record events:
 - Other errors to be defined...
 
 ## Operation on the serial line
+
+![image](https://user-images.githubusercontent.com/14197155/107235100-9ff60700-6a24-11eb-9ed8-552b373d9c1a.png)
 t.b.continued.
   
 
