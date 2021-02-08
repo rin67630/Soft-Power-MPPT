@@ -127,13 +127,13 @@ This is the data bucket to record events:
 ## optional OLED Display
 A small OLED display that can be plugged on to the ESP or integrated in the case cover gives permanently some basic information:  
 ![image](https://user-images.githubusercontent.com/14197155/107244224-15b2a080-6a2e-11eb-9fbd-6c6ecc99ccb4.png)  
-´´´
+```
 H Panel | Battry | Output
 V 17.30 | 12.43  | 05.11
 A 03.21 | 03.76  | 00.03
 W 55.53 | 46.73  | 00.16
 02.02.2021 17:53 eff. 83%
-´´´
+```
 The upper left corner displays H or L depending on whether the high-power buck converter is used or the low-power one.  
 You then have an matrix of voltage, current, power for the panel, the battery, and auxiliary output.  
 Then the date/time indication followed by the conversion efficiency.  
