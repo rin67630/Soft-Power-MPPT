@@ -1,10 +1,12 @@
 # User Handbook
 
 ## Thinger operation.
+Thinger.io allows users to change dashboards on the fly. There is no need to install/configure a server, fiddle with databases, configure a MQTT message concept.  
+For your convenience and to startup easy, I have provided two powerful dashboards, from the four available to free users.
 
-### Default template dashboard
+### Default template dashboard Soft Power Meter
 I have provided Soft-Power with a comfortable default template a dashboard.  
-![image](https://user-images.githubusercontent.com/14197155/107233248-ab483300-6a22-11eb-8ff1-b0c167e4400e.png)  
+![image](https://user-images.githubusercontent.com/14197155/107233248-ab483300-6a22-11eb-8ff1-b0c167e4400e.png)   
 This dashboard is organized in 4 Columns and  6 Rows according to following background color conventions:
 - Light gray: Weather reports
 - Darker gray: Relay control
@@ -56,10 +58,31 @@ This dashboard is organized in 4 Columns and  6 Rows according to following back
 - Auxiliary Output current
 - Auxiliary Output power
 
+### Default template dashboard Soft Power Stats
+
+![image](https://user-images.githubusercontent.com/14197155/107235446-f9f6cc80-6a24-11eb-9073-522d2f5ca252.png)  
+
+The Stats dashboard is organized in three groups:
+#### The "midnight" battery status
+here is a snapshot of the battery status at a time where she is likely to be idling is taken:
+- The voltage difference to the day before ( is an indication, whether the battery is losing or gaining power)
+- The voltage at midnight (is an indication of the battery charging state)
+- The current amount of Ampere/hour harvested (not a midnight info)
+- The amount of Ampere/hour harvested the day before.
+
+#### The Hourly snapshots
+Ampere/hour harvested/consumed by each finished hour. Up to the last elapsed hour, a record of the situation today, beyond the record of the situation from yesterday.
+
+#### The last 72 Hour plot
+this is a plot of the hourly situation of the battery voltage and the Ampere/hour harvested.
+- Green is the voltage
+- Grey is the Ampere/hour harvested
+
+You can design yourself further dashboards.
 
 ### Data Buckets
-Soft-Power reports long-term information in data buckets
-the information from data buckets can be used to plot trends, can be listed and downloaded e.g. to Excel.
+Soft-Power reports long-term information in data buckets.  
+The information from data buckets can be used to plot trends, can be listed and downloaded e.g. to Excel.
 Following data buckets are provided:
 
 #### MIN
@@ -101,7 +124,7 @@ This is the data bucket to record events:
 
 ## Operation on the serial line
 
-![image](https://user-images.githubusercontent.com/14197155/107235100-9ff60700-6a24-11eb-9ed8-552b373d9c1a.png)
+![image](https://user-images.githubusercontent.com/14197155/107235100-9ff60700-6a24-11eb-9ed8-552b373d9c1a.png)  
 t.b.continued.
   
 
