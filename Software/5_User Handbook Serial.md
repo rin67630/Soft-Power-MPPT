@@ -48,6 +48,9 @@ Now is Monday, 08 February 2021 21:42:32. Epoch =1612816952
 
 pm open,type:2 0
 ```
+_n.b.  
+the gibberish first line is normal after a reboot._
+
 Many lines are automatically generated, in between you however get interesting information:  
 - RSSI: 31 dBm is generally the indication, that the connection on that frequency failed  
   RSSI: -53 dBm is a realistic radio level  
