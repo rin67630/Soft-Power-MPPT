@@ -144,13 +144,7 @@ The preferred operation -and by far the most powerful- runs in the cloud over Th
 The precondition is however to have an Internet access. Without that I have provided a fallback operating mode over the serial line.  
 You can connect the ESP over its USB port to a terminal program of your computer or of your smart phone.
 
-Upon starting the ESP you will get a boot log with diagnostic messages.
 
-If you never had an Internet connection and have no RTC shield, you will be requested to enter the current date and time .
-
-![image](https://user-images.githubusercontent.com/14197155/107235100-9ff60700-6a24-11eb-9ed8-552b373d9c1a.png)  
-t.b.continued.
-  
 
 
 
