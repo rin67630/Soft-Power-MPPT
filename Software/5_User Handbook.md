@@ -141,7 +141,9 @@ A bar shows the running seconds as a function indicator.
 
 ## Operation on the serial line
 The preferred operation -and by far the most powerful- runs in the cloud over Thinger.io.
-The precondition is however to have an Internet access. Without that I have provided a fallback operating mode over the serial line.  
+The precondition is however to have an Internet access. Without that I have provided a fallback operating mode over the serial line. 
+https://github.com/rin67630/Soft-Power-MPPT/blob/main/Software/5_User%20Handbook%20Serial.md
+
 You can connect the ESP over its USB port to a terminal program of your computer or of your smart phone.
 
 
