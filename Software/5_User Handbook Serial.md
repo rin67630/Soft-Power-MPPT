@@ -240,6 +240,10 @@ Ah:+00.000 Panel:-9.640 V-10:02.552 Amp:-0.029 Watt:-00.358
 ```
 The same plot called from Arduino's IDE serial plotter:  
 ![image](https://user-images.githubusercontent.com/14197155/107235100-9ff60700-6a24-11eb-9ed8-552b373d9c1a.png) 
+_n.b.  
+The serial plotter of the Arduino IDE has only one Y-Axis range. In order to optimize the presentation, panel and battery voltages are issued -10 V: 3V means 13V..._
+
+
 - 'W' Weather plot
 ```
 Temp:-07.2 Hum:73.0 Press:1002 WindSpeed:5.7 Direction:50
