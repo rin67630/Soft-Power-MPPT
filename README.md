@@ -39,7 +39,7 @@ The BOM cost is < 30 USD.
 
 ### Software
 Soft-Power provides a powerful cloud-based dashboard:    
-![image](https://user-images.githubusercontent.com/14197155/100760181-c595dd00-33f1-11eb-87bc-8ccab89986ff.png)  
+![image](https://user-images.githubusercontent.com/14197155/107233248-ab483300-6a22-11eb-8ff1-b0c167e4400e.png)   
 Provided functions:
 - battery voltage and current monitoring (with trending in the cloud and download to excel)
 - total current to/from Battery and power
