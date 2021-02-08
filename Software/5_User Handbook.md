@@ -18,8 +18,10 @@ This dashboard is organized in 4 Columns and  6 Rows according to following back
 #### Column1 light grey block: Weather report
 - Outside temperature from openweather.org
 - Outside pressure from openweather.org
-- Weather description  from openweather.org
-- Wind speed  from openweather.org
+- Outside humiditys from openweather.org
+- Weather description  from openweather.org (clicking on that field opens the weather forecast website)
+- Wind speed  from openweather.org (clicking on that field opens the "windy" website)
+- Wind direction from openweather.org
 
 #### Column1 mid grey block: Relay control
 - Control of the relay operation 1.
@@ -122,7 +124,29 @@ This is the data bucket to record events:
 - Transition from battery charging states.
 - Other errors to be defined...
 
+## optional OLED Display
+A small OLED display that can be plugged on to the ESP or integrated in the case cover gives permanently some basic information:  
+![image](https://user-images.githubusercontent.com/14197155/107244224-15b2a080-6a2e-11eb-9fbd-6c6ecc99ccb4.png)  
+´´´
+H Panel | Battry | Output
+V 17.30 | 12.43  | 05.11
+A 03.21 | 03.76  | 00.03
+W 55.53 | 46.73  | 00.16
+02.02.2021 17:53 eff. 83%
+´´´
+The upper left corner displays H or L depending on whether the high-power buck converter is used or the low-power one.  
+You then have an matrix of voltage, current, power for the panel, the battery, and auxiliary output.  
+Then the date/time indication followed by the conversion efficiency.  
+A bar shows the running seconds as a function indicator.  
+
 ## Operation on the serial line
+The preferred operation -and by far the most powerful- runs in the cloud over Thinger.io.
+The precondition is however to have an Internet access. Without that I have provided a fallback operating mode over the serial line.  
+You can connect the ESP over its USB port to a terminal program of your computer or of your smart phone.
+
+Upon starting the ESP you will get a boot log with diagnostic messages.
+
+If you never had an Internet connection and have no RTC shield, you will be requested to enter the current date and time .
 
 ![image](https://user-images.githubusercontent.com/14197155/107235100-9ff60700-6a24-11eb-9ed8-552b373d9c1a.png)  
 t.b.continued.
