@@ -6,7 +6,7 @@ void setup()
   Serial1.begin(SERIAL_SPEED); // On GPIO2 / D4
   Serial.setDebugOutput(true);
   Wire.begin(SDA, SCL);
-  Console3.printf("\n\n\nESP-Karajan at work,\nSerial @ %u Baud\n", SERIAL_SPEED);
+  Console4.printf("\n\n\nESP-Karajan at work,Serial @ %u Baud\nTrying to connect\n\n", SERIAL_SPEED);
 
   pinMode(RELAY1   , OUTPUT);
   pinMode(RELAY2   , OUTPUT);
@@ -44,7 +44,7 @@ void setup()
   display.setFont(ArialMT_Plain_10);
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.drawString(0, 0,  HOST_NAME);
-  display.drawString(0, 12, "Getting online..");
+  display.drawString(0, 12, "Try connect..");
   display.display();
 #endif
 
@@ -52,12 +52,7 @@ void setup()
   // Networking and Time
   getWiFi();
 
-#ifndef DISPLAY_IS_NONE
-  display.drawString(0, 24, "IP=");
-  sprintf(charbuff, "IP= %03d.%03d",  ip[2], ip[3]); display.drawString(0, 24, charbuff);
-  display.display();
-  delay(2000);
-#endif
+  delay(100);
 
   if (WiFi.status() == WL_CONNECTED)
   {
@@ -71,42 +66,46 @@ void setup()
         type = "filesystem";
       }
       // NOTE: if updating FS this would be the place to unmount FS using FS.end()
-      Console3.println("Start updating " + type);
+      Console4.println("Start updating " + type);
     });
     ArduinoOTA.onEnd([]()
     {
-      Console3.println("\nEnd");
+      Console4.println("\nEnd");
     });
     ArduinoOTA.onProgress([](unsigned int progress, unsigned int total)
     {
-      Console3.printf("Progress: %u%%\r", (progress / (total / 100)));
+      Console4.printf("Progress: %u%%\r", (progress / (total / 100)));
     });
     ArduinoOTA.onError([](ota_error_t error)
     {
-      Console3.printf("Error[%u]: ", error);
+      Console4.printf("Error[%u]: ", error);
       if (error == OTA_AUTH_ERROR) {
-        Console3.println("Auth Failed");
+        Console4.printf("Auth Failed\n");
       } else if (error == OTA_BEGIN_ERROR) {
-        Console3.println("Begin Failed");
+        Console4.printf("Begin Failed\n");
       } else if (error == OTA_CONNECT_ERROR) {
-        Console3.println("Connect Failed");
+        Console4.printf("Connect Failed\n");
       } else if (error == OTA_RECEIVE_ERROR) {
-        Console3.println("Receive Failed");
+        Console4.printf("Receive Failed\n");
       } else if (error == OTA_END_ERROR) {
-        Console3.println("End Failed");
+        Console4.printf("End Failed\n");
       }
     });
     ArduinoOTA.setHostname(HOST_NAME);
     ArduinoOTA.begin();
-    Console3.println("OTA Ready");
-    Console3.printf("\MAC address: %s , \nHostname: %s \n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+    Console4.printf("OTA Ready\n MAC address: %s\nHostname: %s \n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+#ifndef DISPLAY_IS_NONE
+    sprintf(charbuff, "IP= %03d . %03d",  ip[2], ip[3]); display.drawString(0, 24, charbuff);
+    display.display();
+    delay(2000);
+#endif
     getNTP();
     // Begin listening to UDP port
     UDP.begin(UDP_PORT);
-    Console3.printf("UDP ports: %u, %u\n", UDP_PORT, UDP_PORT + 1);
+    Console4.printf("UDP ports: %u, %u\n", UDP_PORT, UDP_PORT + 1);
     // IOT initialisation
 #if defined (THINGER)
-    Console3.println(" Initializing Thinger");
+    Console4.printf(" Initializing Thinger\n");
     // definition of structures for transmission
     // digital pin control example (i.e. turning on/off a light, a relay, configuring a parameter, etc)
     // resource output example (i.e. reading a sensor value) https://docs.thinger.io/coding#define-output-resources
@@ -196,7 +195,7 @@ void setup()
 
     thing["DAY"] >> [](pson & out)
     {
-      out["BAhDay"] = AhBat[26];
+      out["BAhDay"] = AhBat[27];
       out["BV@0h"]  = voltageAt0H;
       out["BVDiff"] = voltageDelta;
       out["B00h"] = AhBat[0];
@@ -240,6 +239,7 @@ void setup()
       out["Vpan"]         = dashboard.Vpan ;
       out["Wpan"]         = dashboard.Wpan ;
       out["Ohm"]          = dashboard.internal_resistance ;
+      out["AhBat"]        = AhBat[25];
       out["percent_charged"] = dashboard.percent_charged;
     };
 
@@ -254,6 +254,7 @@ void setup()
       out["Iaux"]         = dashboard.Iaux ;
       out["Vaux"]         = dashboard.Vaux ;
       out["Waux"]         = dashboard.Waux ;
+      out["AhBat"]        = AhBat[25];
       out["efficiency"]   = dashboard.efficiency;
     };
 
@@ -268,10 +269,9 @@ void setup()
     currentInt          = persistance["currentInt"];
     nCurrent            = persistance["nCurrent"];
     AhBat[25]           = persistance["Ah/hour"];
-    AhBat[26]           = persistance["Ah/yesterday"];
+    AhBat[27]           = persistance["Ah/yesterday"];
     voltageDelta        = persistance["voltageDelta"];
     voltageAt0H         = persistance["voltageAt0H"];
-    dashboard.internal_resistance       = persistance["resistance"];
 #endif
     outdoor_temperature = persistance["temperature"];
     outdoor_humidity    = persistance["humidity"];
@@ -306,8 +306,8 @@ void setup()
     AhBat[22] = BATmAh["22h"];
     AhBat[23] = BATmAh["23h"];
     AhBat[25] = BATmAh["LastHour"];
-    AhBat[26] = BATmAh["Yesterday"];
-    AhBat[27] = BATmAh["Today"];
+    AhBat[27] = BATmAh["Yesterday"];
+    AhBat[26] = BATmAh["Today"];
 #else // no Thinger
     /*
       // Persistance over Structure and memcpy.
@@ -322,8 +322,7 @@ void setup()
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   getTimeData();         // breaks down the Epoch into discrete values.
 
-  sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, Epoch, DayName, Day, MonthName, Year);
-  Console3.println(charbuff);
+  sprintf(charbuff, "Now is %s, %02d %s %04d %02d:%02d:%02d. Epoch =%10lu\n", DayName, Day, MonthName, Year, Hour, Minute, Second, Epoch);  Console4.println(charbuff);
 
 #if defined AUX_SOURCE_IS_INA
   // INA 226 Panel Sensor
@@ -369,7 +368,7 @@ void setup()
 
   if (Year < 2020)
   {
-    Serial.println("I need the date(dd/mm/yyyy) and time(hh:mm:ss)");
+    Console1.printf("Please enter date & time (dd/mm/yyyy hh:mm:ss)in the serial monitor");
   }
 }
 //end Setup
