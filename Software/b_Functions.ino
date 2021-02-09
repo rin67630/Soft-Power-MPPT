@@ -22,31 +22,36 @@ void getWiFi()
 #endif
   WiFi.reconnect();
   WiFi.waitForConnectResult();
-  WiFi.hostname(HOST_NAME);  
+  WiFi.hostname(HOST_NAME);
   if (WiFi.status() != WL_CONNECTED)
   {
     WiFi.begin(WIFI_SSID, WIFI_PASS);
     //    WiFi.setAutoConnect();
     //    WiFi.setAutoReconnect();
     wifiConnectCounter = 1;
-    Console3.println();
+    Console4.println();
     while (WiFi.status() != WL_CONNECTED)
     {
       delay(wifiRepeatInterval);
-      Console3.print(".");
+      Console4.print(".");
       wifiConnectCounter++;
       if (wifiConnectCounter > wifiMaxTries)
       {
-        //        if (WiFi.status() == WL_NO_SSID_AVAIL) Console3.println("SSID?");
-        //        if (WiFi.status() == WL_CONNECT_WRONG_PASSWORD) Console3.println("PASS?");
-        Console3.println("SSID or PASS?");
-        WiFi.disconnect(true);
-        Console3.println("running offline, back in the 70's"); 
-       break;
+        //        if (WiFi.status() == WL_NO_SSID_AVAIL) Console4.println("SSID?");
+        //        if (WiFi.status() == WL_CONNECT_WRONG_PASSWORD) Console4.println("PASS?");
+        Console4.printf("\n\nBad SSID or PASS?\n");
+        //Turn off WiFi
+        WiFi.forceSleepBegin();
+        // WiFi.mode(WIFI_OFF);
+        Console4.printf("\nRunning offline, back in the 70's\n");
+        break;
+      }
+      else
+      {
+        Console4.printf("RSSI: %d dBm\n", WiFi.RSSI());
       }
     }
     ip = WiFi.localIP();
-    Serial.printf("RSSI: %d dBm\n", WiFi.RSSI());
   }
 }
 
@@ -58,7 +63,7 @@ void myIP()
 // Time management
 void getNTP()
 {
-  configTime(MYTZ, NTP_SERVER);
+  configTime(TZ, NTP_SERVER);
   now = time(nullptr);
   Epoch = now;
 }
@@ -85,13 +90,52 @@ void getTimeData()
   strftime (Date,      12, "%d/%m/%Y", timeinfo);
 }
 
-void buffTimeData()
+void setTimefromSerial()
 {
-strftime(charbuff, sizeof(charbuff), "%R %x", timeinfo);
+  if (Serial.available() > 0)
+  {
+    // read in the user input
+    Day = Serial.parseInt();
+    Month = Serial.parseInt();
+    Year = Serial.parseInt();
+    Hour = Serial.parseInt();
+    Minute = Serial.parseInt();
+    Second = Serial.parseInt();
+    Console1.printf("\nI have understood %u/%u/%u %u:%u:%u\n", Day, Month, Year, Hour, Minute, Second);
+    boolean validDate = (inRange(Day, 1, 31) && inRange(Month, 1, 12) && inRange(Year, 2021, 2031));
+    boolean validTime = (inRange(Hour, 0, 23) && inRange(Minute, 0, 59) && inRange(Second, 0, 59));
+    if (validTime && validDate)
+    {
+      configTime(TZ, 0, "pool.ntp.org");    // Repair timezone
+      tzset();
+
+      struct tm t;                         //Prepare time strucure
+      time_t t_of_day;
+      t.tm_year = Year - 1900; // Year - 1900
+      t.tm_mon = Month - 1;     // Month, where 0 = jan
+      t.tm_mday = Day ;      // Day of the month
+      t.tm_hour = Hour;
+      t.tm_min = Minute;
+      t.tm_sec = Second;
+      t.tm_isdst = -1;         // Is DST on? 1 = yes, 0 = no, -1 = unknown
+      t_of_day = mktime(&t);
+      Console4.printf("Epoch = %10lu", t_of_day);
+      struct timeval tv;                   //Extending to mandatory microseconds
+      tv.tv_sec = t_of_day;  // epoch time (seconds)
+      tv.tv_usec = 0;    // microseconds
+      settimeofday(&tv, 0);                //Setting Clock
+      Console4.printf("\nWelcome back in the present!, Menu ready to listen\n");
+    }
+  }
 }
 
-bool inRange(int x, int low, int high){
-  if(x>=low && x<=high)
+void buffTimeData()
+{
+  strftime(charbuff, sizeof(charbuff), "%R %x", timeinfo);
+}
+
+bool inRange(int x, int low, int high) {
+  if (x >= low && x <= high)
     return true;
   return false;
 }
