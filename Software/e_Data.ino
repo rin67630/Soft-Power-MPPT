@@ -16,8 +16,8 @@ void data1SRun()
   yield();
 
 // High power buck is activated up from 15W from panel, low power buck activated down from 10W
-  if (dashboard.Wpan > 15) high_power_buck_value = 1;
-  if (dashboard.Wpan < 10) high_power_buck_value = 0;
+    if (dashboard.Wpan > 15) high_power_buck_value = true;
+//  if (dashboard.Wpan < 10) high_power_buck_value = false;
 
 
   // === (Getting Weather from OpenWeatherMap every 5 minutes
@@ -51,7 +51,7 @@ void data1SRun()
 
 
   // === (Getting Battery values from another ESP over UDP
-#if defined (BAT_SOURCE_IS_UDP)
+#if defined (UDP_SLAVE)
   // I am using a quick and dirty method called 'type punning' copying the memory block of a structure into an array of chars,
   // transmitting this array, and copying back the memory block of the array into the same structure on the other side.
   // I dont use any header info, only the difference of size permits to assign the received packets to sound or dashboard.
@@ -59,12 +59,10 @@ void data1SRun()
   // and different sizes for Battery and Sound...
 
   int packetSize = UDP.parsePacket();
-  // if (packetSize) Console3.printf("Packet size: %u, Battery size; %u \n", packetSize, sizeof(battery));
-  // if (packetSize) digitalWrite(STDLED, false);    // Blink built-in LED on received packets
-  if (packetSize == sizeof(battery))
+  if (packetSize == sizeof(dashboard))
   {
-    UDP.read(batteryPayload, UDP_TX_PACKET_MAX_SIZE);
-    memcpy(&battery, batteryPayload, sizeof(battery));
+    UDP.read(dashboardPayload, UDP_TX_PACKET_MAX_SIZE);
+    memcpy(&dashboard, dashboardPayload, sizeof(dashboard));
     // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, dashboard.Vbat , dashboard.Ibat , dashboard.Wbat , dashboard.percent_charged);
     delay(3);    // let built-in LED blink slightly stronger on battery packet
   }
@@ -253,15 +251,30 @@ void data1SRun()
     nCurrent = 0;
     currentInt = 0;
     AhBat[25] = AhBat[Hour];   //last hour
-    AhBat[27] = 0;              // today (0h->current hour)
+    AhBat[26] = 0;              // today (0h->current hour)
     for  (byte n = 0; n < Hour; n++)
     {
-      AhBat[27] = AhBat[27] + AhBat[n];
+      AhBat[26] = AhBat[26] + AhBat[n];
     }
+    VBat[Hour] = dashboard.Vbat;
+    VBat[25] = dashboard.Vbat;
+    VBat[26] = 0;              // today (0h->current hour)
+    for  (byte n = 0; n < Hour; n++)
+    {
+      VBat[26] = VBat[26] + VBat[n];
+    }
+    VBat[26] = VBat[26] / (Hour+1) ;   
   } // end hour expiring
 
   if (DayExpiring)
   {
-    AhBat[26] = AhBat[27];
+    AhBat[27] = AhBat[26];
+    AhBat[28] = AhBat[27];
+    AhBat[29] = AhBat[28];
+    AhBat[30] = AhBat[29];    
+    VBat[27] = VBat[26];
+    VBat[28] = VBat[27];
+    VBat[29] = VBat[28];
+    VBat[30] = VBat[29];    
   }
 } // end of 1S run
