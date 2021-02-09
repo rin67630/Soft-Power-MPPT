@@ -28,7 +28,7 @@ void wirelessRun()
       persistance["currentInt"]    = currentInt ;
       persistance["nCurrent"]      = nCurrent;
       persistance["Ah/hour"]       = AhBat[25];
-      persistance["Ah/yesterday"]  = AhBat[26];
+      persistance["Ah/yesterday"]  = AhBat[27];
       persistance["voltageDelta"]  = voltageDelta;
       persistance["voltageAt0H"]   = voltageAt0H;
 #endif
@@ -70,31 +70,28 @@ void wirelessRun()
       BATmAh["22h"] = AhBat[22];
       BATmAh["23h"] = AhBat[23];
       BATmAh["LastHour"] = AhBat[25];
-      BATmAh["Yesterday"] = AhBat[26];
-      BATmAh["Today"] = AhBat[27];
+      BATmAh["Yesterday"] = AhBat[27];
+      BATmAh["Today"] = AhBat[26];
       thing.set_property("BAT", BATmAh);
     }
 #endif // defined Thinger
 
-#if defined (PUBLISH_REPORT)  // Read with NetCat Bash command nc -u -l [UDP_PORT +1]
+#if defined (PUBLISH_REPORT)               // Read with NetCat Bash command nc -u -l [UDP_PORT +1]
     if (DayExpiring || triglEvent)
     {
-      UDP.beginPacket(UDP_TARGET, UDP_PORT + 1);
+      UDP.beginPacket(REPORT_TARGET, UDP_PORT + 1);
       if (DayExpiring)
       {
-        sprintf(charbuff, " \nDaily Report for \n%s, %02d %s %04d ", DayName , Day , MonthName, Year);
-        UDP.print(charbuff);
-
-        UDP.print("\nHour|  Ah    |\n");
-        for  (byte n = 0; n < 30; n++)
+        UDP.printf("\nHour|   Ah    |    V    |    W    |\n");
+        for  (byte n = 0; n < 31; n++)
         {
           if (n == 24)
           {
-            UDP.print("Extra ""hours"" cf. Man.\n");
+            UDP.printf("Extra ""hours"" 25:H-1, 26:today, 27:D-1, 28:D-2..\n");
           }
           else
           {
-            UDP.printf("%02u  |  %+02.3f |\n", n, AhBat[n]);
+            UDP.printf("%02u  | %+07.3f | %+07.3f | %+07.3f |\n", n, AhBat[n], VBat[n], AhBat[n] * VBat[n]);
           }
         }
       }
@@ -108,10 +105,10 @@ void wirelessRun()
 
     if (NewMinute)
     {
-#if defined (PUBLISH_BATTERY)
-      memcpy(batteryPayload, &battery, sizeof(battery));
-      UDP.beginPacket(UDP_TARGET, UDP_PORT);
-      UDP.write(batteryPayload, sizeof(battery));
+#if defined (UDP_MASTER)
+      memcpy(dashboardPayload, &dashboard, sizeof(dashboard));
+      UDP.beginPacket(DATA_TARGET, UDP_PORT);
+      UDP.write(dashboardPayload, sizeof(dashboard));
       UDP.endPacket();
 #else
       yield();
