@@ -33,8 +33,8 @@ SSD1306Wire display(0x3c, SDA, SCL);                  //OLED 128*64 soldered
 #define RELAY2     D6   // GPIO16 Relay or FET control 2
 #define LP_BUCK    D0   // GPIO12 Digital out control low Power buck
 #define HP_BUCK    D7   // GPIO12 Digital out control high Power buck
-#define PWM_BAT     D3   // GPIO0  PWM output to control scc buck
-#define PWM_AUX     D4   // GPIO2  PWM output to control aux buck (lights also the built-in LED)
+#define PWM_BAT    D3   // GPIO0  PWM output to control scc buck
+#define PWM_AUX    D4   // GPIO2  PWM output to control aux buck (lights also the built-in LED)
 #define AUX_BUCK   D8   // GPIO15 Digital out control aux buck
 
 // Solar charger phases
@@ -137,13 +137,8 @@ byte    inbyte;
 byte    displayPage;
 byte    displaySubPage;
 byte    serialPage;
-byte    serialPageMem;
-byte    wirelessPage;
-boolean serialDay;
-boolean serialHur;
-boolean serialMin;
-boolean serialSec;
-boolean SerialEvent;
+byte    serialPeriodicity;
+boolean serialEvent;
 boolean triglEvent;
 
 static IPAddress ip;
@@ -171,6 +166,7 @@ float voltageDelta ;
 float currentInt = 0;
 int   nCurrent;
 float AhBat[31];
+float VBat[31];
 float last_power;
 
 struct dashboard {
@@ -208,7 +204,7 @@ boolean relay2_value;
 boolean high_power_buck_value;
 boolean aux_buck_value;
 
-char batteryPayload[sizeof(dashboard)];  //  Array of characters as image of the structure for UDP xmit/rcv
+char dashboardPayload[sizeof(dashboard)];  //  Array of characters as image of the structure for UDP xmit/rcv
 
 //Weather
 float outdoor_temperature;
