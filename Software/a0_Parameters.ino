@@ -1,9 +1,9 @@
-#define HOST_NAME   "SoftPower" // n.b: The HOST_NAME must match the device name of Thinger.
+#define HOST_NAME   "SoftPowerTest" // n.b: The HOST_NAME must match the device name of Thinger.
 
 //  ***Credentials***  
 // WifI: for the very first run with a new ESP or on a new WiFi network 
 // remove the // from the next line and provide real SSID and PASS credentials.
-//#define ERASE_WIFI_CREDENTIALS 
+#define ERASE_WIFI_CREDENTIALS 
 #define WIFI_SSID          "SSID"
 #define WIFI_PASS          "Password"
 #define wifiMaxTries       20
@@ -11,24 +11,23 @@
 // after a successful connection, you can revert to the defaults lines again.
 
 //Thinger
-#define THINGER_USERNAME           "SoftPower1"       
-#define THINGER_DEVICE_CREDENTIALS "Password"    
+#define THINGER_USERNAME           "USERNAME"       
+#define THINGER_DEVICE_CREDENTIALS "Device Credentials"    
 #define THINGER_DEVICE HOST_NAME    
 //Location for weather
-#define OPEN_WEATHER_MAP_APP_ID      "208085abb5a3859d1e32341d6e1f9079" 
-#define OPEN_WEATHER_MAP_LOCATION_ID "2820158"
+#define OPEN_WEATHER_MAP_APP_ID      "Openweathermapps ID" 
+#define OPEN_WEATHER_MAP_LOCATION_ID "Location"
 #define OPEN_WEATHER_MAP_LANGUAGE    "en"
 #define OPEN_WEATHER_MAP_UNITS       "metric"
 //Time zone
 #define NTP_SERVER "de.pool.ntp.org"
-#define MYTZ TZ_Europe_Berlin
-#define TZ   1               // (utc+) TZ in hours
+#define TZ TZ_Europe_Berlin
 
 // ***Hardware Configuration***  (Adjust to your own hardware options)
 #define WEATHER_SOURCE_IS_URL   //_URL _NONE         Change end accordingly
 #define BAT_SOURCE_IS_INA       //_INA _UDP _NONE        Change end accordingly
-#define PAN_SOURCE_IS_A0        //_A0 _INA _UDP _NONE   Change end accordingly
-#define AUX_SOURCE_IS_NONE      //_A0 _INA  _NONE    Change end accordingly
+#define PAN_SOURCE_IS_INA       //_A0 _INA _UDP _NONE   Change end accordingly
+#define AUX_SOURCE_IS_INA       //_A0 _INA _UDP _NONE    Change end accordingly
 #define BATTERY_IS_12V_LIFEPO   //_12V_FLA _12V_AGM _12V_GEL _12V_LIFEPO 11V_LIPO
 #define DISPLAY_IS_OLED128x64   //_NONE _OLED64x48 _OLED128x64
 #define DISPLAY_REVERSED
@@ -43,30 +42,33 @@
 #define AMPERE2   2         // Chose here about 2x the max expected Amps
 
 // ***Calibration***  (Leave as is for a first run)
-#define IFACTORP  1000000   // Panel Current correction factor 1000000 is normal,   -"- only used when PAN_SOURCE_IS_INA.
-#define IFACTORB  1000000   // Battery Current correction factor 1000000 is normal,  -1000000 reverses shunt, change value to correct for wrong Amp values
-#define IFACTORA  1000000   // Aux Out Current correction factor 1000000 is normal,   -"- only used when AUX_SOURCE_IS_INA.
-#define PANEL_MAX 23300     // mV panel voltage  (Adjust to match panel voltage)
-#define INJ_NEUTRAL 430
-#define INJ_HP_MIN  00000   //   Minimum Battery Voltage Setpoint at injection=1024
-#define INJ_HP_MAX  00000   //   Maximum Battery Voltage Setpoint at injection=0 
-#define INJ_LP_MIN  10000   //   Minimum Battery Voltage Setpoint at injection=1024
-#define INJ_LP_MAX  14830   //   Maximum Battery Voltage Setpoint at injection=0 
-#define INJ_AUX_MIN  1870   //   Minimum Auxiliary Voltage Setpoint at injection=1024
-#define INJ_AUX_MAX  8740   //   Maximum Auxiliary Voltage Setpoint at injection=0 
+#define IFACTORP   1000000   // Panel   Current correction factor 1000000 is normal,   -"- only used when PAN_SOURCE_IS_INA.
+#define IFACTORB   1000000   // Battery Current correction factor 1000000 is normal,  -1000000 reverses shunt, change value to correct for wrong Amp values
+#define IFACTORA   1000000   // Aux Out Current correction factor 1000000 is normal,   -"- only used when AUX_SOURCE_IS_INA.
+#define PANEL_MAX  23300     // mV panel voltage  (Adjust to match panel voltage)
+#define INJ_NEUTRAL 424
+#define INJ_HP_MIN  11130   //   Minimum Battery Voltage Setpoint at injection=1024
+#define INJ_HP_MAX  15600   //   Maximum Battery Voltage Setpoint at injection=0 
+#define INJ_LP_MIN  11240   //   Minimum Battery Voltage Setpoint at injection=1024
+#define INJ_LP_MAX  15600   //   Maximum Battery Voltage Setpoint at injection=0 
+#define INJ_AUX_MIN  2780   //   Minimum Auxiliary Voltage Setpoint at injection=1024
+#define INJ_AUX_MAX  8560   //   Maximum Auxiliary Voltage Setpoint at injection=0 
 
-#define BATT_CAPACITY 12 // Ah
+#define BATT_CAPACITY 120 // Ah
 
 //  ***Communicatin options*** (For geeks only, else leave as it is)
 //'define DWITTER               //(Comment out, if no dwitter.io used) 
-#define THINGER                 //(Comment out, if no thinger.io used)
-#define WRITE_BUCKETS           //(Comment out, if this is the second device for Thinger)
-//define PUBLISH_REPORT              // Issue events&midnight reports to UDP Port + 1, comment out else
-//#define PUBLISH_BATTERY            // If this is the battery master, comment out else
-//#define UDP_TARGET "192.168.188.75"  // IP to forward data
+//#define THINGER                 //(Comment out, if no thinger.io used)
+//#define WRITE_BUCKETS           //(Comment out, if this is the second device for Thinger)
+//#define PUBLISH_REPORT          // Issue events&midnight reports to UDP Port + 1, comment out else
+#define REPORT_TARGET "192.168.188.00"  // IP to forward Report
+//#define UDP_MASTER            // If this is the  master of a slave ESP
+#define UDP_SLAVE             // If this is the  master of a slave ESP
+#define DATA_TARGET "192.168.188.00"  // IP to forward data
 #define UDP_PORT   4214              // Ports to forward/receive data
 #define Console0 Serial      // Port for user inputs  
 #define Console1 Serial      // Port for user output
 #define Console2 Serial1     // Port for midnight report e.g. on thermal printer
-#define Console3 Serial      // Port for boot messages
+#define Console3 Serial      // Port for periodic messages
+#define Console4 Serial      // Port for boot messages
 #define SERIAL_SPEED            9600 //9600  115200 230400
