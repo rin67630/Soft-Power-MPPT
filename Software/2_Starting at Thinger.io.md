@@ -60,7 +60,7 @@ Return to the Thinger instance and
 Click on "Save".  
 
 Enjoy your standard Soft-Power dashboard!  
-![image](https://user-images.githubusercontent.com/14197155/106634824-751d3600-6580-11eb-932a-027b90c51213.png)  
+![image](https://user-images.githubusercontent.com/14197155/107529012-be8e0680-6bba-11eb-85e3-01bff1225d07.png)    
 The dashboard is best viewed on a vertical tablet: change the zoom level of your browser to get the best display.
 
 
