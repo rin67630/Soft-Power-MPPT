@@ -1,7 +1,7 @@
 # Starting at Thinger.io
 
 Using Thinger.io is not a precondition, but it makes Soft-Power really comfortable and provides a lot of the visibility. 
-The following instructions will help you creating an account and the first device at Thinger.io, that is compatible with the Soft-Power example given out of the box.
+The following instructions will help you creating an account and the first device at Thinger.io, that is compatible with the Soft-Power example given out of the box.  
 
 ##Create a free account
 First you need to register at www.thinger.io, take note of your username and password.
@@ -14,30 +14,30 @@ The most important feature for a beginning are:
 - Data Buckets
 
 ## Preparing your account
-First you will need to create a device: Select Devices, then Add Device.
-- leave the device type unchanged
-- as a device ID I recommend to use "SoftPower" (without the quotes), you must change that for your second device.
-- enter whatever you want as a device description
-- enter a password as a device credentials (not your password for Thinger.io)
+First you will need to create a device: Select Devices, then Add Device.  
+- leave the device type unchanged  
+- as a device ID I recommend to use "SoftPower" (without the quotes), you must change that for your second device.  
+- enter whatever you want as a device description  
+- enter a password as a device credentials (not your password for Thinger.io)  
 Click on "Add Device"
 
-Then you must enter the for buckets used by Soft-Power: Select Data Buckets, then Add Bucket.
-you will need to define the following buckets:
+Then you must enter the for buckets used by Soft-Power: Select Data Buckets, then Add Bucket.  
+you will need to define the following buckets:  
 1. EVENT
 2. DAY
 3. HOUR
 4. MIN
-for each one, enter exactly the buckets ID. you may enter what you want as a bucket name and Beckett description.
-As a data source select " from device write call" out of the drop-down lists.
+for each one, enter exactly the buckets ID. you may enter what you want as a bucket name and Beckett description.  
+As a data source select " from device write call" out of the drop-down lists.  
 Click on "Add bucket"  
-Finally you must get that picture:  
+Finally you should get that picture:  
 ![image](https://user-images.githubusercontent.com/14197155/106426214-80c80a00-6465-11eb-9a7a-1ead53ddb8f5.png)  
 
 ## Creating a dashboard.
 You can finally enter your first dashboard: Select Dashboards, then  Add Dashboard.  
-- you may enter any dashboard ID, dashboard name, dashboard description.
+- you may enter any dashboard ID, dashboard name, dashboard description.  
 Click on Add Dashboard
-Then click on the name of your newly created dashboard, you will get that picture:
+Then click on the name of your newly created dashboard, you will get that picture:  
 ![image](https://user-images.githubusercontent.com/14197155/106428750-c090f080-6469-11eb-9144-6d397d9651bf.png)  
 upon clicking on the right slider you enter the design mode (you can do that anytime from anywhere).  
 You may now enter widgets yourself, but for the first dashboard, I can provide a preconfigured powerful dashboard:  
@@ -45,7 +45,7 @@ Click on Settings, on the pop-up click on the tab "Developer"
 You will get a small JSON list corresponding to an empty dashboard. 
 
 ## Cloning the template dashboard.
-Open the Arduino IDE and load Soft Power.
+Open the Arduino IDE and load Soft Power.  
 Get into the tab w_Thinger_Dashboard:  
 ![image](https://user-images.githubusercontent.com/14197155/106659252-c3d9c880-659e-11eb-8aa9-7342b6df893c.png)  
 Use Edit/Find to replace every occurence of SoftPower1 with the user name that you have chosen to register.
@@ -66,8 +66,18 @@ The dashboard is best viewed on a vertical tablet: change the zoom level of your
 
 
 ** Further design possibilities
+Thinger.io dashboard system allows creating nice data representation interfaces within minutes in a very simple way.  
+No coding is required, just selecting different widgets from a list and using drag&drop technology to configure the layout of the dashboard, then using the configuration forms it is possible to set the data sources, sampling interval, and other behaviors of each widget.  
+The main types of these widgets are: 
+
+* **Real-time** data representation
+* **Historical** data representation from buckets 
+* **Control** device functions or change values with On/Off buttons or sliders  
+
+https://docs.thinger.io/features/dashboards#create-a-dashboard
 You may any time enter the design mode by clicking on the right slider.
-every widget has at its upper right corner 3 icons ![image](https://user-images.githubusercontent.com/14197155/106430653-67768c00-646c-11eb-8eee-5a0c796d9060.png)  
+every widget has at its upper right corner 3 icons !  
+[image](https://user-images.githubusercontent.com/14197155/106430653-67768c00-646c-11eb-8eee-5a0c796d9060.png)  
 corresponding to: duplicate, edit, trash.
 e.g. upon clicking on edit the widget you might get something like:  
 ![image](https://user-images.githubusercontent.com/14197155/106430945-dbb12f80-646c-11eb-9a95-b2874cdfbfeb.png)  
