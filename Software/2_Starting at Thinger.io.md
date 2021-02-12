@@ -74,15 +74,15 @@ The main types of these widgets are:
 * **Historical** data representation from buckets 
 * **Control** device functions or change values with On/Off buttons or sliders  
 
-https://docs.thinger.io/features/dashboards#create-a-dashboard
-You may any time enter the design mode by clicking on the right slider.
-every widget has at its upper right corner 3 icons !  
+https://docs.thinger.io/features/dashboards#create-a-dashboard  
+You may any time enter the design mode by clicking on the right slider.  
+Every widget has at its upper right corner 3 icons !  
 [image](https://user-images.githubusercontent.com/14197155/106430653-67768c00-646c-11eb-8eee-5a0c796d9060.png)  
-corresponding to: duplicate, edit, trash.
+corresponding to: duplicate, edit, trash.  
 e.g. upon clicking on edit the widget you might get something like:  
 ![image](https://user-images.githubusercontent.com/14197155/106430945-dbb12f80-646c-11eb-9a95-b2874cdfbfeb.png)  
-meaning that that widget is getting its information from device resource named measure, using the value Ipan, which will be sampled every 2 seconds.
-The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
+meaning that that widget is getting its information from device resource named measure, using the value Ipan, which will be sampled every 2 seconds.  
+The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:  
 ```C++
   thing["measure"] >> [](pson & out)
   {
@@ -100,8 +100,8 @@ The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
     out["percent_charged"] = dashboard.percent_charged;
   };
 ``` 
-You might also have other widgets getting their data from "device properties".
-The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
+You might also have other widgets getting their data from "device properties".  
+The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:  
 ```C++
   pson persistance;
   thing.get_property("persistance", persistance);
@@ -118,13 +118,13 @@ The corresponding ESP8266 code is defined in the Arduino IDE under c-Setup:
   wind_speed          = persistance["wind"];
   wind_direction      = persistance["direction"];
 ```
-Device properties are a kind of memory in the cloud, where the ESP can write data and retrieve it.
-This is an essential feature to store information that must survive a reset.
+Device properties are a kind of memory in the cloud, where the ESP can write data and retrieve it.  
+This is an essential feature to store information that must survive a reset.  
 
-Last but not least, widgets can get the information from Data Buckets.
-Data buckets are time series information useful to plot longtime trends.
-the structure of the data is defined in the Arduino IDE under c-Setup:
-e.g. for the data being written every minute:
+Last but not least, widgets can get the information from Data Buckets.  
+Data buckets are time series information useful to plot longtime trends.  
+the structure of the data is defined in the Arduino IDE under c-Setup:  
+e.g. for the data being written every minute:  
 ```C++
   thing["MIN"] >> [](pson & out)
   {
@@ -140,7 +140,7 @@ e.g. for the data being written every minute:
     out["efficiency"]   = dashboard.efficiency;
   };
 ```
-and the transmission is triggered in the Arduino IDE under c-Wireless:
+and the transmission is triggered in the Arduino IDE under c-Wireless:  
 ```C++
 #if defined (WRITE_BUCKETS)
   if (triglEvent)   thing.write_bucket("EVENT", "EVENT");
@@ -149,5 +149,5 @@ and the transmission is triggered in the Arduino IDE under c-Wireless:
   if (NewMinute)    thing.write_bucket("MIN", "MIN");
 #endif
 ```
-You have even got more possibilities, but that was the most important ones as a starting manual.
-Enjoy your Thinger.io dashboards!
+You have even got more possibilities, but that was the most important ones as a starting manual.  
+Enjoy your Thinger.io dashboards!  
