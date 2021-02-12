@@ -3,7 +3,7 @@
 Using Thinger.io is not a precondition, but it makes Soft-Power really comfortable and provides a lot of the visibility. 
 The following instructions will help you creating an account and the first device at Thinger.io, that is compatible with the Soft-Power example given out of the box.  
 
-##Create a free account
+## Create a free account
 First you need to register at www.thinger.io, take note of your username and password.
 Chose a user name and note it.
 After confirming your registration go to:
