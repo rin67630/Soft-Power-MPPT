@@ -1,5 +1,9 @@
-# Soft-Power: the different high dynamic MPPT Solar Charge Controller 
+# Soft-Power: the high dynamic MPPT Solar Charge Controller 
 __based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)__
+
+![image](https://user-images.githubusercontent.com/14197155/108857506-72e05180-75eb-11eb-8731-d5d0d6ecd7af.png)
+
+Everybody can provide grid-connected SCCs for sunny days. 
 
 Soft power is a project intending to address a specific niche under charge controllers:  
 Providing solar charging services with MPPT strategies to _low and mid-range solar panels (10 to 200W)_  
