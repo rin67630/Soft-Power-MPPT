@@ -1,85 +1,8 @@
 void data125mSRun()
 {
-  // === ( Actions)  ====
-  digitalWrite(RELAY1, not relay1_value);
-  digitalWrite(RELAY2, not relay2_value);
-  digitalWrite(HP_BUCK, high_power_buck_value);
-  digitalWrite(LP_BUCK, not high_power_buck_value);
-  digitalWrite(AUX_BUCK, aux_buck_value);
-  analogWrite (PWM_BAT, bat_injection);
-  analogWrite (PWM_AUX, aux_injection);
-  delay(50);
-}
 
-void data1SRun()
-{
-  yield();
+  // === ( Measures)  ====
 
-// High power buck is activated up from 15W from panel, low power buck activated down from 10W
-    if (dashboard.Wpan > 15) high_power_buck_value = true;
-//  if (dashboard.Wpan < 10) high_power_buck_value = false;
-
-
-  // === (Getting Weather from OpenWeatherMap every 5 minutes
-#if defined WEATHER_SOURCE_IS_URL
-  if (Minute % 5 == 1 && Second == 32)                    // call every 5 minutes
-  {
-    HTTPClient http;
-    http.begin(OPEN_WEATHER_MAP_URL);
-    int httpCode2 = http.GET();
-    if (httpCode2 == HTTP_CODE_OK)
-    {
-      JSONpayload = http.getString();
-      DynamicJsonDocument doc(1024);
-      auto error = deserializeJson(doc, JSONpayload.c_str());
-      if ( not error)
-      {
-        outdoor_temperature  = doc["main"]["temp"];
-        outdoor_pressure     = doc["main"]["pressure"];
-        outdoor_humidity     = doc["main"]["humidity"];
-        wind_speed           = doc["wind"]["speed"];
-        wind_direction       = doc["wind"]["deg"];
-        cloudiness           = doc["clouds"]["all"];  // % Clouds
-        const char* w        = doc["weather"][0]["description"]; weather_summary = w;
-        sunrise              = doc["sys"]["sunrise"];
-        sunset               = doc["sys"]["sunset"];
-      }
-    }
-    http.end();
-  }
-#endif
-
-
-  // === (Getting Battery values from another ESP over UDP
-#if defined (UDP_SLAVE)
-  // I am using a quick and dirty method called 'type punning' copying the memory block of a structure into an array of chars,
-  // transmitting this array, and copying back the memory block of the array into the same structure on the other side.
-  // I dont use any header info, only the difference of size permits to assign the received packets to sound or dashboard.
-  // it is quick and damn efficient, but NOT portable and YOU must take care to have the same structures on both systems
-  // and different sizes for Battery and Sound...
-
-  int packetSize = UDP.parsePacket();
-  if (packetSize == sizeof(dashboard))
-  {
-    UDP.read(dashboardPayload, UDP_TX_PACKET_MAX_SIZE);
-    memcpy(&dashboard, dashboardPayload, sizeof(dashboard));
-    // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, dashboard.Vbat , dashboard.Ibat , dashboard.Wbat , dashboard.percent_charged);
-    delay(3);    // let built-in LED blink slightly stronger on battery packet
-  }
-  //digitalWrite(STDLED, true);
-#endif
-
-  // === (Computing injection voltages) ===
-  if (not aux_buck_value) aux_injection = 1024;
-  if (not high_power_buck_value)
-  {
-    bat_injection_mvolt = map(bat_injection, 1024, 0, INJ_LP_MIN, INJ_LP_MAX);
-  } else {
-    bat_injection_mvolt = map(bat_injection, 1024, 0, INJ_HP_MIN, INJ_HP_MAX);
-  }
-  aux_injection_mvolt = map(aux_injection, 1024, 0, INJ_AUX_MIN, INJ_AUX_MAX);
-
-  // === ( Getting panel voltage from A0 ) ===
 #if defined (PAN_SOURCE_IS_A0)
   // Performing 3 reads to get a reliable reading.
   A0Raw = analogRead(A0);  // 1st read  0...1V = 0 ..1023
@@ -88,10 +11,9 @@ void data1SRun()
   delay(3);
   A0Raw += analogRead(A0); // 3rd read
   A0Raw = A0Raw / 3;
-  dashboard.Vpan += (float(map(A0Raw, 0, 1023, 0, PANEL_MAX)) / 1000 - dashboard.Vpan) / 10; // Volt Smoothed 10seconds
+  dashboard.Vpan += (float(map(A0Raw, 0, 1023, 0, PANEL_MAX)) / 1000 - dashboard.Vpan) / 10; // Volt Smoothed 1seconds
 #endif
 
-  // === ( Getting aux voltage from A0 ) ===
 #if defined (AUX_SOURCE_IS_A0)
   // Performing 3 reads to get a reliable reading.
   A0Raw = analogRead(A0);  // 1st read  0...1V = 0 ..1023
@@ -100,7 +22,7 @@ void data1SRun()
   delay(3);
   A0Raw += analogRead(A0); // 3rd read
   A0Raw = A0Raw / 3;
-  dashboard.Vaux += (float(map(A0Raw, 0, 1023, 0, PANEL_MAX)) / 1000 - dashboard.Vaux) / 10; // Volt Smoothed 10seconds
+  //dashboard.Vaux += (float(map(A0Raw, 0, 1023, 0, PANEL_MAX)) / 1000 - dashboard.Vaux) / 10; // Volt Smoothed 1seconds
 #endif
 
 #if defined (PAN_SOURCE_IS_INA)
@@ -109,8 +31,8 @@ void data1SRun()
   ina2_shunt     = INA.getShuntMicroVolts(1);
   ina2_current   = INA.getBusMicroAmps(1);
   ina2_power     = INA.getBusMicroWatts(1);
-  dashboard.Vpan  += (ina2_voltage / 1000   - dashboard.Vpan) / 3; // Volt smoothed 3seconds
-  dashboard.Ipan += (ina2_current / IFACTORP - dashboard.Ipan) / 3; // Ampere Smoothed 3seconds, set divisor negative to reverse current if required
+  dashboard.Vpan  += (ina2_voltage / 1000   - dashboard.Vpan) / 3; // Volt smoothed 0.3seconds
+  dashboard.Ipan += (ina2_current / IFACTORP - dashboard.Ipan) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
   dashboard.Wpan = dashboard.Vpan * dashboard.Ipan; +0.001;
 #endif
 
@@ -120,9 +42,9 @@ void data1SRun()
   ina3_shunt     = INA.getShuntMicroVolts(2);
   ina3_current   = INA.getBusMicroAmps(2);
   ina3_power     = INA.getBusMicroWatts(2);
-  dashboard.Vaux  += (ina3_voltage / 1000   - dashboard.Vaux) / 3; // Volt smoothed 3seconds
-  dashboard.Iaux += (ina3_current / IFACTORP - dashboard.Iaux) / 3; // Ampere Smoothed 3seconds, set divisor negative to reverse current if required
-  dashboard.Waux = dashboard.Vaux * dashboard.Iaux; +0.001;
+  //dashboard.Vaux  += (ina3_voltage / 1000   - dashboard.Vaux) / 3; // Volt smoothed 0.3seconds
+  dashboard.Iout += (ina3_current / IFACTORA - dashboard.Iout) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
+  dashboard.Wout = dashboard.Vbat * dashboard.Iout; +0.001;
 #endif
 
   //=== ( Measure Battery
@@ -136,21 +58,153 @@ void data1SRun()
   ina1_power     = INA.getBusMicroWatts(0);
   delta_voltage = ina1_voltage - v;          // mV
   delta_current = (ina1_current - w) / 1000;   // mA
-  dashboard.Vbat += (ina1_voltage / 1000   - dashboard.Vbat) / 3; // Volt Smoothed 3seconds
-  dashboard.Ibat += (ina1_current / IFACTORB - dashboard.Ibat) / 3; // Ampere Smoothed 3seconds, set divisor negative to reverse current if required
-  dashboard.Wbat = dashboard.Wbat = dashboard.Vbat * dashboard.Ibat;
+  dashboard.Vbat += (ina1_voltage / 1000   - dashboard.Vbat) / 3; // Volt Smoothed 0.3seconds
+  dashboard.Iin += (ina1_current / IFACTORB - dashboard.Iin) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
+  dashboard.Win = dashboard.Win = dashboard.Vbat * dashboard.Iin;
+#endif
 
-  //  if (Hour < 4)   //Internal resistance evaluated during night, when no solar influence is expected. A load that generates sometimes peaks >50mA is requested for entropy.
-  //    {
   // Evaluate battery internal resistance (r = dv / di) if deltaCurrent > 50mA.
   if (fabs(delta_current) > 50) dashboard.internal_resistance = fabs(delta_voltage / delta_current);
-  //    }
+
+
+  // === ( Actions)  ====
+
+  // PWM to charger buck: dashboard.DVinj is our adjustment variable. It is the difference between the battery voltage and the desired voltage.
+
+  switch (dashboard.modus)
+  {
+    case CVFX:  // fix voltage
+      dashboard.DVinj = dashboard.CVbat - dashboard.Vbat;
+      break;
+    case CVTR:  // voltage ahead tracking
+      dashboard.DVinj = dashboard.CCbat / 10 ;
+      break;
+    case CCFX:  // fix current
+      dashboard.DVinj = dashboard.DVinj + (dashboard.Iin + dashboard.Iout - dashboard.CCinj) * -0.005;
+      break;
+    case PVFX:  // fix panel voltage
+      dashboard.CCinj = dashboard.CCinj + (dashboard.Vpan - dashboard.CVpan) * 0.0005;
+      dashboard.CCinj = constrain( dashboard.CCinj, 1, 8) ;
+      dashboard.DVinj = dashboard.DVinj + (dashboard.Iin + dashboard.Iout - dashboard.CCinj) * -0.003;      
+      break;
+    case MPPT:  // maximum power point tracking Perturb and Observe
+      dP  = dashboard.Win + dashboard.Wout - MPPT_last_power;
+      dV  = dashboard.Vpan - MPPT_last_voltage;
+      MPPT_last_power = dashboard.Win + dashboard.Wout ;
+      MPPT_last_voltage = dashboard.Vpan;
+      if (dP > 0)
+      {
+        if (dV > 0)
+        {
+          dashboard.CCinj-= 0.003;
+        } else {
+          dashboard.CCinj+= 0.003;
+        }
+
+      } else {
+        if (dV > 0)
+        {
+          dashboard.CCinj+= 0.003;
+        } else {
+          dashboard.CCinj-= 0.003;
+        }
+      }
+      break;
+    case AUTO:  // automatic
+      // placeholder code, more to come...
+      dashboard.CVbat = 14.400;
+      dashboard.CVpan = 19.000;
+      dashboard.CCbat = 3.000;
+      break;
+  }
+
+  dashboard.CVinj = dashboard.DVinj + dashboard.Vbat;
+  dashboard.CVinj = constrain( dashboard.CVinj, phase_voltage[8], dashboard.CVbat) ;
+  dashboard.DVinj = dashboard.CVinj - dashboard.Vbat;
+  dashboard.DVinj = constrain( dashboard.DVinj, -0.25, 0.50);
+  bat_injection = bat2pwm(dashboard.CVinj);
+  bat_injection =  constrain( bat_injection, 0, 1024);
+
+  // PWM to aux buck
+  dashboard.Vaux  = dashboard.CVaux;
+  if (not aux_enable) dashboard.Vaux  = 0;
+  aux_injection = aux2pwm(dashboard.Vaux);
+
+  digitalWrite(RELAY1, not relay1_value);
+  digitalWrite(RELAY2, not relay2_value);
+  digitalWrite(HP_BUCK, high_power_enable);
+  digitalWrite(LP_BUCK, not high_power_enable);
+  digitalWrite(AUX_BUCK, aux_enable);
+  analogWrite (PWM_BAT, bat_injection);
+  analogWrite (PWM_AUX, aux_injection);
+
+} // end 125msRun
+
+void data1SRun()
+{
+
+  // High power buck is activated up from 15W from panel, low power buck activated down from 10W
+  if (dashboard.Wpan > 10) high_power_enable = true;
+  if (dashboard.Wpan < 5)  high_power_enable = false;
+
+  // === (Getting Weather from OpenWeatherMap every 5 minutes
+#if defined WEATHER_SOURCE_IS_URL
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    if (Minute % 5 == 1 && Second == 32)                    // call every 5 minutes
+    {
+      HTTPClient http;
+      http.begin(OPEN_WEATHER_MAP_URL);
+      int httpCode2 = http.GET();
+      if (httpCode2 == HTTP_CODE_OK)
+      {
+        JSONpayload = http.getString();
+        DynamicJsonDocument doc(1024);
+        auto error = deserializeJson(doc, JSONpayload.c_str());
+        if ( not error)
+        {
+          outdoor_temperature  = doc["main"]["temp"];
+          outdoor_pressure     = doc["main"]["pressure"];
+          outdoor_humidity     = doc["main"]["humidity"];
+          wind_speed           = doc["wind"]["speed"];
+          wind_direction       = doc["wind"]["deg"];
+          cloudiness           = doc["clouds"]["all"];  // % Clouds
+          const char* w        = doc["weather"][0]["description"]; weather_summary = w;
+        }
+      }
+      http.end();
+    }
+  }
 #endif
+
+
+  // === (Getting Battery values from another ESP over UDP
+#if defined (UDP_SLAVE)
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    // I am using a quick and dirty method called 'type punning' copying the memory block of a structure into an array of chars,
+    // transmitting this array, and copying back the memory block of the array into the same structure on the other side.
+    // I dont use any header info, only the difference of size permits to assign the received packets to sound or dashboard.
+    // it is quick and damn efficient, but NOT portable and YOU must take care to have the same structures on both systems
+    // and different sizes for Battery and Sound...
+
+    int packetSize = UDP.parsePacket();
+    if (packetSize == sizeof(dashboard))
+    {
+      UDP.read(dashboardPayload, UDP_TX_PACKET_MAX_SIZE);
+      memcpy(&dashboard, dashboardPayload, sizeof(dashboard));
+      // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, dashboard.Vbat , dashboard.Iin , dashboard.Win , dashboard.percent_charged);
+      delay(3);    // let built-in LED blink slightly stronger on battery packet
+    }
+    //digitalWrite(STDLED, true);
+  }
+#endif
+
 
 #if defined (PAN_SOURCE_IS_INA) && defined (BAT_SOURCE_IS_INA)
   if (dashboard.Wpan > 0.03)
   {
-    dashboard.efficiency = constrain((dashboard.Wbat + dashboard.Waux) / dashboard.Wpan * 100, -50, 97.5);
+    dashboard.efficiency = constrain((dashboard.Win + dashboard.Wout) / dashboard.Wpan * 100, -50, 97.5);
   } else {
     dashboard.efficiency = 0;
   }
@@ -161,11 +215,11 @@ void data1SRun()
   {
     // Evaluate battery charge
     float d = 0;
-    if (dashboard.Ibat >= 0.3)
+    if (dashboard.Iin >= 0.3)
     {
       d = 500;   // mV
     }
-    else if (dashboard.Ibat <= 0.3)
+    else if (dashboard.Iin <= 0.3)
     {
       d = -500;   // mV
     }
@@ -174,29 +228,29 @@ void data1SRun()
 
     // Battery charging procedure
     phase_timer ++;
-    phase_duration[phase] = phase_timer;
+    phase_duration[dashboard.phase] = phase_timer;
     expired = false;
-    if (phase_timer > phase_limit[phase]) expired = true;
+    if (phase_timer > phase_limit[dashboard.phase]) expired = true;
 
     /*
-        switch (phase)
+        switch (dashboard.phase)
         {
           case NIGHT:        //0 panel voltage < battery voltage Low-Power mode
-            LP_buck_value = LOW;
+            LP_enable = LOW;
             if (dashboard.Vpan > (dashboard.Vbat + 1))
             {
               phase_timer = 0;
               if (dashboard.Vbat > LOWLIM)
               {
-                phase = RECOVERY;
+                dashboard.phase = RECOVERY;
                 aux_injection = 1024;
-                LP_buck_value = LOW;
+                LP_enable = LOW;
               }
               else
               {
-                phase = BULK;
+                dashboard.phase = BULK;
                 aux_injection = 580;
-                LP_buck_value = HIGH;
+                LP_enable = HIGH;
               }
             }
             break;
@@ -242,7 +296,7 @@ void data1SRun()
   if (SecondOfDay == 85899) voltageDelta = dashboard.Vbat - voltageAt0H; // set ranges at 33:53:59
 
   //=== ( Battery Stat integration
-  currentInt += dashboard.Ibat;
+  currentInt += dashboard.Iin;
   nCurrent ++;
 
   if (HourExpiring)
@@ -256,14 +310,14 @@ void data1SRun()
     {
       AhBat[26] = AhBat[26] + AhBat[n];
     }
-    VBat[Hour] = dashboard.Vbat;
-    VBat[25] = dashboard.Vbat;
-    VBat[26] = 0;              // today (0h->current hour)
+    Vbat[Hour] = dashboard.Vbat;
+    Vbat[25] = dashboard.Vbat;
+    Vbat[26] = 0;              // today (0h->current hour)
     for  (byte n = 0; n < Hour; n++)
     {
-      VBat[26] = VBat[26] + VBat[n];
+      Vbat[26] = Vbat[26] + Vbat[n];
     }
-    VBat[26] = VBat[26] / (Hour+1) ;   
+    Vbat[26] = Vbat[26] / (Hour + 1) ;
   } // end hour expiring
 
   if (DayExpiring)
@@ -271,10 +325,10 @@ void data1SRun()
     AhBat[27] = AhBat[26];
     AhBat[28] = AhBat[27];
     AhBat[29] = AhBat[28];
-    AhBat[30] = AhBat[29];    
-    VBat[27] = VBat[26];
-    VBat[28] = VBat[27];
-    VBat[29] = VBat[28];
-    VBat[30] = VBat[29];    
+    AhBat[30] = AhBat[29];
+    Vbat[27] = Vbat[26];
+    Vbat[28] = Vbat[27];
+    Vbat[29] = Vbat[28];
+    Vbat[30] = Vbat[29];
   }
 } // end of 1S run
