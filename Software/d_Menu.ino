@@ -34,23 +34,23 @@ void menuRun()
       Console1.printf ("D=3\n");
       break;
     case '+': //Increase Offset
-      bat_injection ++;
+      dashboard.CCbat ++;
       Console1.printf ("+1 bat=%i", bat_injection);
       break;
     case '-': //Reduce Offset
-      bat_injection --;
+      dashboard.CCbat --;
       Console1.printf ("-1 bat=%i", bat_injection);
       break;
     case '>': //Increase Offset by 20
-      bat_injection = bat_injection + 20;
+      dashboard.CCbat += 20;
       Console1.printf ("+10 bat=%i", bat_injection);
       break;
     case '<': //Reduce Offset by 20
-      bat_injection = bat_injection - 20;
+      dashboard.CCbat -= 20;
       Console1.printf ("-10 bat=%i", bat_injection);
       break;
     case 'R': // Relay control
-       n = Serial.parseInt();
+      n = Serial.parseInt();
       switch (n)
       {
         case 10:
@@ -75,10 +75,10 @@ void menuRun()
       m = Serial.parseInt();
       if (not n && not m)
       {
-        aux_buck_value = false;
+        aux_enable = false;
       } else {
-        aux_buck_value = true;
-        aux_injection_mvolt = 1000 * n + m;
+        aux_enable = true;
+        dashboard.CVaux = 1000 * n + m;
       }
       break;
     case 'Z':  //Reset
@@ -93,13 +93,16 @@ void menuRun()
       serialPage = 'S';
       break;
     case 'P': //Parameter List
-      Console1.printf("Par.List \n DPage: %d DSPage: %d SPage: %d\n", displayPage, displaySubPage, serialPage);
+      Console1.printf("Par.List \n BatPWM: %i Bat CV %6.2f Bat CC %6.3f AuxPWM: %i Aux CV %6.3f", bat_injection, dashboard.CVbat, dashboard.CCbat, aux_injection, dashboard.CVaux);
       break;
-    case '?': //List parameters
-      Console1.printf("Command list");
+    case '?': //List Variables
+      Console1.printf("Page.List \n DPage: %d DSPage: %d SPage: %d\n", displayPage, displaySubPage, serialPage);
       break;
-    case 'T': // Print time
+    case 't': // Print time
       Console1.println(ctime(&now));
+      break;
+    case 'T': // Enter time
+      setTimefromSerial();
       break;
 
     // ***Options for periodical Reports**
@@ -128,11 +131,11 @@ void menuRun()
     // ***Periodical Reports/Plots**
     case 'E':  //Energy Plot
       serialPage = 'E';
-//      Console1.printf ("\nEnergy plot :\n");
+      //      Console1.printf ("\nEnergy plot :\n");
       break;
     case 'W':  //Weather Plot
       serialPage = 'W';
-//      Console1.printf ("\nWeather Plot :\n");
+      //      Console1.printf ("\nWeather Plot :\n");
       break;
     case '~':  //Redio Report / WiFi
       serialPage = '~';
