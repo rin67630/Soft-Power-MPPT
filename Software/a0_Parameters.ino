@@ -19,7 +19,7 @@
 #define INFLUXDB_URL "https://eu-central-1-1.aws.cloud2.influxdata.com"
 #define INFLUXDB_TOKEN "ZON2344MVMpe7ukp7bSOCyjskjlkjlkjlOP6W-qLftp756wqlHIzcOBQKiv0Tz1aDrszK6wwgoIaH4WAV9GcQ=="
 #define INFLUXDB_ORG "your@email"
-#define INFLUXDB_BUCKET "SeftPower Bucket"
+#define INFLUXDB_BUCKET "SoftPower Bucket"
 
 //Location for weather
 #define OPEN_WEATHER_MAP_APP_ID      "Openweathermapps ID" 
