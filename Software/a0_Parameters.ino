@@ -10,10 +10,17 @@
 #define wifiRepeatInterval 500
 // after a successful connection, you can revert to the defaults lines again.
 
-//Thinger
+//Thinger option
 #define THINGER_USERNAME           "USERNAME"       
 #define THINGER_DEVICE_CREDENTIALS "Device Credentials"    
-#define THINGER_DEVICE HOST_NAME    
+#define THINGER_DEVICE HOST_NAME   
+
+//Influx option (work in progress)
+#define INFLUXDB_URL "https://eu-central-1-1.aws.cloud2.influxdata.com"
+#define INFLUXDB_TOKEN "ZON2344MVMpe7ukp7bSOCyjskjlkjlkjlOP6W-qLftp756wqlHIzcOBQKiv0Tz1aDrszK6wwgoIaH4WAV9GcQ=="
+#define INFLUXDB_ORG "your@email"
+#define INFLUXDB_BUCKET "SeftPower Bucket"
+
 //Location for weather
 #define OPEN_WEATHER_MAP_APP_ID      "Openweathermapps ID" 
 #define OPEN_WEATHER_MAP_LOCATION_ID "Location"
@@ -57,18 +64,19 @@
 #define BATT_CAPACITY 120 // Ah
 
 //  ***Communicatin options*** (For geeks only, else leave as it is)
-//'define DWITTER               //(Comment out, if no dwitter.io used) 
-//#define THINGER                 //(Comment out, if no thinger.io used)
-//#define WRITE_BUCKETS           //(Comment out, if this is the second device for Thinger)
-//#define PUBLISH_REPORT          // Issue events&midnight reports to UDP Port + 1, comment out else
+//#define INFLUX             //(Comment out, if no Influx is used) 
+//#define THINGER            //(Comment out, if no thinger.io used)
+//#define WRITE_BUCKETS      //(Comment out, if this is the second device for Thinger)
+//#define PUBLISH_REPORT     // Issue events&midnight reports to UDP Port + 1, comment out else
 #define REPORT_TARGET "192.168.188.00"  // IP to forward Report
-//#define UDP_MASTER            // If this is the  master of a slave ESP
+//#define UDP_MASTER         // If this is the  master of a slave ESP
 #define UDP_SLAVE             // If this is the  master of a slave ESP
-#define DATA_TARGET "192.168.188.00"  // IP to forward data
-#define UDP_PORT   4214              // Ports to forward/receive data
+#define DATA_TARGET   "192.168.188.00"  // IP to forward data
+#define UDP_PORT   4214      // Ports to forward/receive data
 #define Console0 Serial      // Port for user inputs  
 #define Console1 Serial      // Port for user output
 #define Console2 Serial1     // Port for midnight report e.g. on thermal printer
 #define Console3 Serial      // Port for periodic messages
 #define Console4 Serial      // Port for boot messages
 #define SERIAL_SPEED            9600 //9600  115200 230400
+//#define _DEBUG_            // to get deep diagnosis information over the serial line.
