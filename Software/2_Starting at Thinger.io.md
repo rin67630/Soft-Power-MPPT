@@ -44,26 +44,27 @@ You may now enter widgets yourself, but for the first dashboard, I can provide a
 Click on Settings, on the pop-up click on the tab "Developer"  
 You will get a small JSON list corresponding to an empty dashboard. 
 
-## Cloning the template dashboard.
-Open the Arduino IDE and load Soft Power.  
-Get into the tab w_Thinger_Dashboard:  
-![image](https://user-images.githubusercontent.com/14197155/106659252-c3d9c880-659e-11eb-8aa9-7342b6df893c.png)  
-Use Edit/Find to replace every occurence of SoftPower1 with the user name that you have chosen to register.
-Should you have used a device named differently than "SoftPower" :
-Use Edit/Find to replace every occurence of SoftPower with the device name that you created.
-Save.
+## Cloning template dashboards.
+To start easily, I am providing four preconfigured dashboards in a vertical tablet format:
+- Thinger_SoftPowerSimple.json (with just a few widgets to keep an eye on your SCC, well suitable for smartphones)
+- Thinger_SoftPowerMonitor.json (with most passive widgets and the control of the AUX/Relays outputs) 
+- Thinger_SoftPowerControl.json (with all widgets and the control of the SCC operation mode)
+- Thinger_SoftPowerStats.json (a survey on the last 24h Ah of the battery + a plot of the last 72h)  
 
-From the content of the  tab w_Thinger_Dashboard, copy everything **but not the first line and the last line**.  
-**your copied content must start and end with a curly brace.**  
-Return to the Thinger instance and  
-**Replace** all the content of the dashboard configuration by the content of your clipboard.  
-Click on "Save".  
+To clone one of these dashboards you first need to replace all occurences of  
+              "device": "SoftPower" 
+and
+              "user": "SoftPower"
+with your device and user name.
+You may use any plain text editor. 
+Personally I copy the json code in a tab of my Arduino IDE make the replacements and delete the tab afterwards.  
+You may also leave the tab, placing "/*" before and "*/" after the JSON code so that the complier ignores that part.  
+Once the replacements are done, you replace on the tab "Developer" the small JSON list corresponding to an empty dashboard with the new JSON and save your dashboard. 
 
-Enjoy your standard Soft-Power dashboard!  
+Enjoy your preconfigured Soft-Power dashboard!  
 ![image](https://user-images.githubusercontent.com/14197155/107529012-be8e0680-6bba-11eb-85e3-01bff1225d07.png)    
 The dashboard is best viewed on a vertical tablet: change the zoom level of your browser to get the best display.
-
-
+Of course if you prefer a horizontal view, you may move the widgets to match your preferences.
 
 ** Further design possibilities
 Thinger.io dashboard system allows creating nice data representation interfaces within minutes in a very simple way.  
