@@ -11,6 +11,10 @@ INA_Class INA;
 ThingerESP8266 thing(THINGER_USERNAME, THINGER_DEVICE, THINGER_DEVICE_CREDENTIALS);
 #endif
 
+# if defined(INFLUX)
+InfluxDBClient client(INFLUXDB_URL, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN, InfluxDbCloud2CACert);
+#endif
+
 // Functions
 
 // WiFi Managemement
@@ -22,7 +26,7 @@ void getWiFi()
 #endif
   WiFi.reconnect();
   WiFi.waitForConnectResult();
-  WiFi.hostname(HOST_NAME);
+  WiFi.hostname(DEVICE_NAME);
   if (WiFi.status() != WL_CONNECTED)
   {
     WiFi.begin(WIFI_SSID, WIFI_PASS);
@@ -43,7 +47,7 @@ void getWiFi()
         //Turn off WiFi
         WiFi.forceSleepBegin();
         // WiFi.mode(WIFI_OFF);
-        Console4.printf("\nRunning offline, back in the 70's\n");
+        Console4.printf("\nRunning offline, enter time date & time (dd/mm/yyyy hh:mm:ss) before using the menu\n");
         break;
       }
       else
@@ -51,8 +55,9 @@ void getWiFi()
         Console4.printf("RSSI: %d dBm\n", WiFi.RSSI());
       }
     }
-    ip = WiFi.localIP();
+    delay(100);
   }
+  ip = WiFi.localIP();
 }
 
 void myIP()
@@ -90,7 +95,7 @@ void getTimeData()
   strftime (Date,      12, "%d/%m/%Y", timeinfo);
 }
 
-void setTimefromSerial()
+boolean setTimefromSerial()
 {
   if (Serial.available() > 0)
   {
@@ -101,7 +106,7 @@ void setTimefromSerial()
     Hour = Serial.parseInt();
     Minute = Serial.parseInt();
     Second = Serial.parseInt();
-    Console1.printf("\nI have understood %u/%u/%u %u:%u:%u\n", Day, Month, Year, Hour, Minute, Second);
+    Console1.printf("\nNew time: %u/%u/%u %u:%u:%u\n", Day, Month, Year, Hour, Minute, Second);
     boolean validDate = (inRange(Day, 1, 31) && inRange(Month, 1, 12) && inRange(Year, 2021, 2031));
     boolean validTime = (inRange(Hour, 0, 23) && inRange(Minute, 0, 59) && inRange(Second, 0, 59));
     if (validTime && validDate)
@@ -124,9 +129,14 @@ void setTimefromSerial()
       tv.tv_sec = t_of_day;  // epoch time (seconds)
       tv.tv_usec = 0;    // microseconds
       settimeofday(&tv, 0);                //Setting Clock
-      Console4.printf("\nWelcome back in the present!, Menu ready to listen\n");
+      Console4.printf("\nTime set, Menu ready to listen\n");
+      return true;
+    } else {
+      return false;
     }
+    return true;
   }
+
 }
 
 void buffTimeData()
@@ -140,70 +150,49 @@ bool inRange(int x, int low, int high) {
   return false;
 }
 
-int do_perturb_and_observe_mppt() { // performs Perturb & Observe MPPT; changes pwm_value to maximise power
-  if (dashboard.Wbat < last_power) { // power has gone down - change direction
-    bat_delta = - bat_delta;
-  }       // "else" power is the same or increased  - keep direction
-  dashboard.Wbat < last_power;
-  bat_injection += bat_delta;
-  bat_injection = constrain (bat_injection, 0, 255);
-  analogWrite (PWM_AUX, bat_injection);
-}
-
-int do_incremental_conductance_mppt() { // performs Inc Conductance MPPT; changes pwm_value to maximise power
-  //place code here
-}
-
-int do_CV () { // performs fix voltage operation at target
-  if (dashboard.Vbat > bat_target) {
-    aux_delta = abs(aux_delta);
-  } else {                // decrease pwm value
-    aux_delta = - abs(aux_delta);
-  }
-  bat_injection += aux_delta;
-  bat_injection = constrain (bat_injection, 0, 1024);
-  analogWrite (PWM_AUX, bat_injection);
-}
-
-int do_CC () { // performs fix current operation at target
-  if (dashboard.Ibat > bat_target) { // increase pwm value
-    aux_delta = abs(aux_delta);
-  } else {                // decrease pwm value
-    aux_delta = - abs(aux_delta);
-  }
-  bat_injection += aux_delta;
-  bat_injection = constrain (bat_injection, 0, 1024);
-  analogWrite (PWM_AUX, bat_injection);
-}
-
-float pwm2volt (float pwm)
+//Conversions Volt <-> PWM
+float pwm2bat(unsigned int pwm)
 {
-  int volt = map(pwm, 1024, 0, long(MIN_VOLT * 100), long(MAX_VOLT * 100));
-  return volt;
+  float bat;
+  if (not high_power_enable)
+  {
+    bat = float(map(pwm, 1024, 0, INJ_LP_MIN, INJ_LP_MAX) / 1000);
+  } else {
+    bat = float(map(pwm, 1024, 0, INJ_HP_MIN, INJ_HP_MAX) / 1000);
+  }
+  return bat;
 }
 
-float volt2pwm (float volt)
+unsigned int  bat2pwm(float bat)
 {
-  int pwm = map(volt, long(MIN_VOLT * 100), long(MAX_VOLT * 100), 1024, 0);
+  unsigned int pwm;
+  if (high_power_enable)
+  {
+    pwm = map(int(bat * 1000), INJ_HP_MIN, INJ_HP_MAX, 1024, 0 );
+  } else {
+
+  } pwm = map(int(bat * 1000), INJ_LP_MIN, INJ_LP_MAX, 1024, 0 );
   return pwm;
 }
 
-/*boolean time_phase()
+float pwm2aux(unsigned int pwm)
+{
+  float aux = float(map(pwm, 1024, 0, INJ_AUX_MIN, INJ_AUX_MAX) / 1000);
+  return aux;
+}
+
+unsigned int aux2pwm(float aux)
+{
+  unsigned int pwm = map(int(aux * 1000), INJ_AUX_MIN, INJ_AUX_MAX, 1024, 0);
+  return pwm;
+}
+
+/*boolean time_dashboard.phase()
   {
   phase_timer ++;
-  phase_duration[phase] = phase_timer;
+  phase_duration[dashboard.phase] = phase_timer;
   expired = false;
-  if (phase_timer > phase_limit[phase]) expired = true;
+  if (phase_timer > phase_limit[dashboard.phase]) expired = true;
   return expired;
-  }*/
-
-void do_CVCC () {   // stay at or below voltage and current targets
-  if (dashboard.Ibat > bat_target || dashboard.Vbat > bat_target) { // increase pwm value to decrease charging
-    bat_delta = abs(bat_delta);
-    bat_injection += bat_delta;
-    bat_injection = constrain (bat_injection, 0, 255);
-    analogWrite (PWM_BAT, bat_injection);
-  } else {                // increase charging subject to capacity
-    do_perturb_and_observe_mppt();
   }
-}
+*/
