@@ -1,4 +1,5 @@
 // *** libraries***
+
 #include <Wire.h>          // Libs for I2C
 #include <INA.h>           // Zanshin INA Library
 #include <ArduinoJson.h>   // Libs for Webscraping
@@ -12,6 +13,11 @@
 #include <ThingerESP8266.h>
 //#include <ThingerConsole.h>
 #endif
+# if defined(INFLUX)
+#include <InfluxDbClient.h>
+#include <InfluxDbCloud.h>
+#endif
+
 #include <EEPROM.h>
 
 #ifndef DISPLAY_IS_NONE
@@ -37,53 +43,29 @@ SSD1306Wire display(0x3c, SDA, SCL);                  //OLED 128*64 soldered
 #define PWM_AUX    D4   // GPIO2  PWM output to control aux buck (lights also the built-in LED)
 #define AUX_BUCK   D8   // GPIO15 Digital out control aux buck
 
-// Solar charger phases
-#define NIGHT        0  // panel voltage < battery voltage Low-Power mode
-#define RECOVERY     1  // battery voltage < LOWLIM, panel current > low limit, cut off load 
-#define BULK         2  // battery voltage < FLOAT, current limited by battery
-#define MPPT         3  // battery voltage < FLOAT, current limited by panel
-#define ABSORPTION   4  // battery voltage > FLOAT < ABSORB, current limited by battery and time
-#define FLOATCHARGE  5  // battery voltage = FLOAT
-#define EQUALIZATION 6  // battery voltage = EQUALIZE, current limited by battery and time
-#define OVERCHARGE   7  // battery voltage > ABSORB and not EQUALIZATION
-#define DISCHARGED   8  // battery voltage < LOWLIM, panel current < low limit , cut off load
-#define PAUSE        9  // no charge, wait for a defined time
-#define NOBAT        10 // no battery current possible at Vbat = ABSORB
-#define NOPANEL      11 // no panel current for more than 20h
-#define EXAMINE      12 // evaluate battery condition
-
-
-byte phase = EXAMINE;
-int phase_timer;
-unsigned int phase_duration[13];
-// phase_limit is the maximal duration (in minutes) for each phase, 0= no limit
-// phase_ratio_C is the ratio charging current to BATT_CAPACITY for each phase
-// phase_voltage is the battery voltage for each phase
-
-int phase_limit[13] = {1000, 300, 900, 900, 480, 900, 240, 0, 0, 30, 0, 0, 10};
 
 // Battery parameters
 #ifdef BATTERY_IS_12V_FLA
 float phase_ratio_C[] = {0, 0.05, 0.2, 0.2, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 12.4, 13.8, 13, 8, 14.6, 13.7, 15.2, 15.6, 11.0, 0, 0, 0, 0};
+float phase_voltage[] = {0, 12.4, 13.8, 13.8, 14.6, 13.7, 15.2, 15.6, 11.0, 0, 0, 0, 0};
 #define MIN_VOLT 10.8
 #define MAX_VOLT 15.6
 #endif
 #ifdef BATTERY_IS_12V_AGM
 float phase_ratio_C[] = {0, 0.05, 0.2, 0.2, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 12.4, 13.8, 13, 8, 14.4, 13.7, 14.4, 15.6, 11.0, 0, 0, 0, 0};
+float phase_voltage[] = {0, 12.4, 13.8, 13.8, 14.4, 13.7, 14.4, 15.6, 11.0, 0, 0, 0, 0};
 #define MIN_VOLT 10.8
 #define MAX_VOLT 15.6
 #endif
 #ifdef BATTERY_IS_12V_GEL
 float phase_ratio_C[] = {0, 0.05, 0.2, 0.2, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 12.4, 13.8, 13, 8, 14.4, 13.7, 15, 2, 15.6, 11.0, 0, 0, 0, 0};
+float phase_voltage[] = {0, 12.4, 13.8, 13.8, 14.4, 13.7, 15.2, 15.6, 11.0, 0, 0, 0, 0};
 #define MIN_VOLT 10.8
 #define MAX_VOLT 15.6
 #endif
 #ifdef BATTERY_IS_12V_LIFEPO
 float phase_ratio_C[] = {0, 0.3, 1, 1, 0.5, 0.1, 0.3, 0, 0, 0, 0, 0, 0};
-float phase_voltage[] = {0, 11.4, 13.2, 13.2, 13.2, 12.0, 12.0, 12.0, 10.5, 0, 0, 0, 0};
+float phase_voltage[] = {0, 11.4, 13.2, 13.7, 13.7, 12.0, 12.0, 12.0, 10.5, 0, 0, 0, 0};
 #define MIN_VOLT 10.36
 #define MAX_VOLT 14.97
 #endif
@@ -131,6 +113,10 @@ boolean NewHour;
 boolean HourExpiring;
 boolean NewDay;
 boolean DayExpiring;
+byte    SunriseHour;
+byte    SunriseMin;
+byte    SunsetHour;
+byte    SunsetMin;
 
 // ***Variables for Menu***
 byte    inbyte;
@@ -166,43 +152,97 @@ float voltageDelta ;
 float currentInt = 0;
 int   nCurrent;
 float AhBat[31];
-float VBat[31];
+float Vbat[31];
 float last_power;
 
 struct dashboard {
-  float Ibat ;
+// Measures
   float Vbat ;
-  float Wbat ;
-  float Cbat ;  
-  float Ipan ;
+  float Iin ;
+  float Win ;
+  float Iout ;
+  float Wout ;
   float Vpan ;
+  float Ipan ;
   float Wpan ;
-  float Cpan ; 
-  float Iaux ;
   float Vaux ;
-  float Waux ;
-  float Caux ; 
-  float efficiency;
-  float internal_resistance;
-  float percent_charged;
+  
+// User set-points converted to float.
+  float CVbat;
+  float CCbat;
+  float CVpan;
+  float DVinj;
+  float CVaux;
+  
+// Set points changed from regulation
+  float CVinj;                //Battery Voltage control modified
+  float CCinj;                //Battery Current control modified
+  float MPPTinj;                 //Voltage control modified
+
+// 
+  byte  phase ;                // charger phases
+  byte  modus ;                // mode of operation
+  float efficiency;            // converter efficiency
+  float internal_resistance;   // battery internal resistance (as low as possible, >0,3 is bad)
+  float percent_charged;       // not much precise though..
 } dashboard;
 
-int bat_injection = 250;
-int bat_injection_mvolt;
-int bat_target = 250;
-int bat_delta = 10;
-int bat_corr   = 0;
-int aux_injection = 250;
-int aux_injection_mvolt;
-int aux_target = 250;
-int aux_delta = 10;
-int aux_corr   = 0;
+// User set-points Set points from sliders
+  int   CVbat;
+  int   CCbat;
+  int   CVpan;
+  int   CVaux;
 
+// Injection PWM output values
+unsigned int bat_injection;
+unsigned int aux_injection;
 
+// MPPT
+float MPPT_last_power;
+float MPPT_last_voltage;
+float dP; // power difference;
+float dV; // voltage difference;
+
+// Charger
+// Solar charger dashboard.phases
+#define NIGH         0  // panel voltage < battery voltage Low-Power mode
+#define RECO         1  // battery voltage < LOWLIM, panel current > low limit, cut off load 
+#define BULK         2  // battery voltage < FLOAT, current limited by battery
+#define MPPT         3  // battery voltage < FLOAT, current limited by panel
+#define ABSO         4  // battery voltage > FLOAT < ABSORB, current limited by battery and time
+#define FLOA         5  // battery voltage = FLOAT
+#define EQUA         6  // battery voltage = EQUALIZE, current limited by battery and time
+#define OVER         7  // battery voltage > ABSORB and not EQUALIZATION
+#define DISC         8  // battery voltage < LOWLIM, panel current < low limit , cut off load
+#define PAUS         9  // no charge, wait for a defined time
+#define NOBA         10 // no battery current possible at Vbat = ABSORB
+#define NOPA         11 // no panel current for more than 20h
+#define EXAM         12 // evaluate battery condition
+
+String phase_description[] = {"NIGH","RECO","BULK","MPPT","ABSO","FLOA","EQUA","OVER","DISC","PAUS","NOBA","NOPA","EXAM"}; // for dashboard.phase
+unsigned int phase_timer;
+unsigned int phase_duration[13];
+
+// phase_limit is the maximal duration (in minutes) for each dashboard.phase, 0= no limit
+// dashboard.phase_ratio_C is the ratio charging current to BATT_CAPACITY for each dashboard.phase
+// dashboard.phase_voltage is the battery voltage for each dashboard.phase
+int phase_limit[13] = {1000, 300, 900, 900, 480, 900, 240, 0, 0, 30, 0, 0, 10};
+
+// Solar charger Modus modes
+#define CVFX         0  // fix voltage
+#define CVTR         1  // voltage ahead tracking 
+#define CCFX         2  // fix current
+#define PVFX         3  // fix panel voltage
+#define MPPT         4  // maximum power point tracking
+#define AUTO         5  // automatic
+
+String modus_description[] = {"CVFX","CVTR","CCFX","PVFX","MPPT","AUTO"}; // for dashboard.Modus
+
+// Digital outputs
 boolean relay1_value;
 boolean relay2_value;
-boolean high_power_buck_value;
-boolean aux_buck_value;
+boolean high_power_enable;
+boolean aux_enable;
 
 char dashboardPayload[sizeof(dashboard)];  //  Array of characters as image of the structure for UDP xmit/rcv
 
@@ -214,10 +254,8 @@ float wind_speed;
 int   wind_direction;
 int   cloudiness;
 String weather_summary;
-long  sunrise;
-long  sunset;
 
-//Sound level from URL
+//UDP Trasnmission
 String  JSONpayload;
 byte    wifiConnectCounter;
 
@@ -226,4 +264,3 @@ static char charbuff[80];    //Char buffer for many functions
 
 int A0Raw;
 boolean trigEvent;
-String eventTime;
