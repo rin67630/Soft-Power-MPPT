@@ -1,20 +1,19 @@
 void setup()
 {
-  delay(3000); // Wait for serial monitor to be started
+  delay(1000); // Wait for serial monitor to be started
   // Serial initialisation
   Serial.begin (SERIAL_SPEED); // On USB port
   Serial1.begin(SERIAL_SPEED); // On GPIO2 / D4
   Serial.setDebugOutput(true);
   Wire.begin(SDA, SCL);
-  Console4.printf("\n\n\nESP-Karajan at work,Serial @ %u Baud\nTrying to connect\n\n", SERIAL_SPEED);
+  Console4.print("Reset by: "); Console4.print(ESP.getResetReason());
+  Console4.printf("\nESP-Karajan at work,Serial @ %u Baud\nTrying to connect\n\n", SERIAL_SPEED);
 
   pinMode(RELAY1   , OUTPUT);
   pinMode(RELAY2   , OUTPUT);
   pinMode(LP_BUCK  , OUTPUT);
-  pinMode(HP_BUCK , OUTPUT);
-  pinMode(AUX_BUCK  , OUTPUT);
-  pinMode(PWM_BAT , OUTPUT);
-  pinMode(PWM_AUX ,   OUTPUT);
+  pinMode(HP_BUCK  , OUTPUT);
+  pinMode(AUX_BUCK , OUTPUT);
   /*
     // Witty Color LEDs
     pinMode(STDLED, OUTPUT);
@@ -23,12 +22,21 @@ void setup()
     pinMode(BLULED, OUTPUT);
   */
 
+  // Start dashboard with defaults
+  dashboard.CVbat = 14.400 ;
+  dashboard.CCbat = 3.000 ;
+  dashboard.CVpan = 19.000 ;
+  dashboard.CVaux = 5.0 ;
   bat_injection = INJ_NEUTRAL;
+  aux_injection = INJ_NEUTRAL;
+  aux_enable = false;
+
+  // Start outputs with defaults
   digitalWrite(RELAY1, not relay1_value);
   digitalWrite(RELAY2, not relay2_value);
-  digitalWrite(HP_BUCK, high_power_buck_value);
-  digitalWrite(LP_BUCK, not high_power_buck_value);
-  digitalWrite(AUX_BUCK, aux_buck_value);
+  digitalWrite(HP_BUCK, high_power_enable);
+  digitalWrite(LP_BUCK, not high_power_enable);
+  digitalWrite(AUX_BUCK, aux_enable);
   analogWrite (PWM_BAT, bat_injection);
   analogWrite (PWM_AUX, aux_injection);
 
@@ -43,15 +51,44 @@ void setup()
   delay(50);
   display.setFont(ArialMT_Plain_10);
   display.setTextAlignment(TEXT_ALIGN_LEFT);
-  display.drawString(0, 0,  HOST_NAME);
+  display.drawString(0, 0,  DEVICE_NAME);
   display.drawString(0, 12, "Try connect..");
   display.display();
 #endif
 
+#if defined BAT_SOURCE_IS_INA
+  // INA 226 Panel Sensor
+  INA.begin( AMPERE0 , SHUNT0, 0);      // Define max Ampere, Shunt value, Address
+  INA.setBusConversion(100);            // Maximum conversion time 100ms
+  INA.setShuntConversion(100);          // Maximum conversion time 100ms
+  INA.setAveraging(32);                  // Average each reading n-times
+  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
+  //  INA.alertOnPowerOverLimit(true;450000); //Set alert when power over 45W.
+#endif
+
+#if defined PAN_SOURCE_IS_INA
+  // INA 226 Battery Sensor
+  INA.begin( AMPERE1 , SHUNT1, 1);      // Define max Ampere, Shunt value, Address
+  INA.setBusConversion(100);            // Maximum conversion time 100ms
+  INA.setShuntConversion(100);          // Maximum conversion time 100ms
+  INA.setAveraging(32);                 // Average each reading n-times
+  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
+  //  INA.alertOnPowerOverLimit(true;450000); //Set alert when power over 45W.
+#endif
+
+#if defined AUX_SOURCE_IS_INA
+  // INA 226 Panel Sensor
+  INA.begin( AMPERE2 , SHUNT2, 2);      // Define max Ampere, Shunt value, Address
+  INA.setBusConversion(100);            // Maximum conversion time 100ms
+  INA.setShuntConversion(100);          // Maximum conversion time 100ms
+  INA.setAveraging(32);                  // Average each reading n-times
+  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
+  //  INA.alertOnPowerOverLimit(true;50000); // Set alert when power over 5W.
+#endif
 
   // Networking and Time
   getWiFi();
-
+  WiFi.setOutputPower(WIFI_POWER);
   delay(100);
 
   if (WiFi.status() == WL_CONNECTED)
@@ -91,10 +128,11 @@ void setup()
         Console4.printf("End Failed\n");
       }
     });
-    ArduinoOTA.setHostname(HOST_NAME);
+    ArduinoOTA.setHostname(DEVICE_NAME);
     ArduinoOTA.begin();
     Console4.printf("OTA Ready\n MAC address: %s\nHostname: %s \n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
 #ifndef DISPLAY_IS_NONE
+
     sprintf(charbuff, "IP= %03d . %03d",  ip[2], ip[3]); display.drawString(0, 24, charbuff);
     display.display();
     delay(2000);
@@ -109,7 +147,9 @@ void setup()
     // definition of structures for transmission
     // digital pin control example (i.e. turning on/off a light, a relay, configuring a parameter, etc)
     // resource output example (i.e. reading a sensor value) https://docs.thinger.io/coding#define-output-resources
-    //https://docs.thinger.io/coding#read-multiple-data
+    // https://docs.thinger.io/coding#read-multiple-data
+
+    // it is a bit confusing, but Thinger code placed in setup will be exceuted **periodically when required by the dashboard.
 
     thing["menu"] << [](pson & in) {
       displayPage    = in["displayPage"];
@@ -133,51 +173,126 @@ void setup()
         relay2_value = in;
       }
     };
-    thing["DC_out1"] << [](pson & in) {
+    thing["DC_out1"] << [](pson & in)
+    {
       if (in.is_empty()) {
-        in = high_power_buck_value;
-      }
-      else {
-        high_power_buck_value = in;
-      }
-    };
-    thing["DC_out2"] << [](pson & in) {
-      if (in.is_empty()) {
-        in = aux_buck_value;
-      }
-      else {
-        aux_buck_value = in;
+        in = high_power_enable;
+      } else {
+        yield();
+        // high_power_enable = in;
       }
     };
 
-    thing["scc"] << inputValue(bat_injection);
-    thing["aux"] << inputValue(aux_injection);
+    thing["DC_out2"] << [](pson & in)
+    {
+      if (in.is_empty()) {
+        in = aux_enable;
+      } else {
+        yield();
+        aux_enable = in;
+      }
+    };
+
+    /*
+        thing["scc"]  << inputValue(CCbat);
+        thing["scv"]  << inputValue(CVbat);
+        thing["scp"]  << inputValue(CVpan);
+        thing["aux"]  << inputValue(CVaux);
+        thing["mode"] << inputValue(modus);
+    */
+
+    thing["scv"]  = [](pson & in, pson & out)
+    {
+      if (in.is_empty())
+      {
+        in = CVbat;
+      } else {
+        CVbat = in;
+      }
+      dashboard.CVbat = float(in) / 1000;
+      out = dashboard.CVbat;
+      dashboard.CVinj = dashboard.CVbat;      
+    };
+
+    thing["scc"]  = [](pson & in, pson & out)
+    {
+      if (in.is_empty())
+      {
+        in = CCbat;
+      } else {
+        CCbat = in;
+      }
+      dashboard.CCbat = float(in) / 1000;
+      out = dashboard.CCbat;
+      dashboard.CCinj = dashboard.CCbat;
+    };
+
+    thing["scp"]  = [](pson & in, pson & out)
+    {
+      if (in.is_empty())
+      {
+        in = CVpan;
+      } else {
+        CVpan = in;
+      }
+      dashboard.CVpan = float(in) / 1000;
+      out = dashboard.CVpan;
+    };
+    
+    thing["aux"]  = [](pson & in, pson & out)
+    {
+      if (in.is_empty())
+      {
+        in = CVaux;
+      } else {
+        CVaux = in;
+      }
+      dashboard.CVaux = float(in) / 1000;
+      out = dashboard.CVaux;
+    };
+    
+    thing["mode"]  = [](pson & in, pson & out)
+    {
+      if (in.is_empty())
+      {
+        in = dashboard.modus;
+      } else {
+        dashboard.modus = in;
+      }
+      out = modus_description[dashboard.modus];
+    };
 
     thing["control"] >> [](pson & out)
     {
+      out["bat_CV"]          = dashboard.CVbat;
+      out["bat_CC"]          = dashboard.CCbat;
+      out["pan_CV"]          = dashboard.CVpan;
+      out["inj_CV"]          = dashboard.CVinj;
+      out["inj_CC"]          = dashboard.CCinj;      
+      out["inj_DV"]          = dashboard.DVinj;
+      out["aux_CV"]          = dashboard.CVaux;
       out["bat_inj"]         = bat_injection;
-      out["bat_mvolt"]       = bat_injection_mvolt;
-      out["bat_tar"]         = bat_target;
       out["aux_inj"]         = aux_injection;
-      out["aux_mvolt"]       = aux_injection_mvolt;
-      out["aux_tar"]         = aux_target;
       out["relay1"]          = relay1_value;
       out["relay2"]          = relay2_value;
-      out["DC1"]             = high_power_buck_value;
-      out["DC2"]             = aux_buck_value;
+      out["DC1"]             = high_power_enable;
+      out["DC2"]             = aux_enable;
+      out["phaseTXT"]        = phase_description[dashboard.phase];
+      out["modusTXT"]        = modus_description[dashboard.modus];
     };
 
     thing["measure"] >> [](pson & out)
     {
-      out["Ibat"]            = dashboard.Ibat ;
+      out["Iin"]             = dashboard.Iin ;
       out["Vbat"]            = dashboard.Vbat ;
-      out["Wbat"]            = dashboard.Wbat ;
+      out["Win"]             = dashboard.Win ;
       out["Ipan"]            = dashboard.Ipan ;
       out["Vpan"]            = dashboard.Vpan ;
       out["Wpan"]            = dashboard.Wpan ;
-      out["Iaux"]            = dashboard.Iaux ;
+      out["Itot"]            = dashboard.Iin + dashboard.Iout;
+      out["Iout"]            = dashboard.Iout ;
       out["Vaux"]            = dashboard.Vaux ;
-      out["Waux"]            = dashboard.Waux ;
+      out["Wout"]            = dashboard.Wout ;
       out["ohm"]             = dashboard.internal_resistance ;
       out["efficiency"]      = dashboard.efficiency;
       out["percent_charged"] = dashboard.percent_charged;
@@ -226,34 +341,39 @@ void setup()
 
     thing["HOUR"] >> [](pson & out)
     {
+      out["Vbat"]         = dashboard.Vbat;
+      out["Iin"]         = dashboard.Iin;
+      out["Win"]         = dashboard.Win;
+      out["Ipan"]         = dashboard.Ipan ;
+      out["Vpan"]         = dashboard.Vpan ;
+      out["Wpan"]         = dashboard.Wpan ;
+      out["VbatPlot"]     = dashboard.Vbat - 10;
+      out["VpanPlot"]     = dashboard.Vpan - 10 ;
+      out["Ohm"]          = dashboard.internal_resistance ;
+      out["AhBat"]        = AhBat[25];
+      out["percent_charged"] = dashboard.percent_charged;
+
       out["temperature"]  = outdoor_temperature;
       out["humidity"]     = outdoor_humidity;
       out["pressure"]     = outdoor_pressure;
       out["wind"]         = wind_speed;
       out["direction"]    = wind_direction;
       out["summary"]      = weather_summary;
-      out["Vbat"]         = dashboard.Vbat;
-      out["Ibat"]         = dashboard.Ibat;
-      out["Wbat"]         = dashboard.Wbat;
-      out["Ipan"]         = dashboard.Ipan ;
-      out["Vpan"]         = dashboard.Vpan ;
-      out["Wpan"]         = dashboard.Wpan ;
-      out["Ohm"]          = dashboard.internal_resistance ;
-      out["AhBat"]        = AhBat[25];
-      out["percent_charged"] = dashboard.percent_charged;
     };
 
     thing["MIN"] >> [](pson & out)
     {
-      out["Ibat"]         = dashboard.Ibat ;
+      out["Iin"]         = dashboard.Iin ;
       out["Vbat"]         = dashboard.Vbat ;
-      out["Wbat"]         = dashboard.Wbat ;
+      out["Win"]         = dashboard.Win ;
       out["Ipan"]         = dashboard.Ipan ;
       out["Vpan"]         = dashboard.Vpan ;
       out["Wpan"]         = dashboard.Wpan ;
-      out["Iaux"]         = dashboard.Iaux ;
+      out["VbatPlot"]     = dashboard.Vbat - 10;
+      out["VpanPlot"]     = dashboard.Vpan - 10 ;
+      out["Iout"]         = dashboard.Iout ;
       out["Vaux"]         = dashboard.Vaux ;
-      out["Waux"]         = dashboard.Waux ;
+      out["Wout"]         = dashboard.Wout ;
       out["AhBat"]        = AhBat[25];
       out["efficiency"]   = dashboard.efficiency;
     };
@@ -280,7 +400,7 @@ void setup()
     wind_direction      = persistance["direction"];
 
     pson BATmAh;
-    thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=dashboard.Ibat, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=AhBat22-24
+    thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=dashboard.Iin, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=AhBat22-24
     AhBat[0]  = BATmAh["00h"];
     AhBat[1]  = BATmAh["01h"];
     AhBat[2]  = BATmAh["02h"];
@@ -317,6 +437,7 @@ void setup()
     */
 #endif  //end if defined THINGER
   }
+
   delay(1000);
 
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
@@ -324,39 +445,9 @@ void setup()
 
   sprintf(charbuff, "Now is %s, %02d %s %04d %02d:%02d:%02d. Epoch =%10lu\n", DayName, Day, MonthName, Year, Hour, Minute, Second, Epoch);  Console4.println(charbuff);
 
-#if defined AUX_SOURCE_IS_INA
-  // INA 226 Panel Sensor
-  INA.begin( AMPERE2 , SHUNT2, 2);      // Define max Ampere, Shunt value, Address
-  INA.setBusConversion(8244);            // Maximum conversion time 8.244ms
-  INA.setShuntConversion(8244);          // Maximum conversion time 8.244ms
-  INA.setAveraging(32);                  // Average each reading n-times
-  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
-  //  INA.alertOnPowerOverLimit(true;50000); // Set alert when power over 5W.
-#endif
-
-#if defined PAN_SOURCE_IS_INA
-  // INA 226 Panel Sensor
-  INA.begin( AMPERE0 , SHUNT0, 0);      // Define max Ampere, Shunt value, Address
-  INA.setBusConversion(8244);            // Maximum conversion time 8.244ms
-  INA.setShuntConversion(8244);          // Maximum conversion time 8.244ms
-  INA.setAveraging(32);                  // Average each reading n-times
-  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
-  //  INA.alertOnPowerOverLimit(true;450000); //Set alert when power over 45W.
-#endif
-
-#if defined BAT_SOURCE_IS_INA
-  // INA 226 Battery Sensor
-  INA.begin( AMPERE1 , SHUNT1, 1);      // Define max Ampere, Shunt value, Address
-  INA.setBusConversion(8244);            // Maximum conversion time 8.244ms
-  INA.setShuntConversion(8244);          // Maximum conversion time 8.244ms
-  INA.setAveraging(32);                 // Average each reading n-times
-  INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
-  //  INA.alertOnPowerOverLimit(true;450000); //Set alert when power over 45W.
-#endif
-
 #if defined BAT_SOURCE_IS_NONE
   dashboard.Vbat = (MAX_VOLT + MIN_VOLT) / 2;
-  dashboard.Ibat = 0;
+  dashboard.Iin = 0;
 #else
 
 #endif
@@ -366,9 +457,5 @@ void setup()
   serialPage = '0';           // default reporting page AK Modulbus
   //  digitalWrite(STDLED, true);
 
-  if (Year < 2020)
-  {
-    Console1.printf("Please enter date & time (dd/mm/yyyy hh:mm:ss)in the serial monitor");
-  }
 }
 //end Setup
