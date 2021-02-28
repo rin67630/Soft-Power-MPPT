@@ -121,7 +121,7 @@ void data125mSRun()
   dashboard.CVinj = dashboard.DVinj + dashboard.Vbat;
   dashboard.CVinj = constrain( dashboard.CVinj, phase_voltage[8], dashboard.CVbat) ;
   dashboard.DVinj = dashboard.CVinj - dashboard.Vbat;
-  dashboard.DVinj = constrain( dashboard.DVinj, -0.25, 0.50);
+  dashboard.DVinj = constrain( dashboard.DVinj, -0.25, 1);
   bat_injection = bat2pwm(dashboard.CVinj);
   bat_injection =  constrain( bat_injection, 0, 1024);
 
@@ -153,8 +153,9 @@ void data1SRun()
   {
     if (Minute % 5 == 1 && Second == 32)                    // call every 5 minutes
     {
+      WiFiClient client;
       HTTPClient http;
-      http.begin(OPEN_WEATHER_MAP_URL);
+      http.begin(client,OPEN_WEATHER_MAP_URL);
       int httpCode2 = http.GET();
       if (httpCode2 == HTTP_CODE_OK)
       {
