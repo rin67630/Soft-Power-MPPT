@@ -193,23 +193,15 @@ void setup()
       }
     };
 
-    /*
-        thing["scc"]  << inputValue(CCbat);
-        thing["scv"]  << inputValue(CVbat);
-        thing["scp"]  << inputValue(CVpan);
-        thing["aux"]  << inputValue(CVaux);
-        thing["mode"] << inputValue(modus);
-    */
-
+ // Setpoint processing: Thinger input is currently only integer, so slider value is * 1000 and ESP processing makes a float out of it.  
     thing["scv"]  = [](pson & in, pson & out)
     {
       if (in.is_empty())
       {
-        in = CVbat;
+        in = CVbat * 1000;
       } else {
-        CVbat = in;
-      }
       dashboard.CVbat = float(in) / 1000;
+      }
       out = dashboard.CVbat;
       dashboard.CVinj = dashboard.CVbat;      
     };
@@ -218,11 +210,10 @@ void setup()
     {
       if (in.is_empty())
       {
-        in = CCbat;
+        in = CCbat * 1000;
       } else {
-        CCbat = in;
-      }
       dashboard.CCbat = float(in) / 1000;
+      }
       out = dashboard.CCbat;
       dashboard.CCinj = dashboard.CCbat;
     };
@@ -231,11 +222,10 @@ void setup()
     {
       if (in.is_empty())
       {
-        in = CVpan;
+        in = CVpan * 1000;
       } else {
-        CVpan = in;
-      }
       dashboard.CVpan = float(in) / 1000;
+      }
       out = dashboard.CVpan;
     };
     
@@ -243,11 +233,10 @@ void setup()
     {
       if (in.is_empty())
       {
-        in = CVaux;
+        in = CVaux * 1000;
       } else {
-        CVaux = in;
-      }
       dashboard.CVaux = float(in) / 1000;
+      }
       out = dashboard.CVaux;
     };
     
