@@ -43,8 +43,8 @@ void data125mSRun()
   ina3_current   = INA.getBusMicroAmps(2);
   ina3_power     = INA.getBusMicroWatts(2);
   //dashboard.Vaux  += (ina3_voltage / 1000   - dashboard.Vaux) / 3; // Volt smoothed 0.3seconds
-  dashboard.Iout += (ina3_current / IFACTORA - dashboard.Iout) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
-  dashboard.Wout = dashboard.Vbat * dashboard.Iout; +0.001;
+  dashboard.Iaux += (ina3_current / IFACTORA - dashboard.Iaux) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
+  dashboard.Waux = dashboard.Vbat * dashboard.Iaux; +0.001;
 #endif
 
   //=== ( Measure Battery
@@ -59,8 +59,8 @@ void data125mSRun()
   delta_voltage = ina1_voltage - v;          // mV
   delta_current = (ina1_current - w) / 1000;   // mA
   dashboard.Vbat += (ina1_voltage / 1000   - dashboard.Vbat) / 3; // Volt Smoothed 0.3seconds
-  dashboard.Iin += (ina1_current / IFACTORB - dashboard.Iin) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
-  dashboard.Win = dashboard.Win = dashboard.Vbat * dashboard.Iin;
+  dashboard.Ipan += (ina1_current / IFACTORB - dashboard.Ipan) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
+  dashboard.Wpan = dashboard.Wpan = dashboard.Vbat * dashboard.Ipan;
 #endif
 
   // Evaluate battery internal resistance (r = dv / di) if deltaCurrent > 50mA.
@@ -80,17 +80,17 @@ void data125mSRun()
       dashboard.DVinj = dashboard.CCbat / 10 ;
       break;
     case CCFX:  // fix current
-      dashboard.DVinj = dashboard.DVinj + (dashboard.Iin + dashboard.Iout - dashboard.CCinj) * -0.005;
+      dashboard.DVinj = dashboard.DVinj + (dashboard.Ipan + dashboard.Iaux - dashboard.CCinj) * -0.005;
       break;
     case PVFX:  // fix panel voltage
       dashboard.CCinj = dashboard.CCinj + (dashboard.Vpan - dashboard.CVpan) * 0.0005;
       dashboard.CCinj = constrain( dashboard.CCinj, 1, 8) ;
-      dashboard.DVinj = dashboard.DVinj + (dashboard.Iin + dashboard.Iout - dashboard.CCinj) * -0.003;      
+      dashboard.DVinj = dashboard.DVinj + (dashboard.Ipan + dashboard.Iaux - dashboard.CCinj) * -0.003;      
       break;
     case MPPT:  // maximum power point tracking Perturb and Observe
-      dP  = dashboard.Win + dashboard.Wout - MPPT_last_power;
+      dP  = dashboard.Wpan + dashboard.Waux - MPPT_last_power;
       dV  = dashboard.Vpan - MPPT_last_voltage;
-      MPPT_last_power = dashboard.Win + dashboard.Wout ;
+      MPPT_last_power = dashboard.Wpan + dashboard.Waux ;
       MPPT_last_voltage = dashboard.Vpan;
       if (dP > 0)
       {
@@ -194,7 +194,7 @@ void data1SRun()
     {
       UDP.read(dashboardPayload, UDP_TX_PACKET_MAX_SIZE);
       memcpy(&dashboard, dashboardPayload, sizeof(dashboard));
-      // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, dashboard.Vbat , dashboard.Iin , dashboard.Win , dashboard.percent_charged);
+      // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, dashboard.Vbat , dashboard.Ipan , dashboard.Wpan , dashboard.percent_charged);
       delay(3);    // let built-in LED blink slightly stronger on battery packet
     }
     //digitalWrite(STDLED, true);
@@ -205,7 +205,7 @@ void data1SRun()
 #if defined (PAN_SOURCE_IS_INA) && defined (BAT_SOURCE_IS_INA)
   if (dashboard.Wpan > 0.03)
   {
-    dashboard.efficiency = constrain((dashboard.Win + dashboard.Wout) / dashboard.Wpan * 100, -50, 97.5);
+    dashboard.efficiency = constrain((dashboard.Wpan + dashboard.Waux) / dashboard.Wpan * 100, -50, 97.5);
   } else {
     dashboard.efficiency = 0;
   }
@@ -216,11 +216,11 @@ void data1SRun()
   {
     // Evaluate battery charge
     float d = 0;
-    if (dashboard.Iin >= 0.3)
+    if (dashboard.Ipan >= 0.3)
     {
       d = 500;   // mV
     }
-    else if (dashboard.Iin <= 0.3)
+    else if (dashboard.Ipan <= 0.3)
     {
       d = -500;   // mV
     }
@@ -263,7 +263,7 @@ void data1SRun()
           case BULK:         //2 battery voltage < FLOAT, current limited by battery
             // Bulk is terminated once the charging voltage reaches Absorption level -> absorbption
             break;
-          case MPPT:         //3 battery voltage < FLOAT, current limited by panel
+          case PANL:         //3 battery voltage < FLOAT, current limited by panel
             // MPPT is terminated once the charging voltage reaches Absorption level -> absorbption
             break;
           case ABSORPTION:   //4  battery voltage > FLOAT < ABSORB, current limited by battery and time
@@ -297,7 +297,7 @@ void data1SRun()
   if (SecondOfDay == 85899) voltageDelta = dashboard.Vbat - voltageAt0H; // set ranges at 33:53:59
 
   //=== ( Battery Stat integration
-  currentInt += dashboard.Iin;
+  currentInt += dashboard.Ipan;
   nCurrent ++;
 
   if (HourExpiring)
