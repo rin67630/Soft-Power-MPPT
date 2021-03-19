@@ -158,14 +158,14 @@ float last_power;
 struct dashboard {
 // Measures
   float Vbat ;
-  float Iin ;
-  float Win ;
-  float Iout ;
-  float Wout ;
+  float Ibat ;
+  float Wbat ;
   float Vpan ;
   float Ipan ;
   float Wpan ;
   float Vaux ;
+  float Iaux ;
+  float Waux ;
   
 // User set-points converted to float.
   float CVbat;
@@ -208,7 +208,7 @@ float dV; // voltage difference;
 #define NIGH         0  // panel voltage < battery voltage Low-Power mode
 #define RECO         1  // battery voltage < LOWLIM, panel current > low limit, cut off load 
 #define BULK         2  // battery voltage < FLOAT, current limited by battery
-#define MPPT         3  // battery voltage < FLOAT, current limited by panel
+#define PANL         3  // battery voltage < FLOAT, current limited by panel
 #define ABSO         4  // battery voltage > FLOAT < ABSORB, current limited by battery and time
 #define FLOA         5  // battery voltage = FLOAT
 #define EQUA         6  // battery voltage = EQUALIZE, current limited by battery and time
@@ -219,7 +219,7 @@ float dV; // voltage difference;
 #define NOPA         11 // no panel current for more than 20h
 #define EXAM         12 // evaluate battery condition
 
-String phase_description[] = {"NIGH","RECO","BULK","MPPT","ABSO","FLOA","EQUA","OVER","DISC","PAUS","NOBA","NOPA","EXAM"}; // for dashboard.phase
+String phase_description[] = {"NIGH","RECO","BULK","PANL","ABSO","FLOA","EQUA","OVER","DISC","PAUS","NOBA","NOPA","EXAM"}; // for dashboard.phase
 unsigned int phase_timer;
 unsigned int phase_duration[13];
 
