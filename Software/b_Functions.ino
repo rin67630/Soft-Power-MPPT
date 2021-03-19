@@ -26,7 +26,7 @@ void getWiFi()
 #endif
   WiFi.reconnect();
   WiFi.waitForConnectResult();
-  WiFi.hostname(HOST_NAME);
+  WiFi.hostname(DEVICE_NAME);
   if (WiFi.status() != WL_CONNECTED)
   {
     WiFi.begin(WIFI_SSID, WIFI_PASS);
