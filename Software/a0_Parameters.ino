@@ -1,4 +1,4 @@
-#define HOST_NAME   "SoftPowerTest" // n.b: The HOST_NAME must match the device name of Thinger.
+#define DEVICE_NAME   "SoftPowerTest" // n.b: The HOST_NAME must match the device name of Thinger.
 
 //  ***Credentials***  
 // WifI: for the very first run with a new ESP or on a new WiFi network 
@@ -13,11 +13,11 @@
 //Thinger option
 #define THINGER_USERNAME           "USERNAME"       
 #define THINGER_DEVICE_CREDENTIALS "Device Credentials"    
-#define THINGER_DEVICE HOST_NAME   
+#define THINGER_DEVICE DEVICE_NAME   
 
 //Influx option (work in progress)
 #define INFLUXDB_URL "https://eu-central-1-1.aws.cloud2.influxdata.com"
-#define INFLUXDB_TOKEN "ZON2344MVMpe7ukp7bSOCyjskjlkjlkjlOP6W-qLftp756wqlHIzcOBQKiv0Tz1aDrszK6wwgoIaH4WAV9GcQ=="
+#define INFLUXDB_TOKEN "ZON2344MVMpe7ukp7bSOCyjskjlkjlkjlOP6W-qLftp7lkjhlkjhcOBQKiv0Tz1aDrszK6wwgoIaH4WAV9GcQ=="
 #define INFLUXDB_ORG "your@email"
 #define INFLUXDB_BUCKET "SoftPower Bucket"
 
