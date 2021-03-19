@@ -13,7 +13,7 @@ void serialRun()
         if (serialPeriodicity == '!') serialPage = 0; // One shot reset serial page.
         break;
       case 'E':   // Energy plot every
-        Console1.printf("Ah:%+07.3f Panel:%06.3f V-10:%06.3f Amp:%06.3f Watt:%+07.3f\n", AhBat[26], dashboard.Vpan -10, dashboard.Vbat - 10, dashboard.Iin, dashboard.Win);
+        Console1.printf("Ah:%+07.3f Panel:%06.3f V-10:%06.3f Amp:%06.3f Watt:%+07.3f\n", AhBat[26], dashboard.Vpan -10, dashboard.Vbat - 10, dashboard.Ipan, dashboard.Wpan);
         if (serialPeriodicity == '!') serialPage = 0; // One shot reset serial page.
         break;
       case '~':   // WiFi status report
