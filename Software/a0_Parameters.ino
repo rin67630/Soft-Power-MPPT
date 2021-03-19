@@ -65,8 +65,8 @@
 
 //  ***Communicatin options*** (For geeks only, else leave as it is)
 //#define INFLUX             //(Comment out, if no Influx is used) 
-//#define THINGER            //(Comment out, if no thinger.io used)
-//#define WRITE_BUCKETS      //(Comment out, if this is the second device for Thinger)
+#define THINGER            //(Comment out, if no thinger.io used)
+#define WRITE_BUCKETS      //(Comment out, if this is the second device for Thinger)
 //#define PUBLISH_REPORT     // Issue events&midnight reports to UDP Port + 1, comment out else
 #define REPORT_TARGET "192.168.188.00"  // IP to forward Report
 //#define UDP_MASTER         // If this is the  master of a slave ESP
@@ -78,5 +78,5 @@
 #define Console2 Serial1     // Port for midnight report e.g. on thermal printer
 #define Console3 Serial      // Port for periodic messages
 #define Console4 Serial      // Port for boot messages
-#define SERIAL_SPEED            9600 //9600  115200 230400
+#define SERIAL_SPEED            115200 //9600  115200 230400
 //#define _DEBUG_            // to get deep diagnosis information over the serial line.
