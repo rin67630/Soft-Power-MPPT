@@ -272,16 +272,16 @@ void setup()
 
     thing["measure"] >> [](pson & out)
     {
-      out["Iin"]             = dashboard.Iin ;
+      out["Iin"]             = dashboard.Ipan ;
       out["Vbat"]            = dashboard.Vbat ;
-      out["Win"]             = dashboard.Win ;
+      out["Win"]             = dashboard.Wpan ;
       out["Ipan"]            = dashboard.Ipan ;
       out["Vpan"]            = dashboard.Vpan ;
       out["Wpan"]            = dashboard.Wpan ;
-      out["Itot"]            = dashboard.Iin + dashboard.Iout;
-      out["Iout"]            = dashboard.Iout ;
+      out["Itot"]            = dashboard.Ipan + dashboard.Iaux;
+      out["Iout"]            = dashboard.Iaux ;
       out["Vaux"]            = dashboard.Vaux ;
-      out["Wout"]            = dashboard.Wout ;
+      out["Wout"]            = dashboard.Waux ;
       out["ohm"]             = dashboard.internal_resistance ;
       out["efficiency"]      = dashboard.efficiency;
       out["percent_charged"] = dashboard.percent_charged;
@@ -331,8 +331,8 @@ void setup()
     thing["HOUR"] >> [](pson & out)
     {
       out["Vbat"]         = dashboard.Vbat;
-      out["Iin"]         = dashboard.Iin;
-      out["Win"]         = dashboard.Win;
+      out["Iin"]         = dashboard.Ipan;
+      out["Win"]         = dashboard.Wpan;
       out["Ipan"]         = dashboard.Ipan ;
       out["Vpan"]         = dashboard.Vpan ;
       out["Wpan"]         = dashboard.Wpan ;
@@ -352,17 +352,17 @@ void setup()
 
     thing["MIN"] >> [](pson & out)
     {
-      out["Iin"]         = dashboard.Iin ;
+      out["Iin"]         = dashboard.Ipan ;
       out["Vbat"]         = dashboard.Vbat ;
-      out["Win"]         = dashboard.Win ;
+      out["Win"]         = dashboard.Wpan ;
       out["Ipan"]         = dashboard.Ipan ;
       out["Vpan"]         = dashboard.Vpan ;
       out["Wpan"]         = dashboard.Wpan ;
       out["VbatPlot"]     = dashboard.Vbat - 10;
       out["VpanPlot"]     = dashboard.Vpan - 10 ;
-      out["Iout"]         = dashboard.Iout ;
+      out["Iout"]         = dashboard.Iaux ;
       out["Vaux"]         = dashboard.Vaux ;
-      out["Wout"]         = dashboard.Wout ;
+      out["Wout"]         = dashboard.Waux ;
       out["AhBat"]        = AhBat[25];
       out["efficiency"]   = dashboard.efficiency;
     };
@@ -389,7 +389,7 @@ void setup()
     wind_direction      = persistance["direction"];
 
     pson BATmAh;
-    thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=dashboard.Iin, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=AhBat22-24
+    thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=dashboard.Ipan, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=AhBat22-24
     AhBat[0]  = BATmAh["00h"];
     AhBat[1]  = BATmAh["01h"];
     AhBat[2]  = BATmAh["02h"];
@@ -436,7 +436,7 @@ void setup()
 
 #if defined BAT_SOURCE_IS_NONE
   dashboard.Vbat = (MAX_VOLT + MIN_VOLT) / 2;
-  dashboard.Iin = 0;
+  dashboard.Ipan = 0;
 #else
 
 #endif
