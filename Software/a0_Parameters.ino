@@ -4,15 +4,15 @@
 // WifI: for the very first run with a new ESP or on a new WiFi network 
 // remove the // from the next line and provide real SSID and PASS credentials.
 //#define ERASE_WIFI_CREDENTIALS 
-#define WIFI_SSID          "GW-FM-7390"
-#define WIFI_PASS          "3tr67333"
+#define WIFI_SSID          "SSID"
+#define WIFI_PASS          "PASS"
 #define wifiMaxTries       20
 #define wifiRepeatInterval 500
 // after a successful connection, you can revert to the defaults lines again.
 
 //Thinger
-#define THINGER_USERNAME           "Reumor"       
-#define THINGER_DEVICE_CREDENTIALS "GW-26-45219"    
+#define THINGER_USERNAME           "USER"       
+#define THINGER_DEVICE_CREDENTIALS "CREDENTIALS"    
 #define THINGER_DEVICE DEVICE_NAME    
 
 #define INFLUXDB_URL "https://eu-central-1-1.aws.cloud2.influxdata.com"
