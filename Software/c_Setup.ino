@@ -160,16 +160,14 @@ void setup()
     thing["relay1"] << [](pson & in) {
       if (in.is_empty()) {
         in = relay1_value;
-      }
-      else {
+      } else {
         relay1_value = in;
       }
     };
     thing["relay2"] << [](pson & in) {
       if (in.is_empty()) {
         in = relay2_value;
-      }
-      else {
+      } else {
         relay2_value = in;
       }
     };
@@ -417,13 +415,13 @@ void setup()
     AhBat[25] = BATmAh["LastHour"];
     AhBat[27] = BATmAh["Yesterday"];
     AhBat[26] = BATmAh["Today"];
-#else // no Thinger
-    /*
+/*
+// no Thinger
       // Persistance over Structure and memcpy.
       EEPROM.get(addr,data);
       EEPROM.put(addr,data);
       EEPROM.commit();
-    */
+*/
 #endif  //end if defined THINGER
   }
 

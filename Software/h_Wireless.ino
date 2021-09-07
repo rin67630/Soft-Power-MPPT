@@ -10,7 +10,7 @@ void wirelessRun()
     if (not GracePause) thing.handle();               // do not call permanently Thinger if it takes too long to respond.
     if (millis() - MillisMem > 500) GracePause = 30;  // if the Thinger call took longer than 500mS, make 30s pause before retrying
 
-if (NewMinute)  thing.stream("energy");                       // Fast update
+    if (NewMinute)  thing.stream("energy");                       // Fast update
 
 
 #if defined (WRITE_BUCKETS)
@@ -116,14 +116,14 @@ if (NewMinute)  thing.stream("energy");                       // Fast update
     }
     yield();
 #if defined (MODEM_PAUSES)
-      } else {
-      WiFi.forceSleepBegin();
-      if (Minute % 6 == 1)
-      {
+  } else {
+    WiFi.forceSleepBegin();
+    if (Minute % 6 == 1)
+    {
       WiFi.forceSleepWake();
       WiFi.reconnect();
       WiFi.waitForConnectResult();
-      }
+    }
 #endif
   }
 }

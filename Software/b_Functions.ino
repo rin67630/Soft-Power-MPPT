@@ -95,7 +95,7 @@ void getTimeData()
   strftime (Date,      12, "%d/%m/%Y", timeinfo);
 }
 
-boolean setTimefromSerial()
+void setTimefromSerial()
 {
   if (Serial.available() > 0)
   {
@@ -130,13 +130,8 @@ boolean setTimefromSerial()
       tv.tv_usec = 0;    // microseconds
       settimeofday(&tv, 0);                //Setting Clock
       Console4.printf("\nTime set, Menu ready to listen\n");
-      return true;
-    } else {
-      return false;
     }
-    return true;
   }
-
 }
 
 void buffTimeData()
