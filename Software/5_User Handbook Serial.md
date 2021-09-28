@@ -226,14 +226,34 @@ The same plot called from Arduino's IDE serial plotter:
 _n.b.  
 The serial plotter of the Arduino IDE has only one Y-Axis range. In order to optimize the presentation, panel and battery voltages are issued -10 V: 3V means 13V..._
 
+- 'W' Weather plot
+Temp:-07.2 Hum:73.0 Press:1002 WindSpeed:5.7 Direction:50
+Temp:-07.2 Hum:73.0 Press:1002 WindSpeed:5.7 Direction:50
+Temp:-07.2 Hum:73.0 Press:1002 WindSpeed:5.7 Direction:50
+Temp:-07.2 Hum:73.0 Press:1002 WindSpeed:5.7 Direction:50
 
-- 'W' Wlan report
+- '~' returns a radio report
+WiFi Plot :
+Mode: STA
+PHY mode: N
+Channel: 1
+AP id: 0
+Status: 5
+Auto connect: 1
+SSID (10): [SSID]
+Passphrase (8): [Password]
+BSSID set: 0
+'s~' issues the same report, but followed with a signal strength line every second, so you can follow where you get the best (less negative) signal:
+
 ```
 ### Control commands
-From the serial menu, you can control several operations of Soft-Power.  
-- '+' or '-' increases or decreases in small steps the setpoint of the respective screen 3 voltage, 4 current, 5 input voltage
-- '>' or '<' increases or decreases in coarse steps the setpoint of the battery voltage
-- R10 or R11 or R20 or R21 respectively stops or start relay 1 or relay 2.
+From the serial menu, you can control several operations of Soft-Power.
+
+'+' or '-' increases or decreases in small steps the setpoint of the battery voltage
+'>' or '<' increases or decreases in coarse steps the setpoint of the battery voltage
+A0 stops the auxiliary output
+A3.3 starts the auxiliary output at 3.3V (or any of the voltage specified up to 9.0V)
+
 
 ### Display control commands
 You will be able to control which information is displayed on the OLED Display:  
