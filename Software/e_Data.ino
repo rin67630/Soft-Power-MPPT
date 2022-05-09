@@ -3,7 +3,7 @@ void data125mSRun()
 
   // === ( Measures)  ====
 
-#if defined (PAN_SOURCE_IS_A0)
+#ifdef PAN_SOURCE_IS_A0
   // Performing 3 reads to get a reliable reading.
   A0Raw = analogRead(A0);  // 1st read  0...1V = 0 ..1023
   delay(3);
@@ -14,7 +14,7 @@ void data125mSRun()
   dashboard.Vpan += (float(map(A0Raw, 0, 1023, 0, PANEL_MAX)) / 1000 - dashboard.Vpan) / 10; // Volt Smoothed 1seconds
 #endif
 
-#if defined (AUX_SOURCE_IS_A0)
+#ifdef AUX_SOURCE_IS_A0
   // Performing 3 reads to get a reliable reading.
   A0Raw = analogRead(A0);  // 1st read  0...1V = 0 ..1023
   delay(3);
@@ -22,10 +22,9 @@ void data125mSRun()
   delay(3);
   A0Raw += analogRead(A0); // 3rd read
   A0Raw = A0Raw / 3;
-  //dashboard.Vaux += (float(map(A0Raw, 0, 1023, 0, PANEL_MAX)) / 1000 - dashboard.Vaux) / 10; // Volt Smoothed 1seconds
 #endif
 
-#if defined (PAN_SOURCE_IS_INA)
+#ifdef PAN_SOURCE_IS_INA
   // Panel measurements from INA226
   ina2_voltage   = INA.getBusMilliVolts(1);
   ina2_shunt     = INA.getShuntMicroVolts(1);
@@ -36,19 +35,18 @@ void data125mSRun()
   dashboard.Wpan = dashboard.Vpan * dashboard.Ipan; +0.001;
 #endif
 
-#if defined (AUX_SOURCE_IS_INA)
+#ifdef AUX_SOURCE_IS_INA
   // Auxiliary out measurements from INA226
   ina3_voltage   = INA.getBusMilliVolts(2);
   ina3_shunt     = INA.getShuntMicroVolts(2);
   ina3_current   = INA.getBusMicroAmps(2);
   ina3_power     = INA.getBusMicroWatts(2);
-  //dashboard.Vaux  += (ina3_voltage / 1000   - dashboard.Vaux) / 3; // Volt smoothed 0.3seconds
   dashboard.Iaux += (ina3_current / IFACTORA - dashboard.Iaux) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
   dashboard.Waux = dashboard.Vbat * dashboard.Iaux; +0.001;
 #endif
 
   //=== ( Measure Battery
-#if defined (BAT_SOURCE_IS_INA)
+#ifdef BAT_SOURCE_IS_INA
   // Battery measurements from INA226
   float v = ina1_voltage;
   float w = ina1_current;
@@ -59,14 +57,14 @@ void data125mSRun()
   delta_voltage = ina1_voltage - v;          // mV
   delta_current = (ina1_current - w) / 1000;   // mA
   dashboard.Vbat += (ina1_voltage / 1000   - dashboard.Vbat) / 3; // Volt Smoothed 0.3seconds
-  dashboard.Ipan += (ina1_current / IFACTORB - dashboard.Ipan) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
-  dashboard.Wpan = dashboard.Wpan = dashboard.Vbat * dashboard.Ipan;
+  dashboard.Ibat += (ina1_current / IFACTORB - dashboard.Ibat) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
+  dashboard.Wbat  = dashboard.Vbat * dashboard.Ibat;
 #endif
 
   // Evaluate battery internal resistance (r = dv / di) if deltaCurrent > 50mA.
   if (fabs(delta_current) > 50) dashboard.internal_resistance = fabs(delta_voltage / delta_current);
 
-
+#ifdef CHARGE_CONTROLLER
   // === ( Actions)  ====
 
   // PWM to charger buck: dashboard.DVinj is our adjustment variable. It is the difference between the battery voltage and the desired voltage.
@@ -85,7 +83,7 @@ void data125mSRun()
     case PVFX:  // fix panel voltage
       dashboard.CCinj = dashboard.CCinj + (dashboard.Vpan - dashboard.CVpan) * 0.0005;
       dashboard.CCinj = constrain( dashboard.CCinj, 1, 8) ;
-      dashboard.DVinj = dashboard.DVinj + (dashboard.Ipan + dashboard.Iaux - dashboard.CCinj) * -0.003;      
+      dashboard.DVinj = dashboard.DVinj + (dashboard.Ipan + dashboard.Iaux - dashboard.CCinj) * -0.003;
       break;
     case MPPT:  // maximum power point tracking Perturb and Observe
       dP  = dashboard.Wpan + dashboard.Waux - MPPT_last_power;
@@ -96,17 +94,17 @@ void data125mSRun()
       {
         if (dV > 0)
         {
-          dashboard.CCinj-= 0.003;
+          dashboard.CCinj -= 0.003;
         } else {
-          dashboard.CCinj+= 0.003;
+          dashboard.CCinj += 0.003;
         }
 
       } else {
         if (dV > 0)
         {
-          dashboard.CCinj+= 0.003;
+          dashboard.CCinj += 0.003;
         } else {
-          dashboard.CCinj-= 0.003;
+          dashboard.CCinj -= 0.003;
         }
       }
       break;
@@ -124,19 +122,16 @@ void data125mSRun()
   dashboard.DVinj = constrain( dashboard.DVinj, -0.25, 1);
   bat_injection = bat2pwm(dashboard.CVinj);
   bat_injection =  constrain( bat_injection, 0, 1024);
-
-  // PWM to aux buck
-  dashboard.Vaux  = dashboard.CVaux;
-  if (not aux_enable) dashboard.Vaux  = 0;
-  aux_injection = aux2pwm(dashboard.Vaux);
-
-  digitalWrite(RELAY1, not relay1_value);
-  digitalWrite(RELAY2, not relay2_value);
+  analogWrite (PWM_BAT, bat_injection);
+  analogWrite (PWM_AUX, aux_injection);
   digitalWrite(HP_BUCK, high_power_enable);
   digitalWrite(LP_BUCK, not high_power_enable);
   digitalWrite(AUX_BUCK, aux_enable);
-  analogWrite (PWM_BAT, bat_injection);
-  analogWrite (PWM_AUX, aux_injection);
+
+#endif
+
+  digitalWrite(RELAY1, not relay1_value);
+  digitalWrite(RELAY2, not relay2_value);
 
 } // end 125msRun
 
@@ -147,15 +142,35 @@ void data1SRun()
   if (dashboard.Wpan > 10) high_power_enable = true;
   if (dashboard.Wpan < 5)  high_power_enable = false;
 
+dashboard_10min.Vbat += dashboard.Vbat;  // Integrate over 10 Minutes (Reset in Wireless)
+dashboard_10min.Ibat += dashboard.Ibat;  // Integrate over 10 Minutes (Reset in Wireless)
+dashboard_10min.Wbat += dashboard.Wbat;  // Integrate over 10 Minutes (Reset in Wireless)
+
+#ifdef AUX_SOURCE_IS_FXPWR   // Auxiliary out values are fixed
+  dashboard.Vaux  = dashboard.Vbat;
+  dashboard.Waux  = FXPWR;
+  dashboard.Iaux  = FXPWR / dashboard.Vbat;
+#endif
+
+#ifdef PAN_SOURCE_IS_CALC
+  dashboard.Ipan = max(dashboard.Ibat + dashboard.Iaux, dashboard.Iown);
+  if (dashboard.Vbat >= 12.2 && dashboard.Ibat >= 0)   // Solar contribution estimated
+  {
+    dashboard.Vpan = dashboard.Vbat + 0.35;
+  } else {
+    dashboard.Vpan = 0;
+  }
+  dashboard.Wpan = dashboard.Vpan * dashboard.Ipan;
+#endif
+
   // === (Getting Weather from OpenWeatherMap every 5 minutes
-#if defined WEATHER_SOURCE_IS_URL
+#ifdef WEATHER_SOURCE_IS_URL
   if (WiFi.status() == WL_CONNECTED)
   {
     if (Minute % 5 == 1 && Second == 32)                    // call every 5 minutes
     {
-      WiFiClient client;
       HTTPClient http;
-      http.begin(client,OPEN_WEATHER_MAP_URL);
+      http.begin(WifiClient, OPEN_WEATHER_MAP_URL);
       int httpCode2 = http.GET();
       if (httpCode2 == HTTP_CODE_OK)
       {
@@ -180,7 +195,7 @@ void data1SRun()
 
 
   // === (Getting Battery values from another ESP over UDP
-#if defined (UDP_SLAVE)
+#ifdef UDP_SLAVE
   if (WiFi.status() == WL_CONNECTED)
   {
     // I am using a quick and dirty method called 'type punning' copying the memory block of a structure into an array of chars,
@@ -233,7 +248,8 @@ void data1SRun()
     expired = false;
     if (phase_timer > phase_limit[dashboard.phase]) expired = true;
 
-    /*
+/*
+ #ifdef CHARGE_CONTROLLER
         switch (dashboard.phase)
         {
           case NIGHT:        //0 panel voltage < battery voltage Low-Power mode
@@ -288,7 +304,8 @@ void data1SRun()
           case EXAMINE:      //11 evaluate battery condition
             break;
         }
-    */
+ #endif
+*/ 
   }// end if new minute
 
 
@@ -297,7 +314,7 @@ void data1SRun()
   if (SecondOfDay == 85899) voltageDelta = dashboard.Vbat - voltageAt0H; // set ranges at 33:53:59
 
   //=== ( Battery Stat integration
-  currentInt += dashboard.Ipan;
+  currentInt += dashboard.Ibat;
   nCurrent ++;
 
   if (HourExpiring)
