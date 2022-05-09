@@ -17,10 +17,14 @@ void wirelessRun()
     if (triglEvent)   thing.write_bucket("EVENT", "EVENT");
     if (NewDay)       thing.write_bucket("DAY", "DAY");
     if (HourExpiring) thing.write_bucket("HOUR", "HOUR");
-    if (NewMinute)    thing.write_bucket("MIN", "MIN");
+    if (MinuteExpiring && (Minute % 10 == 3))   //every 10 minutes update "MIN Bucket.
+    {    
+       thing.write_bucket("MIN", "MIN");
+       dashboard_10min.Vbat = dashboard_10min.Ibat = dashboard_10min.Wbat = 0; 
+    }
 #endif
 
-    if (Minute % 6 == 2)           //every 6 minutes update persistance data
+    if (MinuteExpiring && (Minute % 6 == 2))           //every 6 minutes update persistance data
     {
       //Persistance
       pson persistance;
