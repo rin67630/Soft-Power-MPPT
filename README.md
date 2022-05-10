@@ -5,10 +5,9 @@ __based on simple tinkering modules (Buck DC converters, ESP8266, INA226...)__
 ------------------!!! This project is retired !!!----------------------------------  
 I don't follow up that idea any more: the DC-DC moduels, not been designed for solar operation are dying as flees.
   
-Please acknowlege that I treid a lot, but fried to much hardware to follow that track further.  
-The concept works, but the reality has nor mercy...  
-I am currently working on recycling the software to a Report-Only device using PWM controlleers that I found to be at least as good on 18V panels.   
------------------------------------------------------------------------------------
+Please acknowlege that I tried a lot, but fried to much hardware to follow that track further.  
+The concept works, but the reality has no mercy...  
+I am currently working on recycling the software to a Report-Only device using PWM controllers that I found to be at least as good on 18V panels.   -----------------------------------------------------------------------------------
 
 ![image](https://user-images.githubusercontent.com/14197155/108857506-72e05180-75eb-11eb-8731-d5d0d6ecd7af.png)
 
