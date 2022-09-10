@@ -41,6 +41,7 @@ void data125mSRun()
   ina3_shunt     = INA.getShuntMicroVolts(2);
   ina3_current   = INA.getBusMicroAmps(2);
   ina3_power     = INA.getBusMicroWatts(2);
+   dashboard.Vaux  += (ina3_voltage / 1000   - dashboard.Vaux) / 3; // Volt smoothed 0.3seconds
   dashboard.Iaux += (ina3_current / IFACTORA - dashboard.Iaux) / 3; // Ampere Smoothed 0.3seconds, set divisor negative to reverse current if required
   dashboard.Waux = dashboard.Vbat * dashboard.Iaux; +0.001;
 #endif
@@ -169,8 +170,9 @@ dashboard_10min.Wbat += dashboard.Wbat;  // Integrate over 10 Minutes (Reset in 
   {
     if (Minute % 5 == 1 && Second == 32)                    // call every 5 minutes
     {
+      WiFiClient wifiClient;
       HTTPClient http;
-      http.begin(WifiClient, OPEN_WEATHER_MAP_URL);
+      http.begin(wifiClient, OPEN_WEATHER_MAP_URL);
       int httpCode2 = http.GET();
       if (httpCode2 == HTTP_CODE_OK)
       {
